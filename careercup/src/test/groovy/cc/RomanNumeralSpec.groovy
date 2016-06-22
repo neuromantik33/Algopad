@@ -3,10 +3,10 @@ package cc
 import spock.lang.Narrative
 import spock.lang.Specification
 import spock.lang.Subject
+import spock.lang.Unroll
 
 @Narrative('''
 The function under test should be able to parse a roman numeral string into a long using the following rules :
-I = 1, V = 5, X = 10, L = 50, C = 100, D = 500, M = 1000
 
 Numbers are formed by combining symbols and adding the values, so II is two (two ones) and XIII is thirteen (a ten and three ones). Because each
 numeral has a fixed value rather than representing multiples of ten, one hundred and so on, according to position, there is no need for "place
@@ -34,7 +34,13 @@ class RomanNumeralSpec extends Specification {
     def parseRomanNum = { String roman ->
 
         def lookup = [
-          'I': 1
+          'I': 1,
+          'V': 5,
+          'X': 10,
+          'L': 50,
+          'C': 100,
+          'D': 500,
+          'M': 1000,
         ]
 
         long num = 0
@@ -46,7 +52,8 @@ class RomanNumeralSpec extends Specification {
 
     }
 
-    def '''it should convert #roman to #num (basic smoke test)'''() {
+    @Unroll
+    def 'it should convert a single character #roman string to #num'() {
 
         expect:
         parseRomanNum(roman) == num as long
@@ -54,7 +61,12 @@ class RomanNumeralSpec extends Specification {
         where:
         roman | num
         'I'   | 1
-        'II'  | 2
+        'V'   | 5
+        'X'   | 10
+        'L'   | 50
+        'C'   | 100
+        'D'   | 500
+        'M'   | 1000
 
     }
 }
