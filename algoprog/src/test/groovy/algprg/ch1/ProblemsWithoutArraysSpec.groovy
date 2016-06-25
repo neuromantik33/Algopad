@@ -9,7 +9,9 @@ import static java.lang.System.nanoTime
 class ProblemsWithoutArraysSpec extends Specification {
 
     @Shared
-    def rnd = new Random()
+    def random = new Random()
+
+    private rand1000() { random.nextInt(1000).abs() }
 
     def '''Consider two integer variables a and b. Write a program block that exchanges the values of a and b
            (i.e., the value of a becomes the value of b and vice versa).'''() {
@@ -65,15 +67,15 @@ class ProblemsWithoutArraysSpec extends Specification {
         }
 
         expect:
-        benchmark("linear pow($a,$n)") { pow(a, n) } == a**n
+        pow(a, n) == a**n
 
         where:
-        a                 | n
-        -99               | 0
-        81                | 5
-        835               | 13
-        18                | 12
-        rnd.nextInt(1000) | rnd.nextInt(20).abs()
+        a          | n
+        -99        | 0
+        81         | 5
+        835        | 13
+        18         | 12
+        rand1000() | random.nextInt(20)
 
     }
 
@@ -121,15 +123,121 @@ class ProblemsWithoutArraysSpec extends Specification {
         }*/
 
         expect:
-        benchmark("log pow($a,$n)") { pow(a, n) } == a**n
+        pow(a, n) == a**n
 
         where:
-        a                 | n
-        -99               | 0
-        81                | 5
-        835               | 13
-        18                | 12
-        rnd.nextInt(1000) | rnd.nextInt(20).abs()
+        a          | n
+        -99        | 0
+        -81        | 5
+        835        | 13
+        18         | 12
+        rand1000() | random.nextInt(20)
+
+    }
+
+    @Unroll
+    def '''Two non-negative integers #a and #b are given. Compute the product a*b
+           (only +, -, =, <> are allowed).'''() {
+
+        given:
+        def multiply = { int x, int y ->
+            def res = 0
+            for (int i = 0; i < y; i++) {
+                res += x
+            }
+            res
+        }
+
+        expect:
+        multiply(a, b) == a * b
+
+        where:
+        a          | b
+        161        | 95
+        774        | 892
+        730        | 942
+        rand1000() | rand1000()
+
+    }
+
+    @Unroll
+    def '''Two non-negative integers #a and #b are given. Compute a + b. Only assignments of the form are allowed.
+           variable1 = variable2
+           variable = {number}
+           variable1 = variable2 + 1'''() {
+
+        given:
+        def add = { int x, int y ->
+            def res = x
+            for (int i = 0; i < y; i++) {
+                res += 1
+            }
+            res
+        }
+
+        expect:
+        add(a, b) == a + b
+
+        where:
+        a          | b
+        517        | 647
+        123        | 908
+        0          | 9
+        rand1000() | rand1000()
+
+    }
+
+    @Unroll
+    def '''A non-negative integer #a and positive integer #d are given. Compute the quotient q and the remainder r
+           when #a is divided by #d. Do not use the operations div or mod.'''() {
+
+        given:
+        def quotientAndRemainder = { int x, int y ->
+            assert x >= 0 && y > 0
+            def quot = 0
+            def rem = x
+            while (y <= rem) {
+                quot += 1
+                rem -= y
+            }
+            [quot, rem]
+        }
+
+        expect:
+        def (quot, rem) = quotientAndRemainder(a, d)
+        quot == a / d as int
+        rem == a % d
+
+        where:
+        a          | d
+        0          | 2
+        2          | 2
+        15         | 5
+        823        | 348
+        rand1000() | rand1000() + 1
+
+    }
+
+    @Unroll
+    def '''For a given non-negative integer #n, compute n!
+           (n! is the product 1*2*3...n; we assume that 0! = 1).'''() {
+
+        given:
+        def fact = { x ->
+            if (x < 2) { return 1 }
+            def val = 1, i = x
+            while (i > 0) {
+                val *= i
+                i -= 1
+            }
+            val
+        }
+
+        expect:
+        fact(n) == (1..n).inject(1) { memo, n -> memo * n } || 1
+
+        where:
+        n << (0..50)
 
     }
 
