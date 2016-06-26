@@ -241,6 +241,60 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
+    @Unroll
+    def '''The Fibonacci sequence is defined as follows: a0 = 0, a1 = 1, ak = ak-1 + ak-2 for k >= 2.
+           For a given #n, compute an.'''() {
+
+        given:
+        def fib = { x ->
+            if (x < 2) { return x }
+            def y = 0, z = 1, i = x
+            while (i > 1) {
+                def tmp = y + z
+                y = z
+                z = tmp
+                i -= 1
+            }
+            z
+        }
+
+        expect:
+        fib(n) == val
+
+        where:
+        n | val
+        0 | 0
+        1 | 1
+        2 | 1
+        3 | 2
+        4 | 3
+        5 | 5
+        6 | 8
+        7 | 13
+        8 | 21
+
+    }
+
+    def '''Repeat the preceding problem with the additional requirement that the number of operations
+           should be proportional to log n. (Use only integer variables.)'''() {
+
+    }
+
+    @Unroll
+    def '''For a non-negative integer #n, compute 1/0! + 1/1! + ... + 1/n!
+           the number of steps (i.e., the number of assignments performed during the execution)
+           should be of order n (i.e., not greater than Cn for some constant C).'''() {
+
+        given:
+        def cache = [:]
+
+        where:
+        n | val
+        0 | 1
+        1 | 2
+
+    }
+
     private static <V> V benchmark(String name, Closure<V> closure) {
         def start = nanoTime()
         V val = closure.call()
