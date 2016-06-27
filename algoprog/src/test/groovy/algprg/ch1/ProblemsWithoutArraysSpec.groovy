@@ -83,8 +83,7 @@ class ProblemsWithoutArraysSpec extends Specification {
            should be of order log n (i.e., it should not exceed C log n for some constant C).'''() {
 
         given:
-        def pow
-        pow = { int x, int y ->
+        def pow = { int x, int y ->
 
             if (y == 0) { return 1 }
             if (y == 1) { return x }
@@ -93,13 +92,13 @@ class ProblemsWithoutArraysSpec extends Specification {
             // y is even
             if (y % 2 == 0) {
                 int exp = y / 2
-                BigInteger val = pow(x, exp)
+                BigInteger val = call(x, exp)
                 return val * val
             }
 
             // y is odd
             int exp = (y - 1) / 2
-            BigInteger val = pow(x, exp)
+            BigInteger val = call(x, exp)
             x * val * val
 
         }
@@ -262,21 +261,83 @@ class ProblemsWithoutArraysSpec extends Specification {
         fib(n) == val
 
         where:
-        n | val
-        0 | 0
-        1 | 1
-        2 | 1
-        3 | 2
-        4 | 3
-        5 | 5
-        6 | 8
-        7 | 13
-        8 | 21
+        n  | val
+        0  | 0
+        1  | 1
+        2  | 1
+        3  | 2
+        4  | 3
+        5  | 5
+        6  | 8
+        7  | 13
+        8  | 21
+        9  | 34
+        10 | 55
 
     }
 
+    @Unroll
     def '''Repeat the preceding problem with the additional requirement that the number of operations
-           should be proportional to log n. (Use only integer variables.)'''() {
+           should be proportional to log n. (Use only integer variables.) (#n)'''() {
+
+        given:
+        def multiply2d = { int[][] a, int[][] b ->
+            def product = new int[2][2]
+            for (int i = 0; i < 2; i++) {
+                for (int j = 0; j < 2; j++) {
+                    for (int k = 0; k < 2; k++) {
+                        product[i][j] += a[i][k] * b[k][j]
+                    }
+                }
+            }
+            product
+        }
+
+        def pow = { int[][] x, int y ->
+
+            if (y == 1) { return x }
+            if (y == 2) { return multiply2d(x, x) }
+
+            // y is even
+            if (y % 2 == 0) {
+                int exp = y / 2
+                int[][] val = call(x, exp)
+                return multiply2d(val, val)
+            }
+
+            // y is odd
+            int exp = (y - 1) / 2
+            int[][] val = call(x, exp)
+            val = multiply2d(val, val)
+            multiply2d(x, val)
+
+        }
+
+        def fib = { x ->
+            if (x < 2) { return x }
+            // Any pair of consecutive Fibonacci numbers is the product of the matrix [[1, 1], [1, 0]]
+            // and the preceding pair. Therefore, it is enough to compute the n-th power of this matrix
+            int[][] init = [[1, 1], [1, 0]] as int[][]
+            def matrix = pow(init, x - 1)
+            matrix[0][0]
+        }
+
+        expect:
+        fib(n) == val
+
+        where:
+        n  | val
+        0  | 0
+        1  | 1
+        2  | 1
+        3  | 2
+        4  | 3
+        5  | 5
+        6  | 8
+        7  | 13
+        8  | 21
+        9  | 34
+        10 | 55
 
     }
 
@@ -286,12 +347,33 @@ class ProblemsWithoutArraysSpec extends Specification {
            should be of order n (i.e., not greater than Cn for some constant C).'''() {
 
         given:
-        def cache = [:]
+        def series = { x ->
+            BigDecimal res = 1
+            def fact = 1, i = 1
+            while (i <= x) {
+                fact *= i
+                res += 1 / fact
+                i += 1
+            }
+            res
+        }
+
+        expect:
+        series(n) == val as BigDecimal
 
         where:
         n | val
-        0 | 1
-        1 | 2
+        0 | 1 // 1/0!
+        1 | 2 // 1/0! + 1/1!
+        2 | 2.5 // 1/0! + 1/1! + 1/2!
+        3 | 2.6666666667 // 1/0! + 1/1! + 1/2! + 1/3!
+        4 | 2.7083333334 // 1/0! + 1/1! + 1/2! + 1/3! + 1/4!
+        5 | 2.7166666667 // 1/0! + 1/1! + 1/2! + 1/3! + 1/4! + 1/5!
+        6 | 2.7180555556 // 1/0! + 1/1! + 1/2! + 1/3! + 1/4! + 1/5! + 1/6!
+
+    }
+
+    def 'Two non-negative integers #a and #b are not both zero. Compute GCD(a,b), the greatest common divisor of #a and #b.'() {
 
     }
 
