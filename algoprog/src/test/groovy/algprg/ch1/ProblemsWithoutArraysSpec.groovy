@@ -2,10 +2,10 @@ package algprg.ch1
 
 import spock.lang.Shared
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import static java.lang.System.nanoTime
 
+@SuppressWarnings('GroovyLocalVariableNamingConvention')
 class ProblemsWithoutArraysSpec extends Specification {
 
     @Shared
@@ -49,9 +49,8 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
-    def '''Let #a be an integer and #n be a non-negative integer. Compute #a**#n. In other words, we ask for a
-           program that does not change the values of #a and #n and assigns the value an to another variable (say, b).
+    def '''Let a be an integer and n be a non-negative integer. Compute a**n. In other words, we ask for a
+           program that does not change the values of a and n and assigns the value an to another variable (say, b).
            (The program may use other variables as well.)'''() {
 
         given:
@@ -134,8 +133,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
-    def '''Two non-negative integers #a and #b are given. Compute the product a*b
+    def '''Two non-negative integers a and b are given. Compute the product a*b
            (only +, -, =, <> are allowed).'''() {
 
         given:
@@ -159,8 +157,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
-    def '''Two non-negative integers #a and #b are given. Compute a + b. Only assignments of the form are allowed.
+    def '''Two non-negative integers a and b are given. Compute a + b. Only assignments of the form are allowed.
            variable1 = variable2
            variable = {number}
            variable1 = variable2 + 1'''() {
@@ -186,9 +183,8 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
-    def '''A non-negative integer #a and positive integer #d are given. Compute the quotient q and the remainder r
-           when #a is divided by #d. Do not use the operations div or mod.'''() {
+    def '''A non-negative integer a and positive integer d are given. Compute the quotient q and the remainder r
+           when a is divided by d. Do not use the operations div or mod.'''() {
 
         given:
         def quotientAndRemainder = { int x, int y ->
@@ -217,8 +213,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
-    def '''For a given non-negative integer #n, compute n!
+    def '''For a given non-negative integer n, compute n!
            (n! is the product 1*2*3...n; we assume that 0! = 1).'''() {
 
         given:
@@ -240,9 +235,8 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
     def '''The Fibonacci sequence is defined as follows: a0 = 0, a1 = 1, ak = ak-1 + ak-2 for k >= 2.
-           For a given #n, compute an.'''() {
+           For a given n, compute an.'''() {
 
         given:
         def fib = { x ->
@@ -276,9 +270,8 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
     def '''Repeat the preceding problem with the additional requirement that the number of operations
-           should be proportional to log n. (Use only integer variables.) (#n)'''() {
+           should be proportional to log n. (Use only integer variables.)'''() {
 
         given:
         def multiply2d = { int[][] a, int[][] b ->
@@ -341,8 +334,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    @Unroll
-    def '''For a non-negative integer #n, compute 1/0! + 1/1! + ... + 1/n!
+    def '''For a non-negative integer n, compute 1/0! + 1/1! + ... + 1/n!
            the number of steps (i.e., the number of assignments performed during the execution)
            should be of order n (i.e., not greater than Cn for some constant C).'''() {
 
@@ -373,7 +365,43 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def 'Two non-negative integers #a and #b are not both zero. Compute GCD(a,b), the greatest common divisor of #a and #b.'() {
+    def 'Two non-negative integers a and b are not both zero. Compute GCD(a,b), the greatest common divisor of a and b.'() {
+
+        given:
+        def gcd = { x, y ->
+            println "x = $x, y = $y"
+            y == 0 ? x : call(y, x % y)
+        }
+
+        /* Book solution
+        def gcd = { x, y ->
+            def m = x, n = y
+            while (m != 0 && n != 0) {
+                if (m >= n) {
+                    m -= n
+                } else {
+                    n -= m
+                }
+            }
+            n
+        }*/
+
+        expect:
+        gcd(a, b) == val
+
+        where:
+        a          | b          | val
+        45         | 54         | 9
+        670        | 385        | 5
+        513        | 227        | 1
+        124        | 334        | 2
+        804        | 717        | 3
+        1611010288 | 1623312280 | 8
+
+    }
+
+    def '''Non-negative integers a and b are given, at least one of which is not zero.
+           Find d = GCD(a,b) and integers x and y such that d = a*x + b*y.'''() {
 
     }
 
