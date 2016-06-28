@@ -369,7 +369,6 @@ class ProblemsWithoutArraysSpec extends Specification {
 
         given:
         def gcd = { x, y ->
-            println "x = $x, y = $y"
             y == 0 ? x : call(y, x % y)
         }
 
@@ -391,6 +390,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
         where:
         a          | b          | val
+        259        | 70         | 7
         45         | 54         | 9
         670        | 385        | 5
         513        | 227        | 1
@@ -402,6 +402,22 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     def '''Non-negative integers a and b are given, at least one of which is not zero.
            Find d = GCD(a,b) and integers x and y such that d = a*x + b*y.'''() {
+
+        given:
+        def pulverize = { x, y, s = x, t = y ->
+            if (y == 0) { return [x, s, t] }
+            println "x = $x, y = $y"
+            def rem = x % y
+            def q = (x - rem) / y
+            println "rem = $rem, q = $q"
+        }
+
+        expect:
+        pulverize(a, b) == [gcd, c, d]
+
+        where:
+        a   | b  | gcd | c | d
+        259 | 70 | 7   | 3 | -11
 
     }
 
