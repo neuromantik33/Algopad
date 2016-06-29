@@ -401,7 +401,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''1.1.15. Non-negative integers a and b are given, at least one of which is not zero.
+    def '''1.1.15-16. Non-negative integers a and b are given, at least one of which is not zero.
            Find d = GCD(a,b) and integers x and y such that d = a*x + b*y.'''() {
 
         given: 'See 4.2.5 The Pulverizer - Mathematics for Computer Science (Lehman, Leighton, Meyer)'
@@ -421,6 +421,73 @@ class ProblemsWithoutArraysSpec extends Specification {
         259 | 70  | 7   | 3  | -11
         14  | 24  | 2   | -5 | 3
         576 | 486 | 18  | 11 | -13
+
+    }
+
+    def '''1.1.18. Write a version of Euclid’s algorithm using the identities
+           GCD(2a,2b) = 2*GCD(a,b); GCD(2a,b) = GCD(a,b) for odd b
+           The algorithm should avoid division (div and mod operations); only division by 2 and the test “to be even” are allowed.
+           (The number of operations should be of order log k if both numbers do not exceed k.)'''() {
+
+        given:
+        def isEven = { it % 2 == 0 }
+        def div2 = { (int) (it / 2) }
+        def gcd = { x, y ->
+            def val
+            if (y == 0) {
+                val = x
+            } else if (isEven(x)) {
+                if (isEven(y)) {
+                    val = 2 * call(div2(x), div2(y))
+                } else {
+                    val = call(div2(x), y)
+                }
+            } else {
+                if (isEven(y)) {
+                    val = call(x, div2(y))
+                } else {
+                    val = call(y, (x - y).abs())
+                }
+            }
+            val
+        }
+
+        /* Book solution (doesn't work!)
+        def gcd = { x, y ->
+            def isOdd = { it % 2 != 0 }
+            int m = x, n = y, d = 1
+            while (m != 0 && n != 0) {
+                if (isEven(m) && isEven(n)) {
+                    d = 2 * d
+                    m = div2(m)
+                    n = div2(n)
+                } else if (isEven(m) && isOdd(n)) {
+                    m = div2(m)
+                } else if (isOdd(m) && isEven(n)) {
+                    n = div2(n)
+                } else {
+                    if (m >= n) {
+                        m -= n
+                    } else {
+                        n -= m
+                    }
+                }
+            }
+            n
+        }*/
+
+        expect:
+        gcd(a, b) == val
+
+        where:
+        a          | b          | val
+        259        | 70         | 7
+        45         | 54         | 9
+        670        | 385        | 5
+        513        | 227        | 1
+        124        | 334        | 2
+        804        | 717        | 3
+        1611010288 | 1623312280 | 8
 
     }
 
