@@ -13,7 +13,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     private rand1000() { random.nextInt(1000).abs() }
 
-    def '''Consider two integer variables a and b. Write a program block that exchanges the values of a and b
+    def '''1.1.1. Consider two integer variables a and b. Write a program block that exchanges the values of a and b
            (i.e., the value of a becomes the value of b and vice versa).'''() {
 
         given:
@@ -31,7 +31,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Solve the preceding problem without an auxiliary variable.
+    def '''1.1.2. Solve the preceding problem without an auxiliary variable.
            (Assume all variables accept arbitrary integer values.)'''() {
 
         given:
@@ -49,7 +49,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Let a be an integer and n be a non-negative integer. Compute a**n. In other words, we ask for a
+    def '''1.1.3. Let a be an integer and n be a non-negative integer. Compute a**n. In other words, we ask for a
            program that does not change the values of a and n and assigns the value an to another variable (say, b).
            (The program may use other variables as well.)'''() {
 
@@ -78,7 +78,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Solve the preceding problem with the additional requirement that the number of execution steps
+    def '''1.1.4. Solve the preceding problem with the additional requirement that the number of execution steps
            should be of order log n (i.e., it should not exceed C log n for some constant C).'''() {
 
         given:
@@ -133,7 +133,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Two non-negative integers a and b are given. Compute the product a*b
+    def '''1.1.5. Two non-negative integers a and b are given. Compute the product a*b
            (only +, -, =, <> are allowed).'''() {
 
         given:
@@ -157,7 +157,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Two non-negative integers a and b are given. Compute a + b. Only assignments of the form are allowed.
+    def '''1.1.6. Two non-negative integers a and b are given. Compute a + b. Only assignments of the form are allowed.
            variable1 = variable2
            variable = {number}
            variable1 = variable2 + 1'''() {
@@ -183,7 +183,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''A non-negative integer a and positive integer d are given. Compute the quotient q and the remainder r
+    def '''1.1.7. A non-negative integer a and positive integer d are given. Compute the quotient q and the remainder r
            when a is divided by d. Do not use the operations div or mod.'''() {
 
         given:
@@ -213,7 +213,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''For a given non-negative integer n, compute n!
+    def '''1.1.8. For a given non-negative integer n, compute n!
            (n! is the product 1*2*3...n; we assume that 0! = 1).'''() {
 
         given:
@@ -235,7 +235,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''The Fibonacci sequence is defined as follows: a0 = 0, a1 = 1, ak = ak-1 + ak-2 for k >= 2.
+    def '''1.1.9. The Fibonacci sequence is defined as follows: a0 = 0, a1 = 1, ak = ak-1 + ak-2 for k >= 2.
            For a given n, compute an.'''() {
 
         given:
@@ -270,7 +270,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Repeat the preceding problem with the additional requirement that the number of operations
+    def '''1.1.10. Repeat the preceding problem with the additional requirement that the number of operations
            should be proportional to log n. (Use only integer variables.)'''() {
 
         given:
@@ -334,7 +334,7 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''For a non-negative integer n, compute 1/0! + 1/1! + ... + 1/n!
+    def '''1.1.11-12. For a non-negative integer n, compute 1/0! + 1/1! + ... + 1/n!
            the number of steps (i.e., the number of assignments performed during the execution)
            should be of order n (i.e., not greater than Cn for some constant C).'''() {
 
@@ -365,7 +365,8 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def 'Two non-negative integers a and b are not both zero. Compute GCD(a,b), the greatest common divisor of a and b.'() {
+    def '''1.1.13. Two non-negative integers a and b are not both zero.
+           Compute GCD(a,b), the greatest common divisor of a and b.'''() {
 
         given:
         def gcd = { x, y ->
@@ -400,24 +401,26 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     }
 
-    def '''Non-negative integers a and b are given, at least one of which is not zero.
+    def '''1.1.15. Non-negative integers a and b are given, at least one of which is not zero.
            Find d = GCD(a,b) and integers x and y such that d = a*x + b*y.'''() {
 
-        given:
-        def pulverize = { x, y, s = x, t = y ->
-            if (y == 0) { return [x, s, t] }
-            println "x = $x, y = $y"
-            def rem = x % y
-            def q = (x - rem) / y
-            println "rem = $rem, q = $q"
+        given: 'See 4.2.5 The Pulverizer - Mathematics for Computer Science (Lehman, Leighton, Meyer)'
+        Closure<List> pulverize = { x, y, s0 = 1, s1 = 0, t0 = 0, t1 = 1 ->
+            if (y == 0) { return [x, s0, t0] }
+            int q = x / y
+            def s2 = s0 - q * s1
+            def t2 = t0 - q * t1
+            call(y, x % y, s1, s2, t1, t2)
         }
 
         expect:
         pulverize(a, b) == [gcd, c, d]
 
         where:
-        a   | b  | gcd | c | d
-        259 | 70 | 7   | 3 | -11
+        a   | b   | gcd | c  | d
+        259 | 70  | 7   | 3  | -11
+        14  | 24  | 2   | -5 | 3
+        576 | 486 | 18  | 11 | -13
 
     }
 
