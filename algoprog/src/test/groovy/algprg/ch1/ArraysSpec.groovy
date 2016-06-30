@@ -100,8 +100,7 @@ class ArraysSpec extends Specification {
 
         given:
         def countDistinct = { x ->
-            def last = null
-            def num = 0
+            def last = null, num = 0
             x.each {
                 if (it != last) {
                     //noinspection GrReassignedInClosureLocalVar
@@ -114,12 +113,11 @@ class ArraysSpec extends Specification {
 
         /* Book solution
         def countDistinct = { x ->
-            def i = 1, k = 1
-            while (i < x.size()) {
+            def k = 1
+            for (int i = 1; i < x.size(); i++) {
                 if (x[i] != x[i - 1]) {
                     k += 1
                 }
-                i += 1
             }
             k
         }*/
@@ -130,11 +128,34 @@ class ArraysSpec extends Specification {
         where:
         a                  | num
         [1, 1, 2, 2, 3, 3] | 3
-        (1..5)             | 5
+        (1..10)            | 10
 
     }
 
-    private randomArray(int size) {
+    def '''An array x: array[1..n] of integer is given. Compute the number of different elements among x[1]..x[n].
+           (The number of operations should be of order n2.)'''() {
+
+        given:
+        def countDistinct = { x ->
+            def num = 0, distinct = []
+            x.each {
+                if (!(it in distinct)) {
+                    distinct << it
+                    num += 1
+                }
+            }
+            num
+        }
+
+        expect:
+        countDistinct(a) == (a as Set).size()
+
+        where:
+        a = randomArray(30)
+
+    }
+
+    private int[] randomArray(int size) {
         def array = new int[size]
         size.times { i ->
             array[i] = random.nextInt(size)
