@@ -426,7 +426,8 @@ class ProblemsWithoutArraysSpec extends Specification {
 
     def '''1.1.18. Write a version of Euclid’s algorithm using the identities
            GCD(2a,2b) = 2*GCD(a,b); GCD(2a,b) = GCD(a,b) for odd b
-           The algorithm should avoid division (div and mod operations); only division by 2 and the test “to be even” are allowed.
+           The algorithm should avoid division (div and mod operations); only division by 2 and the test “to be even”
+            are allowed.
            (The number of operations should be of order log k if both numbers do not exceed k.)'''() {
 
         given:
@@ -452,11 +453,12 @@ class ProblemsWithoutArraysSpec extends Specification {
             val
         }
 
-        /* Book solution (doesn't work!)
+        /*
         def gcd = { x, y ->
             def isOdd = { it % 2 != 0 }
             int m = x, n = y, d = 1
             while (m != 0 && n != 0) {
+                //noinspection GroovyIfStatementWithTooManyBranches
                 if (isEven(m) && isEven(n)) {
                     d = 2 * d
                     m = div2(m)
@@ -473,7 +475,7 @@ class ProblemsWithoutArraysSpec extends Specification {
                     }
                 }
             }
-            n
+            d * (m ?: n)
         }*/
 
         expect:
