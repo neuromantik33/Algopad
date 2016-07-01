@@ -3,6 +3,7 @@ package algprg.ch1
 import spock.lang.Shared
 import spock.lang.Specification
 
+import static algopad.Sorts.mergeSort
 import static java.lang.Integer.MIN_VALUE
 
 class ArraysSpec extends Specification {
@@ -132,7 +133,8 @@ class ArraysSpec extends Specification {
 
     }
 
-    def '''An array x: array[1..n] of integer is given. Compute the number of different elements among x[1]..x[n].
+    def '''1.2.6. An array x: array[1..n] of integer is given.
+           Compute the number of different elements among x[1]..x[n].
            (The number of operations should be of order n2.)'''() {
 
         given:
@@ -141,6 +143,28 @@ class ArraysSpec extends Specification {
             x.each {
                 if (!(it in distinct)) {
                     distinct << it
+                    num += 1
+                }
+            }
+            num
+        }
+
+        expect:
+        countDistinct(a) == (a as Set).size()
+
+        where:
+        a = randomArray(30)
+
+    }
+
+    def '''1.2.7. The same problem with an additional requirement:
+           the number of operations should be of order n log n.'''() {
+
+        def countDistinct = { x ->
+            def num = 1, len = x.size()
+            def sorted = mergeSort(x)
+            for (int i = 1; i < len; i++) {
+                if (sorted[i] != sorted[i - 1]) {
                     num += 1
                 }
             }
