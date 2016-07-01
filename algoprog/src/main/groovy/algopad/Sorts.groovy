@@ -1,8 +1,8 @@
-package algopad
-
 /*
  *  algopad.
  */
+
+package algopad
 
 /**
  * Collection of unoptimized sorting algorithms.
