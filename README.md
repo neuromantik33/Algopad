@@ -5,7 +5,8 @@ Most of the code will be written in Groovy, but occasionnally Java or Python wil
 
 Each module gathers various exercises for varying sources. They are summarized here :
 
-- careercup : http://www.careercup.com
-- algoprog  : Algorithms and Programming, 2nd edition (A. Shen)
+- careercup   : http://www.careercup.com
+- algoprog    : Algorithms and Programming, 2nd edition (A. Shen)
+- algotoolbox : Algorithmic Toolbox (UC San Diego, Coursera)
 
 If you have any remarks feel free to drop me a line ;)
