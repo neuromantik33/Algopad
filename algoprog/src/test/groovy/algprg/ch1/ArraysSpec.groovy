@@ -3,6 +3,7 @@ package algprg.ch1
 import spock.lang.Shared
 import spock.lang.Specification
 
+import static algopad.Sorts.mergeSort
 import static java.lang.Integer.MIN_VALUE
 
 class ArraysSpec extends Specification {
@@ -100,8 +101,7 @@ class ArraysSpec extends Specification {
 
         given:
         def countDistinct = { x ->
-            def last = null
-            def num = 0
+            def last = null, num = 0
             x.each {
                 if (it != last) {
                     //noinspection GrReassignedInClosureLocalVar
@@ -114,12 +114,11 @@ class ArraysSpec extends Specification {
 
         /* Book solution
         def countDistinct = { x ->
-            def i = 1, k = 1
-            while (i < x.size()) {
+            def k = 1
+            for (int i = 1; i < x.size(); i++) {
                 if (x[i] != x[i - 1]) {
                     k += 1
                 }
-                i += 1
             }
             k
         }*/
@@ -130,11 +129,57 @@ class ArraysSpec extends Specification {
         where:
         a                  | num
         [1, 1, 2, 2, 3, 3] | 3
-        (1..5)             | 5
+        (1..10)            | 10
 
     }
 
-    private randomArray(int size) {
+    def '''1.2.6. An array x: array[1..n] of integer is given.
+           Compute the number of different elements among x[1]..x[n].
+           (The number of operations should be of order n2.)'''() {
+
+        given:
+        def countDistinct = { x ->
+            def num = 0, distinct = []
+            x.each {
+                if (!(it in distinct)) {
+                    distinct << it
+                    num += 1
+                }
+            }
+            num
+        }
+
+        expect:
+        countDistinct(a) == (a as Set).size()
+
+        where:
+        a = randomArray(30)
+
+    }
+
+    def '''1.2.7. The same problem with an additional requirement:
+           the number of operations should be of order n log n.'''() {
+
+        def countDistinct = { x ->
+            def num = 1, len = x.size()
+            def sorted = mergeSort(x)
+            for (int i = 1; i < len; i++) {
+                if (sorted[i] != sorted[i - 1]) {
+                    num += 1
+                }
+            }
+            num
+        }
+
+        expect:
+        countDistinct(a) == (a as Set).size()
+
+        where:
+        a = randomArray(30)
+
+    }
+
+    private int[] randomArray(int size) {
         def array = new int[size]
         size.times { i ->
             array[i] = random.nextInt(size)
