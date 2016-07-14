@@ -8,25 +8,11 @@ import static java.util.Arrays.sort
 @CompileStatic
 class GreedyJobScheduler {
 
-    static final DIFF_HEURISTIC = { Job o1, Job o2 ->
-        def diff1 = o1.weight - o1.length
-        def diff2 = o2.weight - o2.length
-        def result = Integer.compare(diff2, diff1)
-        result != 0 ? result : Integer.compare(o2.weight, o1.weight)
-    }
-
-    static final RATIO_HEURISTIC = { Job o1, Job o2 ->
-        def diff1 = (o1.weight / o1.length) as double
-        def diff2 = (o2.weight / o2.length) as double
-        def result = Double.compare(diff2, diff1)
-        result != 0 ? result : Integer.compare(o2.weight, o1.weight)
-    }
-
     Job[] jobs
 
-    GreedyJobScheduler(URL url, heuristic) {
+    GreedyJobScheduler(URL url, Heuristic heuristic) {
         parseJobsFile url
-        sort jobs, heuristic as Comparator
+        sort jobs, heuristic
         updateWeightedCompletionTimes()
     }
 
@@ -64,6 +50,33 @@ class GreedyJobScheduler {
         Job(final int weight, final int length) {
             this.weight = weight
             this.length = length
+        }
+    }
+
+    enum Heuristic implements Comparator<Job> {
+
+        DIFF({ Job o1, Job o2 ->
+            def diff1 = o1.weight - o1.length
+            def diff2 = o2.weight - o2.length
+            def result = diff2 <=> diff1
+            result ?: o2.weight <=> o1.weight
+        }),
+
+        RATIO({ Job o1, Job o2 ->
+            def ratio1 = (double) o1.weight / o1.length
+            def ratio2 = (double) o2.weight / o2.length
+            ratio2 <=> ratio1
+        })
+
+        private final Closure<Integer> closure
+
+        private Heuristic(Closure closure) {
+            this.closure = closure
+        }
+
+        @Override
+        int compare(final Job o1, final Job o2) {
+            closure.call o1, o2
         }
     }
 }
