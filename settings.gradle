@@ -1,4 +1,5 @@
 rootProject.name = 'algopad'
+include ':algodaa2'
 include ':algoprog'
 include ':algotoolbox'
 include ':careercup'
