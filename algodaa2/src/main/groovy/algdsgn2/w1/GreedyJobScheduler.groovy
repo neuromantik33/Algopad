@@ -5,6 +5,12 @@ import groovy.transform.ToString
 
 import static java.util.Arrays.sort
 
+/**
+ * Implementation of a greedy job scheduler which minimizes the sum of weight completion times given a
+ * {@link algdsgn2.w1.GreedyJobScheduler.Heuristic}.
+ *
+ * @author Nicolas Estrada.
+ */
 @CompileStatic
 class GreedyJobScheduler {
 

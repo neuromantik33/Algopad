@@ -15,3 +15,9 @@ allprojects {
 
     }
 }
+
+project(':algodaa2') {
+    dependencies {
+        compile project(':common')
+    }
+}

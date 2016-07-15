@@ -20,7 +20,6 @@ class GreedyJobSchedulerSpec extends Specification {
 
         given:
         def input = GreedyJobSchedulerSpec.class.getResource(file)
-        Stopwatch
         def scheduler = new GreedyJobScheduler(input, heuristic)
 
         expect:
