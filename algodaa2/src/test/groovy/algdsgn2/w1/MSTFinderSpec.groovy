@@ -14,7 +14,7 @@ class MSTFinderSpec extends Specification {
         def graph = new Graph(input)
 
         expect:
-        graph.vertices.length == 500
+        graph.numVertices == 500
         graph.numEdges == 2184
 
         where:

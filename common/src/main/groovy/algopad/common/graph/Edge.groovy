@@ -13,4 +13,9 @@ class Edge {
     final Vertex w
     final int weight
 
+    Edge(Vertex v, Vertex w, int weight) {
+        this.v = v
+        this.w = w
+        this.weight = weight
+    }
 }

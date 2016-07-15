@@ -7,9 +7,9 @@ package algopad.common.graph
 import groovy.transform.CompileStatic
 
 @CompileStatic
+@SuppressWarnings('GroovyLocalVariableNamingConvention')
 class Graph {
 
-    int numV, numE
     Vertex[] vertices
 
     Graph(URL url) {
@@ -18,30 +18,45 @@ class Graph {
 
     private parseAdjacencyList(URL url) {
         url.withReader { reader ->
+
             def scanner = new Scanner(reader)
-            numV = scanner.nextInt()
-            numE = scanner.nextInt()
-            println "V = $numV, E = $numE"
+            def numV = scanner.nextInt()
             vertices = new Vertex[numV + 1] // one-indexed
+
+            def numE = scanner.nextInt()
             numE.times {
 
-                def vId = scanner.nextInt()
-                def v = vertices[vId]
-                if (!v) {
-                    v = new Vertex(id: vId)
-                    vertices[vId] = v
-                }
-
-                def wId = scanner.nextInt()
-                def w = vertices[wId]
-                if (!w) {
-                    w = new Vertex(id: wId)
-                    vertices[wId] = w
-                }
+                def v = parseVertex(scanner)
+                def w = parseVertex(scanner)
 
                 def weight = scanner.nextInt()
+                def edge = new Edge(v, w, weight)
+                v.edges << edge
+                w.edges << edge
 
             }
         }
+    }
+
+    private Vertex parseVertex(Scanner scanner) {
+        def id = scanner.nextInt()
+        def vertex = vertices[id]
+        if (!vertex) {
+            vertex = new Vertex(id)
+            vertices[id] = vertex
+        }
+        vertex
+    }
+
+    int getNumVertices() {
+        vertices.length - 1
+    }
+
+    int getNumEdges() {
+        def edges = vertices.tail().inject(0) { total, v ->
+            total + v.edges.size()
+        } as int
+        // Divide by 2 since each edge is present twice
+        edges >> 1
     }
 }

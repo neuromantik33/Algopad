@@ -11,7 +11,10 @@ import groovy.transform.ToString
 @ToString(includePackage = false, excludes = 'edges')
 class Vertex {
 
-    int id
-    def edges = []
+    final int id
+    final List<Edge> edges = []
 
+    Vertex(int id) {
+        this.id = id
+    }
 }
