@@ -21,7 +21,7 @@ class Graph {
 
             def scanner = new Scanner(reader)
             def numV = scanner.nextInt()
-            vertices = new Vertex[numV + 1] // one-indexed
+            vertices = new Vertex[numV]
 
             def numE = scanner.nextInt()
             numE.times {
@@ -39,7 +39,7 @@ class Graph {
     }
 
     private Vertex parseVertex(Scanner scanner) {
-        def id = scanner.nextInt()
+        def id = scanner.nextInt() - 1 // one-indexed
         def vertex = vertices[id]
         if (!vertex) {
             vertex = new Vertex(id)
@@ -49,7 +49,7 @@ class Graph {
     }
 
     int getNumVertices() {
-        vertices.length - 1
+        vertices.length
     }
 
     int getNumEdges() {
