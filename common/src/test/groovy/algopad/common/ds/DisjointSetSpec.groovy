@@ -1,6 +1,5 @@
 package algopad.common.ds
 
-import algopad.common.misc.Closures
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -25,8 +24,10 @@ class DisjointSetSpec extends Specification {
         ds.add obj
 
         then:
-        obj.rank == 0
-        obj.parent.is obj
+        //noinspection GroovyAccessibility
+        def node = ds.nodeMap[obj]
+        node.rank == 0
+        node.parent == obj
 
         expect:
         ds.size == 1
