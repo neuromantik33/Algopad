@@ -75,6 +75,7 @@ class DisjointSet<T> {
     }
 
     // Useful method for debugging
+    @SuppressWarnings("GroovyUnusedDeclaration")
     Map rootMap() {
         def inverse = [:]
         nodeMap.each { key, val ->
