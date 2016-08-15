@@ -53,7 +53,7 @@ class Graph {
     }
 
     int getNumEdges() {
-        def edges = vertices.tail().inject(0) { total, v ->
+        def edges = vertices.inject(0) { total, v ->
             total + v.edges.size()
         } as int
         // Divide by 2 since each edge is present twice

@@ -55,26 +55,39 @@ class DisjointSet<T> {
      * Connects the components containing <i>o1</i> and <i>o2</i>.
      */
     def union(T o1, T o2) {
-        verifyMembers o1, o2
         def p1 = find(o1)
         def p2 = find(o2)
         link p1, p2
         size -= 1
     }
 
+    /**
+     * Finds the root member of the component containing <i>obj</i>,
+     * optimizing with path compression per operation.
+     */
+    def T find(T obj) {
+        verifyMembers obj
+        def node = nodeMap[obj]
+        if (!obj.is(node.parent)) {
+            node.parent = find(node.parent)
+        }
+        node.parent
+    }
+
+    // Useful method for debugging
+    Map rootMap() {
+        def inverse = [:]
+        nodeMap.each { key, val ->
+            def list = inverse.get(val.parent, [])
+            list << key
+        }
+        inverse
+    }
+
     private verifyMembers(T... members) {
         members.each {
             assert nodeMap[it], "$it was not added to disjoint-set"
         }
-    }
-
-    // Path compression
-    private T find(T obj) {
-        def node = nodeMap[obj]
-        if (!obj.is(obj)) {
-            node.parent = find(node.parent)
-        }
-        node.parent
     }
 
     // Union by rank
@@ -94,5 +107,10 @@ class DisjointSet<T> {
     private class DSNode {
         int rank
         T parent
+
+        @Override
+        public String toString() {
+            parent.toString()
+        }
     }
 }
