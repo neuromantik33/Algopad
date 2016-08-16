@@ -14,23 +14,21 @@ class ClusteringSpec extends Specification {
         def graph = new Graph(input)
 
         expect:
-        graph.numVertices == 500
-        graph.numEdges == (int) 500 * 499 / 2 // Maximum number of edges in undirected graph
+        graph.numVertices == V
 
         when:
         def crossingEdges = calculateSingleLinkClusteringFor(graph, numClusters)
 
         then:
-        println crossingEdges
-        crossingEdges.last().weight == maxSpacing
+        crossingEdges.first().weight == maxSpacing
 
         where:
-        file              | numClusters | maxSpacing
-        'clustering1.txt' | 4           | 9999
+        file                   | V   | maxSpacing
+        'clustering_test1.txt' | 5   | 2
+        'clustering_test2.txt' | 10  | 5
+        'clustering1.txt'      | 500 | 106
 
-    }
+        numClusters = 4
 
-    private static int maxNumEdges(int numV) {
-        numV * (numV - 1) / 2 as int
     }
 }

@@ -52,19 +52,10 @@ class Clustering {
             set.size > numClusters
         }
 
-        // Iterate over all remaining crossing edges retaining the smallest for each cluster
-        Map<Set<Vertex>, Edge> crossingEdges = [:]
-        processCrossingEdge { Edge edge ->
-            def key = [set.find(edge.v), set.find(edge.w)] as Set
-            def existingEdge = crossingEdges[key]
-            if (!existingEdge || edge.weight < existingEdge.weight) {
-                crossingEdges[key] = edge
-            }
-            true // Continue processing all edges
-        }
-
-        crossingEdges.values()
-                     .sort(byWeight)
+        // Gather the remaining crossing edges and return the sorted list
+        def crossingEdges = []
+        processCrossingEdge { crossingEdges << it }
+        crossingEdges.sort byWeight
 
     }
 }
