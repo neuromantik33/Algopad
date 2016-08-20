@@ -30,6 +30,9 @@ class IntsSpec extends Specification {
 
         expect:
         hamming.neighborsFor(n) == neighbors as Set
+        neighbors.each {
+            assert hammingDistance(n, it) == distance
+        }
 
         where:
         n      | distance | numBits | neighbors

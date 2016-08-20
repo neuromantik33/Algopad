@@ -8,7 +8,10 @@ import algopad.common.ds.DisjointSet
 import algopad.common.graph.Edge
 import algopad.common.graph.Graph
 import algopad.common.graph.Vertex
+import algopad.common.misc.Ints.HammingCalculator
 import groovy.transform.CompileStatic
+
+import java.util.Map.Entry
 
 /**
  * @author Nicolas Estrada.
@@ -56,6 +59,65 @@ class Clustering {
         def crossingEdges = []
         processCrossingEdge { crossingEdges << it }
         crossingEdges.sort byWeight
+
+    }
+
+    /**
+     * Counts the number of hamming clusters for the arg <i>ints</i>
+     * with hamming distance <= <i>maxDistance</i>.<br>
+     * The number of clusters in determined in the following way:
+     * <ul>
+     *     <li>For each integer it calculates every possible value with hamming distance <= maxDistance</li>
+     *     <li>For each calculated value, it checks to see if it is in the original input</li>
+     *     <li>If present, it "connects" both integers using a {@link DisjointSet}</li>
+     *     <li>When the algorithm terminates, the disjoint set will have all the values with
+     *     hamming distance <= maxDistance within the same cluster</i>.
+     * </ul>
+     *
+     * @return
+     */
+    static int countHammingClustersFor(int[] ints, int maxDistance) {
+
+        // Create all hamming calculators for all hamming distances 1..maxDistance
+        List<HammingCalculator> calculators = []
+        for (int distance = maxDistance; distance > 0; distance--) {
+            calculators << new HammingCalculator(distance, 24)
+        }
+
+        def set = new DisjointSet(ints.length)
+        def indices = [:] as Map<Integer, Integer>
+        ints.eachWithIndex { int num, Integer ix ->
+            if (!indices.containsKey(num)) {
+                indices[num] = ix
+                set << ix
+            }
+        }
+
+        // Calculates all hamming "neighbors" with distance <= maxDistance
+        def neighborsFor = { int num ->
+            def neighbors = []
+            calculators.each { HammingCalculator hc ->
+                neighbors.addAll hc.neighborsFor(num)
+            }
+            neighbors
+        }
+
+        for (Iterator iterator = indices.iterator();
+             iterator.hasNext();) {
+
+            def entry = iterator.next() as Entry<Integer, Integer>
+            int num = entry.key
+            Integer numIx = entry.value
+
+            neighborsFor(num)
+              .findAll { indices.containsKey it }
+              .each { set.union numIx, indices[it] }
+
+            iterator.remove()
+
+        }
+
+        set.size
 
     }
 }

@@ -21,7 +21,7 @@ class DisjointSetSpec extends Specification {
         def obj = new Object()
 
         when:
-        ds.add obj
+        ds << obj
 
         then:
         //noinspection GroovyAccessibility
@@ -43,7 +43,7 @@ class DisjointSetSpec extends Specification {
         def o1 = new Object()
         def o2 = new Object()
         def o3 = new Object()
-        [o1, o2, o3].each { ds.add it }
+        [o1, o2, o3].each { ds << it }
 
         expect:
         disconnected o1, o2

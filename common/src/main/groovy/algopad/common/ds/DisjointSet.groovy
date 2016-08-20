@@ -35,6 +35,9 @@ class DisjointSet<T> {
         size += 1
     }
 
+    // Shortcut for adding
+    def leftShift(T obj) { add obj }
+
     /**
      * @return the number of connected components.
      */
@@ -57,8 +60,10 @@ class DisjointSet<T> {
     def union(T o1, T o2) {
         def p1 = find(o1)
         def p2 = find(o2)
-        link p1, p2
-        size -= 1
+        if (!p1.is(p2)) {
+            link p1, p2
+            size -= 1
+        }
     }
 
     /**
