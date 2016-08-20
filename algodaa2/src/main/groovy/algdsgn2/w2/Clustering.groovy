@@ -5,6 +5,7 @@
 package algdsgn2.w2
 
 import algopad.common.ds.DisjointSet
+import algopad.common.ds.IntDisjointSet
 import algopad.common.graph.Edge
 import algopad.common.graph.Graph
 import algopad.common.graph.Vertex
@@ -84,9 +85,9 @@ class Clustering {
             calculators << new HammingCalculator(distance, 24)
         }
 
-        def set = new DisjointSet(ints.length)
+        def set = new IntDisjointSet(ints.length)
         def indices = [:] as Map<Integer, Integer>
-        ints.eachWithIndex { int num, Integer ix ->
+        ints.eachWithIndex { int num, int ix ->
             if (!indices.containsKey(num)) {
                 indices[num] = ix
                 set << ix
@@ -107,11 +108,11 @@ class Clustering {
 
             def entry = iterator.next() as Entry<Integer, Integer>
             int num = entry.key
-            Integer numIx = entry.value
+            int numIx = entry.value
 
             neighborsFor(num)
               .findAll { indices.containsKey it }
-              .each { set.union numIx, indices[it] }
+              .each { set.union numIx, indices[it] as int }
 
             iterator.remove()
 

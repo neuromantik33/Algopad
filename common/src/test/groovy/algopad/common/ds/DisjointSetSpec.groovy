@@ -74,22 +74,22 @@ class DisjointSetSpec extends Specification {
     def 'it should merge components by rank applying path compression'() {
 
         given:
-        def ints = (0..9) as List
+        def uf = new IntDisjointSet(10)
         def verifyRoots = { int ... ids ->
-            def root = ds.find(ints[ids[0]])
+            def root = uf.find(ids[0])
             ids.each {
-                assert ds.find(ints[it]) == root
+                assert uf.find(it) == root
             }
         }
         def union = { o1, o2 ->
-            ds.union ints[o1], ints[o2]
+            uf.union o1, o2
         }
 
         when:
-        ints.each ds.&add
+        (0..9).each(uf.&add)
 
         then:
-        ds.size == 10
+        uf.size == 10
 
         when:
         union 4, 3
@@ -122,8 +122,8 @@ class DisjointSetSpec extends Specification {
         verifyRoots 1, 2
 
         expect:
-        ds.connected ints[8], ints[9]
-        !ds.connected(ints[5], ints[4])
+        uf.connected 8, 9
+        !uf.connected(5, 4)
 
         when:
         union 5, 0
@@ -148,7 +148,7 @@ class DisjointSetSpec extends Specification {
 
         then:
         verifyRoots 0..9 as int[]
-        ds.size == 1
+        uf.size == 1
 
     }
 }
