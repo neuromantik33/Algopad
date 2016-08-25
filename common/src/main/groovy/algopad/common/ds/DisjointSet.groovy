@@ -18,9 +18,13 @@ import groovy.transform.CompileStatic
 class DisjointSet<T> {
 
     private Map<T, DSNode> nodeMap
-    private int size
     private Closure<Boolean> areSame;
+    private int size
 
+    /**
+     * @param useIdentity if {@code true} then the object identity is used for equality testing,
+     * otherwise it falls back to {@link Object#equals(java.lang.Object)}.
+     */
     DisjointSet(int expectedMaxSize = 32, boolean useIdentity = true) {
         if (useIdentity) {
             this.nodeMap = new IdentityHashMap(expectedMaxSize)
@@ -80,7 +84,7 @@ class DisjointSet<T> {
     def T find(T obj) {
         verifyMembers obj
         def node = nodeMap[obj]
-        if (!obj.is(node.parent)) {
+        if (!areSame(obj, node.parent)) {
             node.parent = find(node.parent)
         }
         node.parent

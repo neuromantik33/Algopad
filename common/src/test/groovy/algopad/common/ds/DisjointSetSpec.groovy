@@ -81,9 +81,6 @@ class DisjointSetSpec extends Specification {
                 assert uf.find(it) == root
             }
         }
-        def union = { o1, o2 ->
-            uf.union o1, o2
-        }
 
         when:
         (0..9).each(uf.&add)
@@ -92,31 +89,31 @@ class DisjointSetSpec extends Specification {
         uf.size == 10
 
         when:
-        union 4, 3
+        uf.union 4, 3
 
         then:
         verifyRoots 3, 4
 
         when:
-        union 3, 8
+        uf.union 3, 8
 
         then:
         verifyRoots 3, 4, 8
 
         when:
-        union 6, 5
+        uf.union 6, 5
 
         then:
         verifyRoots 6, 5
 
         when:
-        union 9, 4
+        uf.union 9, 4
 
         then:
         verifyRoots 3, 4, 8, 9
 
         when:
-        union 2, 1
+        uf.union 2, 1
 
         then:
         verifyRoots 1, 2
@@ -126,25 +123,25 @@ class DisjointSetSpec extends Specification {
         !uf.connected(5, 4)
 
         when:
-        union 5, 0
+        uf.union 5, 0
 
         then:
         verifyRoots 0, 5, 6
 
         when:
-        union 7, 2
+        uf.union 7, 2
 
         then:
         verifyRoots 1, 2, 7
 
         when:
-        union 6, 1
+        uf.union 6, 1
 
         then:
         verifyRoots 0, 1, 2, 5, 6, 7
 
         when:
-        union 7, 3
+        uf.union 7, 3
 
         then:
         verifyRoots 0..9 as int[]

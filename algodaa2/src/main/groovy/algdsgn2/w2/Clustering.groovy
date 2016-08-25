@@ -5,7 +5,6 @@
 package algdsgn2.w2
 
 import algopad.common.ds.DisjointSet
-
 import algopad.common.graph.Edge
 import algopad.common.graph.Graph
 import algopad.common.graph.Vertex
