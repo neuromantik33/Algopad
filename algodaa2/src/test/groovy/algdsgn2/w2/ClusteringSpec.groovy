@@ -64,7 +64,6 @@ class ClusteringSpec extends Specification {
 
     private static parseHammingFile(final URL url) {
         url.withReader { reader ->
-
             def scanner = new Scanner(reader)
             def readTokens = { scanner.nextLine().split() }
             def (size, numBits) = readTokens().collect { parseInt it }
@@ -75,9 +74,7 @@ class ClusteringSpec extends Specification {
                 def binaryString = readTokens().join()
                 ints[ix] = parseInt(binaryString, 2)
             }
-
             ints
-
         }
     }
 }
