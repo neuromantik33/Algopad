@@ -58,7 +58,7 @@ class ClusteringSpec extends Specification {
         file                 | maxDistance | numClusters
         'hamming1.txt'       | 2           | 2
         'hamming2.txt'       | 2           | 2
-        'clustering_big.txt' | 2           | 6118
+        // SLOW: 'clustering_big.txt' | 2           | 6118
 
     }
 

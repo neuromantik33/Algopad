@@ -74,7 +74,7 @@ class DisjointSetSpec extends Specification {
     def 'it should merge components by rank applying path compression'() {
 
         given:
-        def uf = new IntDisjointSet(10)
+        def uf = new DisjointSet(10, false)
         def verifyRoots = { int ... ids ->
             def root = uf.find(ids[0])
             ids.each {
