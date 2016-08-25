@@ -58,13 +58,12 @@ class ClusteringSpec extends Specification {
         file                 | maxDistance | numClusters
         'hamming1.txt'       | 2           | 2
         'hamming2.txt'       | 2           | 2
-        'clustering_big.txt' | 2           | 6118
+        // SLOW: 'clustering_big.txt' | 2           | 6118
 
     }
 
     private static parseHammingFile(final URL url) {
         url.withReader { reader ->
-
             def scanner = new Scanner(reader)
             def readTokens = { scanner.nextLine().split() }
             def (size, numBits) = readTokens().collect { parseInt it }
@@ -75,9 +74,7 @@ class ClusteringSpec extends Specification {
                 def binaryString = readTokens().join()
                 ints[ix] = parseInt(binaryString, 2)
             }
-
             ints
-
         }
     }
 }
