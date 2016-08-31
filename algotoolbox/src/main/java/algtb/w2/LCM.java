@@ -1,8 +1,6 @@
-/*
- *  algopad.
- */
-
 package algtb.w2;
+
+import static algtb.w2.GCD.calculateGCD;
 
 import java.util.Scanner;
 
@@ -10,19 +8,13 @@ import java.util.Scanner;
  * @author Nicolas Estrada.
  */
 @SuppressWarnings("ClassNamingConvention")
-public final class GCD {
+public final class LCM {
 
-    private GCD() {}
+    private LCM() {}
 
-    static int calculateGCD(final int x, final int y) {
-        int i = x;
-        int j = y;
-        while (j != 0L) {
-            final int tmp = i % j;
-            i = j;
-            j = tmp;
-        }
-        return i;
+    static long calculateLCM(final int x, final int y) {
+        final int xDivGcd = x / calculateGCD(x, y);
+        return (long) xDivGcd * y;
     }
 
     public static void main(final String... args) {
@@ -30,7 +22,7 @@ public final class GCD {
             final int x = in.nextInt();
             final int y = in.nextInt();
             //noinspection UseOfSystemOutOrSystemErr
-            System.out.println(calculateGCD(x, y));
+            System.out.println(calculateLCM(x, y));
         }
     }
 }

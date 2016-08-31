@@ -8,6 +8,7 @@ import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
 
+import static algtb.w2.GCD.calculateGCD
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 
 class GCDSpec extends Specification {
@@ -18,7 +19,7 @@ class GCDSpec extends Specification {
     def 'given two integers a and b, it should find their greatest common divisor'() {
 
         expect:
-        GCD.calculateGCD(a, b) == val
+        calculateGCD(a, b) == val
 
         and:
         stopwatch.runtime(MILLISECONDS) < 1500
