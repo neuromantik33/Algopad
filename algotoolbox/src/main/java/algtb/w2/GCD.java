@@ -17,7 +17,7 @@ public final class GCD {
     static int calculateGCD(final int x, final int y) {
         int i = x;
         int j = y;
-        while (j != 0L) {
+        while (j != 0) {
             final int tmp = i % j;
             i = j;
             j = tmp;
