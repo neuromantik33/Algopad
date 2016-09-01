@@ -24,6 +24,7 @@ public final class FibonacciPartialSum {
 
     private static int getLastDigitForFib(final long l) {
         final long offset = l % PISANO_PERIOD_MOD10.length;
+        //noinspection NumericCastThatLosesPrecision
         return PISANO_PERIOD_MOD10[(int) offset];
     }
 

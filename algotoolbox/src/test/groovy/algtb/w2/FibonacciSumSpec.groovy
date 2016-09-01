@@ -29,6 +29,7 @@ class FibonacciSumSpec extends Specification {
         3            | 4
         100          | 5
         832564823476 | 3
+        614162383528 | 9
 
     }
 }
