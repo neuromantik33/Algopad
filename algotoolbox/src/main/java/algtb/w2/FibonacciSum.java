@@ -14,8 +14,8 @@ public final class FibonacciSum {
     private FibonacciSum() {}
 
     static long getFibonacciSumLastDigit(final long n) {
-        final int offset = (int) (n + 2) % PISANO_PERIOD_MOD10.length;
-        return PISANO_PERIOD_MOD10[offset] - 1;
+        final long offset = (n + 2) % PISANO_PERIOD_MOD10.length;
+        return PISANO_PERIOD_MOD10[(int) offset] - 1;
     }
 
     public static void main(final String... args) {

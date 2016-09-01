@@ -25,9 +25,10 @@ class FibonacciSumSpec extends Specification {
         stopwatch.runtime(MILLISECONDS) < 1500
 
         where:
-        n   | val
-        3   | 4
-        100 | 5
+        n            | val
+        3            | 4
+        100          | 5
+        832564823476 | 3
 
     }
 }

@@ -23,8 +23,8 @@ public final class FibonacciPartialSum {
     }
 
     private static int getLastDigitForFib(final long l) {
-        final int offset = (int) l % PISANO_PERIOD_MOD10.length;
-        return PISANO_PERIOD_MOD10[offset];
+        final long offset = l % PISANO_PERIOD_MOD10.length;
+        return PISANO_PERIOD_MOD10[(int) offset];
     }
 
     public static void main(final String... args) {

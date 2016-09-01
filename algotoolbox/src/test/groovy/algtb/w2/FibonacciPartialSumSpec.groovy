@@ -26,10 +26,11 @@ class FibonacciPartialSumSpec extends Specification {
         stopwatch.runtime(MILLISECONDS) < 1500
 
         where:
-        from | to  | val
-        3    | 7   | 1
-        10   | 10  | 5
-        10   | 200 | 2
+        from | to          | val
+        3    | 7           | 1
+        10   | 10          | 5
+        10   | 200         | 2
+        1    | 10000000000 | 5
 
     }
 }
