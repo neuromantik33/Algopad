@@ -22,12 +22,10 @@ public final class FibonacciLastDigit {
         int nMinus2 = 0;
         int nMinus1 = 1;
 
-        int k = n;
-        while (k > 1) {
+        for (int i = 1; i < n; i++) {
             final int tmp = nMinus1 + nMinus2;
             nMinus2 = nMinus1;
             nMinus1 = tmp % 10;
-            k--;
         }
 
         return nMinus1;

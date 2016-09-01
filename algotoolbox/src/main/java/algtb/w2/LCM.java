@@ -1,6 +1,8 @@
-package algtb.w2;
+/*
+ *  algopad.
+ */
 
-import static algtb.w2.GCD.calculateGCD;
+package algtb.w2;
 
 import java.util.Scanner;
 
@@ -15,6 +17,17 @@ public final class LCM {
     static long calculateLCM(final int x, final int y) {
         final int xDivGcd = x / calculateGCD(x, y);
         return (long) xDivGcd * y;
+    }
+
+    private static int calculateGCD(final int x, final int y) {
+        int i = x;
+        int j = y;
+        while (j != 0) {
+            final int tmp = i % j;
+            i = j;
+            j = tmp;
+        }
+        return i;
     }
 
     public static void main(final String... args) {

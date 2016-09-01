@@ -22,12 +22,10 @@ public final class Fibonacci {
         long nMinus2 = 0;
         long nMinus1 = 1;
 
-        int k = n;
-        while (k > 1) {
+        for (int i = 1; i < n; i++) {
             final long tmp = nMinus1 + nMinus2;
             nMinus2 = nMinus1;
             nMinus1 = tmp;
-            k--;
         }
 
         return nMinus1;
