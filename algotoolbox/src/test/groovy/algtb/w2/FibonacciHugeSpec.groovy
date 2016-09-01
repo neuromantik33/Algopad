@@ -31,6 +31,7 @@ class FibonacciHugeSpec extends Specification {
         15         | 3     | 1
         12         | 4     | 0
         54         | 5     | 2
+        61         | 10    | 1
         239        | 1000  | 161
         2816213588 | 30524 | 10249
 
