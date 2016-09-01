@@ -1,14 +1,12 @@
+/*
+ *  algopad.
+ */
+
 package algtb.w1;
 
 import static java.lang.Integer.MIN_VALUE;
-import static java.lang.Integer.parseInt;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 /**
  * Given a sequence of non-negative integers a0,…,an−1, find the maximum pairwise product,
@@ -44,47 +42,15 @@ public final class MaxPairwiseProduct {
 
     }
 
-    public static void main(final String[] args) {
-        final FastScanner scanner = new FastScanner(System.in);
-        final int n = scanner.nextInt();
-        final int[] numbers = new int[n];
-        for (int i = 0; i < n; i++) {
-            numbers[i] = scanner.nextInt();
-        }
-        //noinspection UseOfSystemOutOrSystemErr
-        System.out.println(getMaxPairwiseProduct(numbers));
-    }
-
-    @SuppressWarnings("CallToPrintStackTrace")
-    private static class FastScanner {
-
-        private BufferedReader  reader;
-        private StringTokenizer tokenizer;
-
-        FastScanner(final InputStream stream) {
-            try {
-                reader = new BufferedReader(new InputStreamReader(stream, UTF_8));
-            } catch (final RuntimeException e) {
-                e.printStackTrace();
+    public static void main(final String... args) {
+        try (final Scanner in = new Scanner(System.in, "UTF-8")) {
+            final int n = in.nextInt();
+            final int[] numbers = new int[n];
+            for (int i = 0; i < n; i++) {
+                numbers[i] = in.nextInt();
             }
+            //noinspection UseOfSystemOutOrSystemErr
+            System.out.println(getMaxPairwiseProduct(numbers));
         }
-
-        String next() {
-            while (tokenizer == null || !tokenizer.hasMoreTokens()) {
-                try {
-                    tokenizer = new StringTokenizer(reader.readLine());
-                } catch (final IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return tokenizer.nextToken();
-        }
-
-        int nextInt() {
-            return parseInt(next());
-        }
-
-        private static final Charset UTF_8 = Charset.forName("UTF-8");
-
     }
 }

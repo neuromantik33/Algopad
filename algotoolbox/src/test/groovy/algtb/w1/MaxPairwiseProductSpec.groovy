@@ -1,15 +1,17 @@
+/*
+ *  algopad.
+ */
+
 package algtb.w1
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import static algtb.w1.MaxPairwiseProduct.getMaxPairwiseProduct
 import static java.lang.Integer.MAX_VALUE
 
 class MaxPairwiseProductSpec extends Specification {
 
-    @Unroll
-    def 'it should calculate the maximum pairwise product #product for #numbers'() {
+    def 'it should calculate the maximum pairwise product'() {
 
         expect:
         getMaxPairwiseProduct(numbers as int[]) == product
