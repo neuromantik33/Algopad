@@ -10,6 +10,7 @@ import algopad.common.graph.Vertex
 
 import static algopad.common.misc.Matrices.initMatrix
 import static groovyx.gpars.GParsPool.withPool
+import static java.lang.Math.min
 
 /**
  * @author Nicolas Estrada.
@@ -30,64 +31,50 @@ class FloydMarshall {
 
         def V = graph.numVertices
         def vertices = graph.vertices
-        def infos = new PathInfo[V][V]
+        def paths = new ShortestPath[V][V]
 
-        initMatrix(infos) { row, col ->
-            def info = new PathInfo()
+        initMatrix(paths) { row, col ->
+            def path = new ShortestPath()
             if (row == col) {
-                info.dist = 0
+                path.dist = 0
             }
-            info
+            path
         }
 
         vertices.each { Vertex vx ->
             vx.edges
               .each { Edge edge ->
-                def info = infos[edge.v.id][edge.w.id]
-                info.dist = edge.weight
-                info.edgeTo = edge
+                paths[edge.v.id][edge.w.id].dist = edge.weight
             }
         }
 
         withPool {
-            vertices.each { Vertex w ->
-                vertices.eachParallel { Vertex u ->
-                    def uw = infos[u.id][w.id]
-                    if (uw.dist == INFINITY) {
-                        return
-                    }
-                    vertices.each { Vertex v ->
-                        def wv = infos[w.id][v.id]
-                        if (wv.dist == INFINITY) {
-                            return
+            for (int k = 1; k < V; k++) {
+                (0..<V).eachParallel { int i ->
+                    def ik = paths[i][k]
+                    if (ik.dist != INFINITY) {
+                        for (int j = 1; j < V; j++) {
+                            def kj = paths[k][j]
+                            def ij = paths[i][j]
+                            if (kj.dist != INFINITY) {
+                                ij.dist = min(ij.dist, ik.dist + kj.dist)
+                            }
                         }
-                        def uv = infos[u.id][v.id]
-                        relax(uv, uw, wv)
-                    }
-                    if (infos[u.id][u.id].dist < 0) {
-                        throw new NegativeCycleException()
+                        if (paths[i][i].dist < 0) {
+                            throw new NegativeCycleException()
+                        }
                     }
                 }
             }
         }
 
-        infos
+        paths
 
-    }
-
-    private static relax(PathInfo path,
-                         PathInfo subPath1,
-                         PathInfo subPath2) {
-        if (path.dist > subPath1.dist + subPath2.dist) {
-            path.dist = subPath1.dist + subPath2.dist
-            path.edgeTo = subPath2.edgeTo
-        }
     }
 
     private static final int INFINITY = Integer.MAX_VALUE
 
-    static class PathInfo {
+    static class ShortestPath {
         int dist = INFINITY
-        Edge edgeTo
     }
 }
