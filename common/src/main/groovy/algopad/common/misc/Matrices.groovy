@@ -7,7 +7,7 @@ package algopad.common.misc
 import groovy.transform.CompileStatic
 
 /**
- * Some useful methods for working with arrays.
+ * Some useful methods for working with 2D matrices/arrays.
  *
  * @author Nicolas Estrada.
  */
@@ -15,9 +15,8 @@ import groovy.transform.CompileStatic
 class Matrices {
 
     /**
-     * TODO
-     * @param matrix
-     * @param closure
+     * Scans the entire <i>matrix</i> and executes the param {@link Closure}
+     * in order to initialize each cell.
      */
     @SuppressWarnings("GroovyParameterNamingConvention")
     static def initMatrix(Object[][] matrix, Closure closure) {
