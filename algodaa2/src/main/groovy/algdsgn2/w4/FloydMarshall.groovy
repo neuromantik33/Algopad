@@ -68,16 +68,16 @@ class FloydMarshall {
     @CompileStatic
     private static calculateShortestPathFor(Vertex src, int k, ShortestPath[][] paths) {
 
-        // Don't bother proceeding if sub-path is unknown
         def i = src.id
         def ik = paths[i][k]
-        if (ik.unknown) { return }
+
+        // Don't bother proceeding if sub-path is undefined
+        if (!ik.defined) { return }
 
         for (int j = 1; j < paths.length; j++) {
             def ij = paths[i][j]
-            // Don't bother proceeding if sub-path is unknown
             def kj = paths[k][j]
-            if (!kj.unknown) {
+            if (kj.defined) {
                 ij.dist = min(ij.dist, ik.dist + kj.dist)
             }
         }
@@ -98,8 +98,8 @@ class FloydMarshall {
 
         int dist = INFINITY
 
-        boolean isUnknown() {
-            dist == INFINITY
+        boolean isDefined() {
+            dist != INFINITY
         }
     }
 }
