@@ -1,3 +1,7 @@
+/*
+ *  algopad.
+ */
+
 package algtb.w3;
 
 import java.util.Scanner;
