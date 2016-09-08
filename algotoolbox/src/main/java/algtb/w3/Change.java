@@ -35,4 +35,3 @@ public final class Change {
     private static final int[] COINS = { 10, 5, 1 };
 
 }
-
