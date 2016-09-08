@@ -18,9 +18,9 @@ public final class FractionalKnapsack {
 
     private FractionalKnapsack() {}
 
-    static double calculateOptimalValue(final int capacity, final int[] values, final int[] weights) {
+    static double calculateOptimalValue(final int capacity, final Item[] items) {
 
-        final Item[] items = sortItemsByIncreasingRatio(values, weights);
+        sort(items, BY_INCREASING_RATIO);
 
         double value = 0.0D;
         int remainingCapacity = capacity;
@@ -37,16 +37,6 @@ public final class FractionalKnapsack {
 
     }
 
-    private static Item[] sortItemsByIncreasingRatio(final int[] values, final int[] weights) {
-        final int n = values.length;
-        final Item[] items = new Item[n];
-        for (int i = 0; i < n; i++) {
-            items[i] = new Item(values[i], weights[i]);
-        }
-        sort(items, BY_INCREASING_RATIO);
-        return items;
-    }
-
     private static final Comparator<Item> BY_INCREASING_RATIO = new Comparator<Item>() {
         @Override
         public int compare(final Item o1, final Item o2) {
@@ -54,12 +44,13 @@ public final class FractionalKnapsack {
         }
     };
 
-    private static final class Item {
+    @SuppressWarnings("PackageVisibleInnerClass")
+    static final class Item {
 
         public final int value;
         public final int weight;
 
-        private Item(final int value, final int weight) {
+        Item(final int value, final int weight) {
             this.value = value;
             this.weight = weight;
         }
@@ -78,14 +69,12 @@ public final class FractionalKnapsack {
         try (final Scanner in = new Scanner(System.in, "UTF-8")) {
             final int n = in.nextInt();
             final int capacity = in.nextInt();
-            final int[] values = new int[n];
-            final int[] weights = new int[n];
+            final Item[] items = new Item[n];
             for (int i = 0; i < n; i++) {
-                values[i] = in.nextInt();
-                weights[i] = in.nextInt();
+                items[i] = new Item(in.nextInt(), in.nextInt());
             }
             //noinspection UseOfSystemOutOrSystemErr
-            System.out.println(calculateOptimalValue(capacity, values, weights));
+            System.out.println(calculateOptimalValue(capacity, items));
         }
     }
 }

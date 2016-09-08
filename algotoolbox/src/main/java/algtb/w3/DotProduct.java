@@ -1,29 +1,48 @@
+/*
+ *  algopad.
+ */
+
 package algtb.w3;
 
-import java.util.*;
+import static java.util.Arrays.sort;
 
-public class DotProduct {
-    private static long maxDotProduct(int[] a, int[] b) {
-        //write your code here
+import java.util.Scanner;
+
+/**
+ * @author Nicolas Estrada.
+ */
+public final class DotProduct {
+
+    private DotProduct() {}
+
+    static long maxDotProduct(final int[] ads, final int[] slots) {
+        sort(ads);
+        sort(slots);
+        return calcDotProduct(ads, slots);
+    }
+
+    private static long calcDotProduct(final int[] v1, final int[] v2) {
         long result = 0;
-        for (int i = 0; i < a.length; i++) {
-            result += a[i] * b[i];
+        for (int i = v1.length - 1; i >= 0; i--) {
+            result += (long) v1[i] * v2[i];
         }
         return result;
     }
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        int[] a = new int[n];
-        for (int i = 0; i < n; i++) {
-            a[i] = scanner.nextInt();
+    public static void main(final String... args) {
+        try (final Scanner in = new Scanner(System.in, "UTF-8")) {
+            final int n = in.nextInt();
+            final int[] ads = new int[n];
+            for (int i = 0; i < n; i++) {
+                ads[i] = in.nextInt();
+            }
+            final int[] slots = new int[n];
+            for (int i = 0; i < n; i++) {
+                slots[i] = in.nextInt();
+            }
+            //noinspection UseOfSystemOutOrSystemErr
+            System.out.println(maxDotProduct(ads, slots));
         }
-        int[] b = new int[n];
-        for (int i = 0; i < n; i++) {
-            b[i] = scanner.nextInt();
-        }
-        System.out.println(maxDotProduct(a, b));
     }
 }
 
