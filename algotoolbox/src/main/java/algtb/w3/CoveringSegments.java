@@ -1,41 +1,42 @@
+/*
+ *  algopad.
+ */
+
 package algtb.w3;
 
 import static java.text.MessageFormat.format;
+import static java.util.Arrays.sort;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * @author Nicolas Estrada.
+ */
 public final class CoveringSegments {
 
     private CoveringSegments() {}
 
     static int[] optimalPoints(final Segment[] segments) {
 
-        Arrays.sort(segments, BY_RIGHT_ENDPOINT);
+        sort(segments, BY_RIGHT_ENDPOINT);
 
-        System.out.println(Arrays.toString(segments));
-
-        Segment segment = segments[0];
-        List<Integer> points = new ArrayList<>(segments.length);
-        points.add(segment.getEnd());
+        final List<Integer> points = new ArrayList<>(segments.length);
+        Segment prev = segments[0];
+        points.add(prev.getEnd());
 
         for (int i = 1; i < segments.length; i++) {
-            final int end = segments[i].getEnd();
-            if (end)
+            final Segment segment = segments[i];
+            if (segment.getStart() > prev.getEnd()) {
+                prev = segment;
+                points.add(segment.getEnd());
+            }
         }
 
-        //write your code here
-//        final int[] points = new int[2 * segments.length];
-//        for (int i = 0; i < segments.length; i++) {
-//            points[2 * i] = segments[i].getStart();
-//            points[2 * i + 1] = segments[i].getEnd();
-//        }
-//        return points;
-        return new int[0];
+        return toIntArray(points);
+
     }
 
     private static final Comparator<Segment> BY_RIGHT_ENDPOINT = new Comparator<Segment>() {
@@ -44,6 +45,14 @@ public final class CoveringSegments {
             return Integer.compare(o1.getEnd(), o2.getEnd());
         }
     };
+
+    private static int[] toIntArray(final List<Integer> list) {
+        final int[] array = new int[list.size()];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = list.get(i);
+        }
+        return array;
+    }
 
     @SuppressWarnings("PackageVisibleInnerClass")
     static class Segment {
