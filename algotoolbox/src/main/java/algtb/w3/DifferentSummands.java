@@ -1,22 +1,28 @@
 package algtb.w3;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
-public class DifferentSummands {
-    private static List<Integer> optimalSummands(int n) {
-        List<Integer> summands = new ArrayList<Integer>();
-        //write your code here
-        return summands;
+public final class DifferentSummands {
+
+    private DifferentSummands() {}
+
+    private static List<Integer> optimalSummands(final int n) {
+        return new ArrayList<>(n);
     }
-    
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-        List<Integer> summands = optimalSummands(n);
-        System.out.println(summands.size());
-        for (Integer summand : summands) {
-            System.out.print(summand + " ");
+
+    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    public static void main(final String... args) {
+        try (final Scanner in = new Scanner(System.in, "UTF-8")) {
+
+            final int n = in.nextInt();
+            final List<Integer> summands = optimalSummands(n);
+
+            System.out.println(summands.size());
+            for (final Integer summand : summands) {
+                System.out.print(summand + " ");
+            }
         }
     }
 }
-
