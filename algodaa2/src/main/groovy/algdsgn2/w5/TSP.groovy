@@ -7,6 +7,7 @@ package algdsgn2.w5
 import groovy.transform.CompileStatic
 
 import static algopad.common.misc.Counting.chooseK
+import static groovy.transform.TypeCheckingMode.SKIP
 import static groovyx.gpars.GParsPool.withPool
 import static java.lang.Float.MAX_VALUE
 import static java.util.concurrent.TimeUnit.NANOSECONDS
@@ -14,6 +15,7 @@ import static java.util.concurrent.TimeUnit.NANOSECONDS
 /**
  * @author Nicolas Estrada.
  */
+@CompileStatic
 class TSP {
 
     final int n
@@ -31,7 +33,8 @@ class TSP {
      *
      * @return
      */
-    @SuppressWarnings("GroovyLocalVariableNamingConvention")
+    @SuppressWarnings('GroovyLocalVariableNamingConvention')
+    @CompileStatic(SKIP)
     float calculateMinimumTour() {
 
         // All points except the start point 0
@@ -67,7 +70,6 @@ class TSP {
         }
     }
 
-    @CompileStatic
     private float searchMinDistance(int src, List<Integer> ids, int bitSet = buildBitSet(ids)) {
         float min = MAX_VALUE
         for (int dest in ids) {
@@ -80,7 +82,6 @@ class TSP {
         min
     }
 
-    @CompileStatic
     private static int buildBitSet(List<Integer> ids) {
         int bitSet = 0
         for (int id in ids) {
@@ -89,12 +90,10 @@ class TSP {
         bitSet
     }
 
-    @CompileStatic
     private static int buildKey(int end, int bitSet) {
         (end << 24) + bitSet
     }
 
-    @CompileStatic
     private static int maskFor(int ix) { MASKS[ix - 1] }
 
     private static final int[] MASKS = [
