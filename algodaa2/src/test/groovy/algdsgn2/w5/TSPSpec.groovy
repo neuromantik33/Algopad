@@ -4,11 +4,9 @@ import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
 
-import java.util.concurrent.TimeUnit
-
-import static algdsgn2.w5.TSP.calculateMinimumTour
 import static java.lang.Math.pow
 import static java.lang.Math.sqrt
+import static java.util.concurrent.TimeUnit.MILLISECONDS
 
 class TSPSpec extends Specification {
 
@@ -18,13 +16,13 @@ class TSPSpec extends Specification {
     def 'it should calculate the minimum distance of a traveling salesman tour given a distance matrix'() {
 
         given:
-        distances = distances as float[][]
+        def tsp = new TSP(distances as float[][])
 
         expect:
-        calculateMinimumTour(distances) == tour
+        tsp.calculateMinimumTour() == tour
 
         cleanup:
-        println "Time spent ${stopwatch.runtime(TimeUnit.MILLISECONDS)}ms"
+        println "Time spent ${stopwatch.runtime(MILLISECONDS)}ms"
 
         where:
         distances = [
@@ -42,17 +40,18 @@ class TSPSpec extends Specification {
         given:
         def input = TSPSpec.class.getResource(file)
         def distances = parseTSPFile(input)
+        def tsp = new TSP(distances)
 
         expect:
-        calculateMinimumTour(distances) == tour
+        tsp.calculateMinimumTour().round() == tour
 
         cleanup:
-        println "Time spent ${stopwatch.runtime(TimeUnit.MILLISECONDS)}ms"
+        println "Time spent ${stopwatch.runtime(MILLISECONDS)}ms"
 
         where:
         file           | tour
         'tsp_test.txt' | 20000
-        //'tsp.txt'      | 0
+        'tsp.txt'      | 26442
 
     }
 
