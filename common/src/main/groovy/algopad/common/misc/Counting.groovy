@@ -17,7 +17,7 @@ class Counting {
      *
      * @return a list of list of elements of size k.
      */
-    static List chooseK(int k, List elements) {
+    static <T> List<List<T>> chooseK(int k, List<T> elements) {
 
         def len = elements.size()
         def selections = new int[k]
