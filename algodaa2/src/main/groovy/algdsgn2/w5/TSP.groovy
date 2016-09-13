@@ -35,7 +35,7 @@ class TSP {
      */
     @SuppressWarnings('GroovyLocalVariableNamingConvention')
     @CompileStatic(SKIP)
-    float calculateMinimumTour() {
+    def calculateMinimumTour() {
 
         // All points except the start point 0
         def allPts = (1..<n)
@@ -50,23 +50,23 @@ class TSP {
             for (int k = 1; k < n - 1; k++) {
                 def now = System.nanoTime()
                 chooseK(k, allPts)
-                  .eachParallel { List<Integer> ids ->
-                    int bitSet = buildBitSet(ids)
-                    for (int pt in allPts) {
-                        if ((bitSet & maskFor(pt)) == 0) {
-                            int key = buildKey(pt, bitSet)
-                            cache[key] = searchMinDistance(pt, ids, bitSet)
-                        }
-                    }
-                }
-
+                  .eachParallel(this.&calculateSolution)
                 def delta = System.nanoTime() - now
                 println "k = $k, time spent = ${NANOSECONDS.toSeconds(delta)}s"
-
             }
 
             searchMinDistance 0, allPts
 
+        }
+    }
+
+    private void calculateSolution(List<Integer> ids) {
+        int bitSet = buildBitSet(ids)
+        for (int pt in (1..<n)) {
+            if ((bitSet & maskFor(pt)) == 0) {
+                int key = buildKey(pt, bitSet)
+                cache[key] = searchMinDistance(pt, ids, bitSet)
+            }
         }
     }
 
