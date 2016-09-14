@@ -8,6 +8,7 @@ import groovy.transform.CompileStatic
 
 import static algopad.common.misc.Counting.chooseK
 import static groovy.transform.TypeCheckingMode.SKIP
+import static groovy.util.GroovyCollections.subsequences
 import static groovyx.gpars.GParsPool.withPool
 import static java.lang.Float.MAX_VALUE
 import static java.util.concurrent.TimeUnit.NANOSECONDS
@@ -21,11 +22,13 @@ class TSP {
     final int n
     final float[][] distances
     final float[] cache
+    final List<Integer> allPts
 
     TSP(float[][] distances) {
         this.n = distances.length
         this.distances = distances
         this.cache = new float[0x1FFFFFFF]
+        this.allPts = (1..<n) // All points except the start point 0
     }
 
     /**
@@ -37,42 +40,43 @@ class TSP {
     @CompileStatic(SKIP)
     def calculateMinimumTour() {
 
-        // All points except the start point 0
-        def allPts = (1..<n)
+        def combos = subsequences(allPts)
 
         withPool {
 
-            for (end in allPts) {
-                def key = buildKey(end, 0)
-                cache[key] = distances[end][0]
+            def empty = buildBitSet([])
+            for (int pt in allPts) {
+                def key = buildKey(pt, empty)
+                cache[key] = distances[pt][empty]
             }
 
             for (int k = 1; k < n - 1; k++) {
                 def now = System.nanoTime()
-                chooseK(k, allPts)
+                combos
+                  .findAll { it.size() == k }
                   .eachParallel(this.&calculateSolution)
                 def delta = System.nanoTime() - now
                 println "k = $k, time spent = ${NANOSECONDS.toSeconds(delta)}s"
             }
 
-            searchMinDistance 0, allPts
+            searchMinDistance 0, allPts, buildBitSet(allPts)
 
         }
     }
 
-    private void calculateSolution(List<Integer> ids) {
-        int bitSet = buildBitSet(ids)
-        for (int pt in (1..<n)) {
+    private void calculateSolution(List<Integer> points) {
+        int bitSet = buildBitSet(points)
+        for (int pt in allPts) {
             if ((bitSet & maskFor(pt)) == 0) {
                 int key = buildKey(pt, bitSet)
-                cache[key] = searchMinDistance(pt, ids, bitSet)
+                cache[key] = searchMinDistance(pt, points, bitSet)
             }
         }
     }
 
-    private float searchMinDistance(int src, List<Integer> ids, int bitSet = buildBitSet(ids)) {
+    private float searchMinDistance(int src, List<Integer> points, int bitSet) {
         float min = MAX_VALUE
-        for (int dest in ids) {
+        for (int dest in points) {
             int key = buildKey(dest, bitSet & ~maskFor(dest))
             float dist = (float) cache[key] + distances[src][dest]
             if (dist < min) {
@@ -82,10 +86,10 @@ class TSP {
         min
     }
 
-    private static int buildBitSet(List<Integer> ids) {
+    private static int buildBitSet(List<Integer> points) {
         int bitSet = 0
-        for (int id in ids) {
-            bitSet |= maskFor(id)
+        for (int pt in points) {
+            bitSet |= maskFor(pt)
         }
         bitSet
     }
