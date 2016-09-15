@@ -6,11 +6,10 @@ package algdsgn2.w5
 
 import groovy.transform.CompileStatic
 
-import static algopad.common.misc.Counting.chooseK
 import static groovy.transform.TypeCheckingMode.SKIP
 import static groovy.util.GroovyCollections.subsequences
 import static groovyx.gpars.GParsPool.withPool
-import static java.lang.Float.MAX_VALUE
+import static java.lang.Float.MAX_VALUE as Infinity
 import static java.util.concurrent.TimeUnit.NANOSECONDS
 
 /**
@@ -75,7 +74,7 @@ class TSP {
     }
 
     private float searchMinDistance(int src, List<Integer> points, int bitSet) {
-        float min = MAX_VALUE
+        float min = Infinity
         for (int dest in points) {
             int key = buildKey(dest, bitSet & ~maskFor(dest))
             float dist = (float) cache[key] + distances[src][dest]
@@ -101,30 +100,30 @@ class TSP {
     private static int maskFor(int ix) { MASKS[ix - 1] }
 
     private static final int[] MASKS = [
-            0b000000000000000000000001,
-            0b000000000000000000000010,
-            0b000000000000000000000100,
-            0b000000000000000000001000,
-            0b000000000000000000010000,
-            0b000000000000000000100000,
-            0b000000000000000001000000,
-            0b000000000000000010000000,
-            0b000000000000000100000000,
-            0b000000000000001000000000,
-            0b000000000000010000000000,
-            0b000000000000100000000000,
-            0b000000000001000000000000,
-            0b000000000010000000000000,
-            0b000000000100000000000000,
-            0b000000001000000000000000,
-            0b000000010000000000000000,
-            0b000000100000000000000000,
-            0b000001000000000000000000,
-            0b000010000000000000000000,
-            0b000100000000000000000000,
-            0b001000000000000000000000,
-            0b010000000000000000000000,
-            0b100000000000000000000000
+      0b000000000000000000000001,
+      0b000000000000000000000010,
+      0b000000000000000000000100,
+      0b000000000000000000001000,
+      0b000000000000000000010000,
+      0b000000000000000000100000,
+      0b000000000000000001000000,
+      0b000000000000000010000000,
+      0b000000000000000100000000,
+      0b000000000000001000000000,
+      0b000000000000010000000000,
+      0b000000000000100000000000,
+      0b000000000001000000000000,
+      0b000000000010000000000000,
+      0b000000000100000000000000,
+      0b000000001000000000000000,
+      0b000000010000000000000000,
+      0b000000100000000000000000,
+      0b000001000000000000000000,
+      0b000010000000000000000000,
+      0b000100000000000000000000,
+      0b001000000000000000000000,
+      0b010000000000000000000000,
+      0b100000000000000000000000
     ] as int[]
 
 }
