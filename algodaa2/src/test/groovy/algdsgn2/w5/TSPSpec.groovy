@@ -4,7 +4,6 @@ import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
 
-import static java.lang.Math.pow
 import static java.lang.Math.sqrt
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 

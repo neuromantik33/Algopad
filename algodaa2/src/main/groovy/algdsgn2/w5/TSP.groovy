@@ -13,6 +13,8 @@ import static java.lang.Float.MAX_VALUE as Infinity
 import static java.util.concurrent.TimeUnit.NANOSECONDS
 
 /**
+ * TODO
+ *
  * @author Nicolas Estrada.
  */
 @CompileStatic
