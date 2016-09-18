@@ -6,9 +6,12 @@ package algdsgn2.w5
 
 import groovy.transform.CompileStatic
 
+import java.util.concurrent.ConcurrentHashMap
+
 import static groovy.transform.TypeCheckingMode.SKIP
 import static groovy.util.GroovyCollections.subsequences
 import static groovyx.gpars.GParsPool.withPool
+import static groovyx.gpars.util.PoolUtils.retrieveDefaultPoolSize
 import static java.lang.Float.MAX_VALUE as Infinity
 import static java.util.concurrent.TimeUnit.NANOSECONDS
 
@@ -22,13 +25,13 @@ class TSP {
 
     final int n
     final float[][] distances
-    final float[] cache
+    final Map<Integer, Float> cache
     final List<Integer> allPts
 
     TSP(float[][] distances) {
         this.n = distances.length
         this.distances = distances
-        this.cache = new float[0x1FFFFFFF]
+        this.cache = new ConcurrentHashMap<>(n*n, 0.75f, retrieveDefaultPoolSize())
         this.allPts = (1..<n) // All points except the start point 0
     }
 
@@ -43,7 +46,14 @@ class TSP {
 
         withPool {
 
-            println "Calculating combinations for ${allPts}"
+            def oldKeys = []
+            def cleanCache = {
+                oldKeys.each cache.&remove
+                oldKeys.clear()
+                oldKeys.addAll cache.keySet()
+            }
+
+            // println "Calculating combinations for ${allPts}"
             def combos = subsequences(allPts)
                            .groupByParallel { it.size() }
 
@@ -53,11 +63,14 @@ class TSP {
                 cache[key] = distances[pt][empty]
             }
 
+            cleanCache()
+
             for (int k = 1; k < n - 1; k++) {
-                def now = System.nanoTime()
+                // def now = System.nanoTime()
                 combos[k].eachParallel(this.&calculateSolution)
-                def delta = System.nanoTime() - now
-                println "k = $k, time spent = ${NANOSECONDS.toSeconds(delta)}s"
+                cleanCache()
+                /*def delta = System.nanoTime() - now
+                println "k = $k, time spent = ${NANOSECONDS.toSeconds(delta)}s"*/
             }
 
             searchMinDistance 0, allPts, buildBitSet(allPts)
