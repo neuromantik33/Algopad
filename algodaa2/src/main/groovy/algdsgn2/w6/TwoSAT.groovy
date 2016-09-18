@@ -42,7 +42,7 @@ class TwoSAT {
         def ts = new TwoSAT(n, clauses)
         def maxTries = max(log2(n), 10)
         boolean satisfied = withPool {
-            (1..<maxTries).findAnyParallel {
+            (0..<maxTries).findAnyParallel {
                 ts.randomWalk()
             }
         }
@@ -53,12 +53,11 @@ class TwoSAT {
         def bits = new BigInteger(numVars, rnd)
         long maxSteps = 2L * numVars * numVars
         while (maxSteps > 0) {
-            def unsat = areClausesSatisfied(bits)
-            if (unsat.empty) {
+            def clause = clauses.find { !it.evaluate(bits) }
+            if (clause == null) {
                 println "satisfying bits for $clauses = ${bits.toString(2).padLeft(numVars, '0')}"
                 return true
             }
-            def clause = unsat[rnd.nextInt(unsat.size())]
             int nextBit = rnd.nextBoolean() ? clause.v1 : clause.v2
             bits.flipBit abs(nextBit)
             maxSteps -= 1
