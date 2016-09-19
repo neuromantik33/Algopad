@@ -19,21 +19,22 @@ class TwoSATSpec extends Specification {
 
         given:
         def url = TwoSATSpec.class.getResource(file)
-        def clauses = parseClauseFile(url)
+        def (n, clauses) = parseClauseFile(url)
 
         expect:
-        isSatisfiable(clauses.length, clauses) == satisfiable
+        n == size
+        isSatisfiable(n, clauses) == satisfiable
 
         cleanup:
         println "TwoSAT($file) : Time spent ${stopwatch.runtime(MILLISECONDS)}ms"
 
         where:
-        file                | size   | satisfiable
-        '2sat_test1_ok.txt' | 8      | true
-        '2sat_test2_ko.txt' | 8      | false
-        '2sat_test3_ko.txt' | 4      | false
-        '2sat_test4_ok.txt' | 7      | true
-        // '2sat1.txt'         | 100000 | true
+        file                | size | satisfiable
+        '2sat_test1_ok.txt' | 8    | true
+        '2sat_test2_ko.txt' | 8    | false
+        '2sat_test3_ko.txt' | 4    | false
+        '2sat_test4_ok.txt' | 7    | true
+        //        '2sat1.txt'         | 100000  | true
         //        '2sat2.txt'         | 200000  | false
         //        '2sat3.txt'         | 400000  | true
         //        '2sat4.txt'         | 600000  | true
@@ -52,7 +53,7 @@ class TwoSATSpec extends Specification {
             n.times {
                 clauses[it] = new Clause(v1: scanner.nextInt(), v2: scanner.nextInt())
             }
-            clauses
+            [n, clauses]
         }
     }
 }
