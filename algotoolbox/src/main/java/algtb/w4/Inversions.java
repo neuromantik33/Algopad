@@ -8,6 +8,9 @@ import static java.lang.System.arraycopy;
 
 import java.util.Scanner;
 
+/**
+ * @author Nicolas Estrada.
+ */
 public final class Inversions {
 
     private Inversions() {}
