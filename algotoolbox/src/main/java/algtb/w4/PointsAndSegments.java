@@ -111,7 +111,6 @@ public final class PointsAndSegments {
             this.index = index;
         }
 
-        @SuppressWarnings("IfMayBeConditional")
         @Override
         public int compareTo(final SweepEvent o) {
             final int cmp = Integer.compare(point, o.point);
