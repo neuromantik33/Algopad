@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * @author Nicolas Estrada.
+ */
 public final class PrimitiveCalculator {
 
     private PrimitiveCalculator() {}
