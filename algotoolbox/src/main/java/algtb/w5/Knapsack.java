@@ -20,11 +20,11 @@ public final class Knapsack {
     static int calculateOptimalWeight(final int maxCapacity, final int[] weights) {
 
         // This implementation uses O(n) space instead of O(n**2) spaces
-        final int[] cache = new int[maxCapacity];
-        final int[] buf = new int[maxCapacity];
+        final int[] cache = new int[maxCapacity + 1];
+        final int[] buf = new int[maxCapacity + 1];
 
         for (final int weight : weights) {
-            for (int capacity = 0; capacity < maxCapacity; capacity++) {
+            for (int capacity = 1; capacity <= maxCapacity; capacity++) {
                 if (weight <= capacity) {
                     final int solutionWithoutItem = cache[capacity];
                     final int solutionWithItem = cache[capacity - weight] + weight;
@@ -32,7 +32,7 @@ public final class Knapsack {
                 }
             }
             // Update the cache with the buffer contents
-            arraycopy(buf, 0, cache, 0, maxCapacity);
+            arraycopy(buf, 0, cache, 0, maxCapacity + 1);
         }
 
         return cache[cache.length - 1];

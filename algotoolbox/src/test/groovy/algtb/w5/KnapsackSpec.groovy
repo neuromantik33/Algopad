@@ -21,8 +21,9 @@ class KnapsackSpec extends Specification {
         calculateOptimalWeight(maxCapacity, weights as int[]) == weight
 
         where:
-        maxCapacity | weights   | weight
-        10          | [1, 4, 8] | 9
+        maxCapacity | weights         | weight
+        10          | [1, 4, 8]       | 9
+        10          | [3, 5, 3, 3, 5] | 10
 
     }
 }
