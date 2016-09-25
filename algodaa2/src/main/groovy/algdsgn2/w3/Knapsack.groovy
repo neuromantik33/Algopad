@@ -25,19 +25,19 @@ class Knapsack {
      */
     static int calculateMaxValueWithCapacity(final Item[] items, final int maxCapacity) {
 
-        def cache = new int[maxCapacity]
-        def buf = new int[maxCapacity]
-        def updateCache = { arraycopy(buf, 0, cache, 0, maxCapacity) }
+        def cache = new int[maxCapacity + 1]
+        def buf = new int[maxCapacity + 1]
 
         items.each { Item item ->
-            for (int capacity = 0; capacity < maxCapacity; capacity++) {
+            for (int capacity = 1; capacity <= maxCapacity; capacity++) {
                 if (item.weight <= capacity) {
                     def solutionWithoutItem = cache[capacity]
                     def solutionWithItem = cache[capacity - item.weight] + item.value
                     buf[capacity] = max(solutionWithoutItem, solutionWithItem)
                 }
             }
-            updateCache()
+            // Update the cache with the buffer contents
+            arraycopy buf, 0, cache, 0, maxCapacity + 1
         }
 
         cache[-1]
