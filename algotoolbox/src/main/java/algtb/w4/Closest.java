@@ -5,9 +5,9 @@
 package algtb.w4;
 
 import static java.lang.Double.POSITIVE_INFINITY;
-import static java.lang.Math.sqrt;
 import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.min;
+import static java.lang.StrictMath.sqrt;
 import static java.lang.String.format;
 import static java.util.Collections.sort;
 
@@ -27,8 +27,7 @@ import java.util.TreeSet;
 @SuppressWarnings("TypeMayBeWeakened")
 public final class Closest {
 
-    private Closest() {
-    }
+    private Closest() {}
 
     static double minimalDistance(final List<Point> points) {
 
@@ -207,7 +206,7 @@ public final class Closest {
         }
     };
 
-    @SuppressWarnings({"PublicInnerClass", "InstanceVariableNamingConvention"})
+    @SuppressWarnings({ "PublicInnerClass", "InstanceVariableNamingConvention" })
     public static class Point {
 
         public final int x;
@@ -245,7 +244,6 @@ public final class Closest {
             this.pt2 = pt2;
             this.distance = distance;
         }
-
 
         // Actually returns the distance squared!
         private double distance() {
