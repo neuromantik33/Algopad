@@ -38,7 +38,7 @@ public final class Closest {
         sort(q, BY_INCREASING_Y);
 
         final PointPair pair = findClosestPair(p, q);
-        return pair.distance();
+        return pair.getDistance();
 
     }
 
@@ -62,14 +62,14 @@ public final class Closest {
         final List<Point> qY = filterPoints(q, qX);
         final PointPair qPair = findClosestPair(qX, qY);
 
-        final double minDistance = min(pPair.distance(), qPair.distance());
+        final double minDistance = min(pPair.getDistance(), qPair.getDistance());
         final PointPair sPair = getClosestPairNearMedian(q, median, minDistance);
 
         // Return the smallest pair of the right, left and axis closest pairs
         PointPair minPair = pPair;
-        if (sPair.distance() < minDistance) {
+        if (sPair.getDistance() < minDistance) {
             minPair = sPair;
-        } else if (qPair.distance() < pPair.distance()) {
+        } else if (qPair.getDistance() < pPair.getDistance()) {
             minPair = qPair;
         }
 
@@ -124,7 +124,7 @@ public final class Closest {
                         break;
                     }
                     final double distance = pt1.distanceTo(pt2);
-                    if (distance < minPair.distance()) {
+                    if (distance < minPair.getDistance()) {
                         minPair = new PointPair(pt1, pt2, distance);
                     }
                 }
@@ -149,7 +149,7 @@ public final class Closest {
         for (int i = 0; i < len - 1; i++) {
             for (int j = i + 1; j < len; j++) {
                 final double distance = pts[i].distanceTo(pts[j]);
-                if (distance < minPair.distance()) {
+                if (distance < minPair.getDistance()) {
                     minPair = new PointPair(pts[i], pts[j], distance);
                 }
             }
@@ -245,8 +245,7 @@ public final class Closest {
             this.distance = distance;
         }
 
-        // Actually returns the distance squared!
-        private double distance() {
+        private double getDistance() {
             return distance;
         }
 

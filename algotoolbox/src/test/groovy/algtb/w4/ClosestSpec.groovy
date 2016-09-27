@@ -65,8 +65,8 @@ class ClosestSpec extends Specification {
         println "Time spent = ${stopwatch.runtime(MILLISECONDS)}ms"
 
         where:
-        seed | size  | distance
-        0L   | 50000 | 13790.842758d
+        seed | size   | distance
+        0L   | 100000 | 11081.939541d
 
     }
 }
