@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Adapted from pseudo-code (released with no restrictions) using an algorithm described here:
@@ -31,18 +31,19 @@ public final class Closest {
 
     static double minimalDistance(final List<Point> points) {
 
-        final SortedSet<Point> p = new TreeSet<>(BY_INCREASING_X);
-        p.addAll(points);
+        final List<Point> p = new ArrayList<>(points);
+        sort(p, BY_INCREASING_X);
 
         final List<Point> q = new ArrayList<>(points);
         sort(q, BY_INCREASING_Y);
 
-        final PointPair pair = findClosestPair(p, q);
+        final PointPair pair = findClosestPair(new HashSet<>(points), p, q);
         return pair.getDistance();
 
     }
 
-    private static PointPair findClosestPair(final SortedSet<Point> p,
+    private static PointPair findClosestPair(final Set<Point> points,
+                                             final List<Point> p,
                                              final List<Point> q) {
 
         final int len = p.size();
@@ -52,18 +53,20 @@ public final class Closest {
             return searchForClosestPoints(p);
         }
 
-        final Point median = findMedianPoint(p);
+        final int mid = len / 2;
 
-        final SortedSet<Point> pX = p.headSet(median);
-        final List<Point> pY = filterPoints(q, pX);
-        final PointPair pPair = findClosestPair(pX, pY);
+        final List<Point> pX = p.subList(0, mid);
+        final Set<Point> leftPts = new HashSet<>(pX);
+        final List<Point> pY = filterPoints(q, leftPts);
+        final PointPair pPair = findClosestPair(leftPts, pX, pY);
 
-        final SortedSet<Point> qX = p.tailSet(median);
-        final List<Point> qY = filterPoints(q, qX);
-        final PointPair qPair = findClosestPair(qX, qY);
+        final List<Point> qX = p.subList(mid, len);
+        final Set<Point> rightPts = new HashSet<>(qX);
+        final List<Point> qY = filterPoints(q, rightPts);
+        final PointPair qPair = findClosestPair(rightPts, qX, qY);
 
         final double minDistance = min(pPair.getDistance(), qPair.getDistance());
-        final PointPair sPair = getClosestPairNearMedian(q, median, minDistance);
+        final PointPair sPair = getClosestPairNearMedian(q, p.get(mid), minDistance);
 
         // Return the smallest pair of the right, left and axis closest pairs
         PointPair minPair = pPair;
@@ -77,22 +80,29 @@ public final class Closest {
 
     }
 
-    private static Point findMedianPoint(final SortedSet<Point> points) {
-        Point median = null;
-        final int to = points.size() / 2 - 1;
-        int i = 0;
-        for (final Point pt : points) {
-            if (i > to) {
-                median = pt;
-                break;
-            }
-            i++;
+    @SuppressWarnings("MethodWithMultipleLoops")
+    private static PointPair searchForClosestPoints(final List<Point> points) {
+        final int len = points.size();
+        if (len < 2) {
+            return NULL_PAIR;
         }
-        return median;
+        if (len == 2) {
+            return new PointPair(points.get(0), points.get(1));
+        }
+        PointPair minPair = new PointPair(points.get(0), points.get(1));
+        for (int i = 1; i < len - 1; i++) {
+            for (int j = i + 1; j < len; j++) {
+                final double distance = points.get(i).distanceTo(points.get(j));
+                if (distance < minPair.getDistance()) {
+                    minPair = new PointPair(points.get(i), points.get(j), distance);
+                }
+            }
+        }
+        return minPair;
     }
 
     private static List<Point> filterPoints(final List<Point> src,
-                                            final SortedSet<Point> within) {
+                                            final Set<Point> within) {
         final List<Point> dest = new ArrayList<>(within.size());
         for (final Point pt : src) {
             if (within.contains(pt)) {
@@ -102,6 +112,7 @@ public final class Closest {
         return dest;
     }
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     private static PointPair getClosestPairNearMedian(final List<Point> points,
                                                       final Point median,
                                                       final double minDistance) {
@@ -135,28 +146,6 @@ public final class Closest {
 
     }
 
-    @SuppressWarnings("MethodWithMultipleLoops")
-    private static PointPair searchForClosestPoints(final SortedSet<Point> points) {
-        final int len = points.size();
-        if (len < 2) {
-            return NULL_PAIR;
-        }
-        if (len == 2) {
-            return new PointPair(points.first(), points.last());
-        }
-        PointPair minPair = NULL_PAIR;
-        final Point[] pts = points.toArray(new Point[len]);
-        for (int i = 0; i < len - 1; i++) {
-            for (int j = i + 1; j < len; j++) {
-                final double distance = pts[i].distanceTo(pts[j]);
-                if (distance < minPair.getDistance()) {
-                    minPair = new PointPair(pts[i], pts[j], distance);
-                }
-            }
-        }
-        return minPair;
-    }
-
     public static void main(final String... args) {
         try (final Scanner in = new Scanner(System.in, "UTF-8")) {
             final int n = in.nextInt();
@@ -174,35 +163,19 @@ public final class Closest {
     private static final PointPair NULL_PAIR = new PointPair(null, null, POSITIVE_INFINITY);
 
     // Various comparators
-    @SuppressWarnings("OverlyComplexAnonymousInnerClass")
     private static final Comparator<Point> BY_INCREASING_X = new Comparator<Point>() {
-        @SuppressWarnings("SuspiciousNameCombination")
         @Override
         public int compare(final Point o1, final Point o2) {
-            int cmp = Integer.compare(o1.x, o2.x);
-            if (cmp == 0) {
-                cmp = Integer.compare(o1.y, o2.y);
-                if (cmp == 0) {
-                    cmp = o1.equals(o2) ? 0 : 1;
-                }
-            }
-            return cmp;
+            //noinspection SuspiciousNameCombination
+            return Integer.compare(o1.x, o2.x);
         }
     };
 
-    @SuppressWarnings("OverlyComplexAnonymousInnerClass")
     private static final Comparator<Point> BY_INCREASING_Y = new Comparator<Point>() {
-        @SuppressWarnings("SuspiciousNameCombination")
         @Override
         public int compare(final Point o1, final Point o2) {
-            int cmp = Integer.compare(o1.y, o2.y);
-            if (cmp == 0) {
-                cmp = Integer.compare(o1.x, o2.x);
-                if (cmp == 0) {
-                    cmp = o1.equals(o2) ? 0 : 1;
-                }
-            }
-            return cmp;
+            //noinspection SuspiciousNameCombination
+            return Integer.compare(o1.y, o2.y);
         }
     };
 
