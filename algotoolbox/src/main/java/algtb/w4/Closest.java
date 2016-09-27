@@ -117,15 +117,15 @@ public final class Closest {
 
     @SuppressWarnings("MethodWithMultipleLoops")
     private static PointPair searchForClosestPoints(final Collection<Point> points) {
-        PointPair minPair = NULL_PAIR;
         final int len = points.size();
+        PointPair minPair = NULL_PAIR;
         if (len > 1) {
             final Point[] pts = points.toArray(new Point[len]);
             for (int i = 0; i < len; i++) {
                 for (int j = i + 1; j < len; j++) {
-                    final PointPair pair = new PointPair(pts[i], pts[j]);
-                    if (pair.distance() < minPair.distance()) {
-                        minPair = pair;
+                    final double distance = pts[i].squareDistanceTo(pts[j]);
+                    if (distance < minPair.distance()) {
+                        minPair = new PointPair(pts[i], pts[j], distance);
                     }
                 }
             }
@@ -147,7 +147,7 @@ public final class Closest {
 
     // Point pair sentinel with maximum distance
     @SuppressWarnings("StaticVariableOfConcreteClass")
-    private static final PointPair NULL_PAIR = new PointPair(POSITIVE_INFINITY);
+    private static final PointPair NULL_PAIR = new PointPair(null, null, POSITIVE_INFINITY);
 
     // Various comparators
     @SuppressWarnings("OverlyComplexAnonymousInnerClass")
@@ -193,7 +193,7 @@ public final class Closest {
             this.y = y;
         }
 
-        double squareDistanceTo(final Point point) {
+        private double squareDistanceTo(final Point point) {
             final int dx = x - point.x;
             final int dy = y - point.y;
             return (long)dx * dx + (long)dy * dy;
@@ -211,16 +211,9 @@ public final class Closest {
         private final Point pt2;
         private final double distance;
 
-        private PointPair(final Point pt1, final Point pt2) {
+        private PointPair(final Point pt1, final Point pt2, final double distance) {
             this.pt1 = pt1;
             this.pt2 = pt2;
-            this.distance = pt1.squareDistanceTo(pt2);
-        }
-
-        @SuppressWarnings("AssignmentToNull")
-        private PointPair(final double distance) {
-            this.pt1 = null;
-            this.pt2 = null;
             this.distance = distance;
         }
 
