@@ -7,7 +7,6 @@ package algtb.w4;
 import static java.lang.Double.POSITIVE_INFINITY;
 import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.min;
-import static java.lang.StrictMath.pow;
 import static java.lang.StrictMath.sqrt;
 import static java.lang.String.format;
 import static java.util.Collections.sort;
@@ -40,7 +39,7 @@ public final class Closest {
         sort(q, BY_INCREASING_Y);
 
         final PointPair pair = findClosestPair(p, q);
-        return sqrt(pair.getDistance());
+        return sqrt(pair.distance());
 
     }
 
@@ -64,14 +63,14 @@ public final class Closest {
         final List<Point> qY = filterPoints(q, qX);
         final PointPair qPair = findClosestPair(qX, qY);
 
-        final double delta = min(pPair.getDistance(), qPair.getDistance());
+        final double delta = min(pPair.distance(), qPair.distance());
         final PointPair sPair = getClosestPairNearMedian(q, median, delta);
 
         // Return the smallest pair of the right, left and axis closest pairs
         PointPair minPair = pPair;
-        if (sPair.getDistance() < delta) {
+        if (sPair.distance() < delta) {
             minPair = sPair;
-        } else if (qPair.getDistance() < pPair.getDistance()) {
+        } else if (qPair.distance() < pPair.distance()) {
             minPair = qPair;
         }
 
@@ -125,7 +124,7 @@ public final class Closest {
             for (int i = 0; i < len; i++) {
                 for (int j = i + 1; j < len; j++) {
                     final PointPair pair = new PointPair(pts[i], pts[j]);
-                    if (pair.getDistance() < minPair.getDistance()) {
+                    if (pair.distance() < minPair.distance()) {
                         minPair = pair;
                     }
                 }
@@ -197,7 +196,7 @@ public final class Closest {
         double squareDistanceTo(final Point point) {
             final int dx = x - point.x;
             final int dy = y - point.y;
-            return pow(dx, 2) + pow(dy, 2);
+            return (long)dx * dx + (long)dy * dy;
         }
 
         @Override
@@ -218,13 +217,15 @@ public final class Closest {
             this.distance = pt1.squareDistanceTo(pt2);
         }
 
+        @SuppressWarnings("AssignmentToNull")
         private PointPair(final double distance) {
             this.pt1 = null;
             this.pt2 = null;
             this.distance = distance;
         }
 
-        public double getDistance() {
+        // Actually returns the distance squared!
+        private double distance() {
             return distance;
         }
 
