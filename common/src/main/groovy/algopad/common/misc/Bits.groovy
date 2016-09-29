@@ -32,7 +32,6 @@ class Bits {
     /**
      * @see BigInteger#randomBits(int, java.util.Random)
      */
-    @CompileStatic(SKIP)
     private static byte[] randomBits(int numBits, Random rnd) {
         assert numBits > 0, 'numBits must be non-negative'
         int numBytes = (int) (((long) numBits + 7) / 8) // avoid overflow
@@ -42,8 +41,22 @@ class Bits {
             rnd.nextBytes randomBits
             int excessBits = 8 * numBytes - numBits
             int mask = (1 << (8 - excessBits)) - 1
-            randomBits[0] &= mask
+            randomBits[0] = (randomBits[0] & mask).byteValue()
         }
         randomBits
+    }
+
+    /**
+     * @return a string representation of the BitSet <i>bits</i>
+     * argument as an unsigned integer in base&nbsp;2.
+     */
+    static String toBinaryString(final BitSet bits, final int numBits = 0) {
+        def sb = new StringBuilder()
+        def toBinary = Integer.&toBinaryString
+        bits.toByteArray()
+            .each { byte b ->
+            sb.append toBinary(b & 0xff)
+        }
+        sb.padLeft numBits, '0'
     }
 }
