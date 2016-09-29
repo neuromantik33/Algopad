@@ -32,9 +32,9 @@ class TwoSATSpec extends Specification {
         file                | size | satisfiable
         '2sat_test1_ok.txt' | 8    | true
         '2sat_test2_ko.txt' | 8    | false
-        '2sat_test3_ko.txt' | 4    | false
-        '2sat_test4_ok.txt' | 7    | true
-        //        '2sat1.txt'         | 100000  | true
+        '2sat_test3_ok.txt' | 7    | true
+        //        '2sat1.txt'         | 100000 | true
+        //        '2sat2.txt'         | 200000  | false
         //        '2sat2.txt'         | 200000  | false
         //        '2sat3.txt'         | 400000  | true
         //        '2sat4.txt'         | 600000  | true
@@ -51,7 +51,10 @@ class TwoSATSpec extends Specification {
             def n = scanner.nextInt()
             def clauses = new Clause[n]
             n.times {
-                clauses[it] = new Clause(v1: scanner.nextInt(), v2: scanner.nextInt())
+                int v1 = scanner.nextInt()
+                int v2 = scanner.nextInt()
+                clauses[it] = new Clause(v1: v1.abs() - 1, not1: v1 < 0,
+                                         v2: v2.abs() - 1, not2: v2 < 0)
             }
             [n, clauses]
         }
