@@ -15,6 +15,7 @@ public final class EditDistance {
 
     private EditDistance() {}
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     static int calculateEditDistance(final String s, final String t) {
 
         final int sLen = s.length();
