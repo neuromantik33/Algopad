@@ -24,6 +24,7 @@ class PlacingParenthesesSpec extends Specification {
         exp           | value
         '1+5'         | 6
         '5-8+7*4-8+9' | 200
+        '1+2-3*4-5'   | 6
 
     }
 }

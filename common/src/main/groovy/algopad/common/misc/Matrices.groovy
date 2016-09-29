@@ -14,6 +14,8 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class Matrices {
 
+    final static LINE_SEPARATOR = System.getProperty('line.separator')
+
     /**
      * Scans the entire <i>matrix</i> and executes the param {@link Closure}
      * in order to initialize each cell.
@@ -25,5 +27,19 @@ class Matrices {
                 matrix[i][j] = closure.call(i, j)
             }
         }
+    }
+
+    /**
+     * @return a string representation of the contents of the specified matrix.
+     */
+    static String toString(matrix) {
+        def sb = new StringBuilder()
+        matrix.eachWithIndex { row, int i ->
+            row.eachWithIndex { col, int j ->
+                sb.append(col).append(' ')
+            }
+            sb.append LINE_SEPARATOR
+        }
+        sb.toString()
     }
 }

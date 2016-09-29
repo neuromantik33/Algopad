@@ -73,7 +73,7 @@ public final class PlacingParentheses {
     private void updateMinAndMaxValues(final int i, final int j) {
         long min = MAX_VALUE;
         long max = MIN_VALUE;
-        for (int k = 0; k < j; k++) {
+        for (int k = i; k < j; k++) {
 
             final char op = operators[k];
             buf[1] = eval(maxValues[i][k], maxValues[k + 1][j], op);
