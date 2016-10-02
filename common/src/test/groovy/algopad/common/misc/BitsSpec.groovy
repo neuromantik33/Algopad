@@ -7,6 +7,7 @@ package algopad.common.misc
 import spock.lang.Shared
 import spock.lang.Specification
 
+import static algopad.common.misc.Bits.randomBitArray
 import static algopad.common.misc.Bits.randomBitSet
 
 class BitsSpec extends Specification {
@@ -17,12 +18,15 @@ class BitsSpec extends Specification {
     def 'it should generate a random number of bits'() {
 
         when:
-        def bits = randomBitSet(numBits, new Random(seed))
-        def ref = new BigInteger(numBits, new Random(seed))
+        def bitSet = randomBitSet(numBits, new Random(seed))
+        def bitAry = randomBitArray(numBits, new Random(seed))
+        def bigInt = new BigInteger(numBits, new Random(seed))
 
         then:
-        bits.toByteArray() == ref.toByteArray()
-        bits.cardinality() == ref.bitCount()
+        bitSet.toByteArray() == bigInt.toByteArray()
+        bitAry.bytes == bigInt.toByteArray()
+        bitSet.cardinality() == bigInt.bitCount()
+        bitAry.cardinality == bigInt.bitCount()
 
         where:
         seed = random.nextLong()

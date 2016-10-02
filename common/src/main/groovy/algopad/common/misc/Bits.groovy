@@ -4,9 +4,8 @@
 
 package algopad.common.misc
 
+import algopad.common.ds.BitArray
 import groovy.transform.CompileStatic
-
-import static groovy.transform.TypeCheckingMode.SKIP
 
 /**
  * Some useful methods for working with {@link BitSet}s.
@@ -30,6 +29,19 @@ class Bits {
     }
 
     /**
+     * Generates a randomly generated non-negative {@link BitArray},
+     * uniformly distributed over the range 0 to (2<sup><i>numBits</i></sup> - 1), inclusive.
+     *
+     * @param numBits maximum bit length of the new BitSet.
+     * @param rnd source of randomness to be used in computing the new BitSet.
+     */
+    static BitArray randomBitArray(final int numBits, final Random rnd) {
+        def bytes = randomBits(numBits, rnd)
+        def bits = new BitArray(numBits, bytes)
+        bits
+    }
+
+    /**
      * @see BigInteger#randomBits(int, java.util.Random)
      */
     private static byte[] randomBits(int numBits, Random rnd) {
@@ -47,14 +59,25 @@ class Bits {
     }
 
     /**
-     * @return a string representation of the BitSet <i>bits</i>
+     * @return a string representation of the {@link BitSet} <i>bits</i>
      * argument as an unsigned integer in base&nbsp;2.
      */
     static String toBinaryString(final BitSet bits, final int numBits = 0) {
+        toBinaryString bits.toByteArray(), numBits
+    }
+
+    /**
+     * @return a string representation of the {@link BitArray} <i>bits</i>
+     * argument as an unsigned integer in base&nbsp;2.
+     */
+    static String toBinaryString(final BitArray bits, final int numBits = 0) {
+        toBinaryString bits.bytes, numBits
+    }
+
+    static String toBinaryString(final byte[] bytes, final int numBits = 0) {
         def sb = new StringBuilder()
         def toBinary = Integer.&toBinaryString
-        bits.toByteArray()
-            .each { byte b ->
+        for (byte b in bytes) {
             sb.append toBinary(b & 0xff)
         }
         sb.padLeft numBits, '0'
