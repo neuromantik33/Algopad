@@ -21,7 +21,7 @@ class BitArray {
     final byte[] bytes
 
     BitArray(final int length) {
-        this(length, new byte[(int) ((length + BITS_PER_UNIT - 1) / BITS_PER_UNIT)])
+        this(length, new byte[(length + BITS_PER_UNIT - 1).intdiv(BITS_PER_UNIT)])
     }
 
     BitArray(final int length, final byte[] bytes) {
@@ -75,7 +75,7 @@ class BitArray {
     }
 
     private static int subscript(final int idx) {
-        (int) (idx / BITS_PER_UNIT)
+        idx.intdiv(BITS_PER_UNIT).intValue()
     }
 
     private static int position(final int idx) {

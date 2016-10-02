@@ -15,6 +15,7 @@ import static groovy.transform.TypeCheckingMode.SKIP
 import static groovyx.gpars.GParsPool.speculate
 import static groovyx.gpars.GParsPool.withPool
 import static java.lang.Math.max
+import static java.lang.Thread.currentThread
 
 /**
  * @author Nicolas Estrada.
@@ -26,6 +27,8 @@ class TwoSAT {
     final int numVars
     final Clause[] clauses
     final Random rnd
+
+    int current = 0
 
     TwoSAT(int numVars, Clause[] clauses, Random rnd) {
         this.numVars = numVars
@@ -48,29 +51,41 @@ class TwoSAT {
                 ts.randomWalk bits
             }
         }
-        withPool(2) { speculate(trials) }
+        withPool { speculate(trials) }
     }
 
     private boolean randomWalk(BitArray bits) {
-        long maxSteps = 2L * numVars * numVars
-        while (maxSteps > 0) {
-            if (maxSteps % 100 == 0L) {
-                println "Steps remaining = $maxSteps"
-            }
-            // println "remaining steps = $maxSteps, bits=${toBinaryString(bits, numVars)}"
+
+        long maxSteps = 2L * numVars**2
+        boolean satisfied = false
+
+        long numSteps = 0
+        while (numSteps < maxSteps) {
             def clause = findUnsatisfiableClause(bits)
-            if (clause == null) {
-                println "satisfying bits : ${toBinaryString(bits, numVars)}"
-                return true
+            if (clause == null || currentThread().interrupted) {
+                println "numSteps = $numSteps, satisfying bits : ${toBinaryString(bits, numVars)}"
+                satisfied = true
+                break
             }
             int nextBit = rnd.nextBoolean() ? clause.v1 : clause.v2
             bits.flip nextBit
-            maxSteps--
+            numSteps += 1
         }
-        false
+
+        satisfied
+
     }
 
     private Clause findUnsatisfiableClause(BitArray bits) {
+        int len = clauses.length
+        if (current >= len) { current = 0 }
+        for (; current < len; current++) {
+            def clause = clauses[current]
+            if (!clause.evaluate(bits)) {
+                current++
+                return clause
+            }
+        }
         clauses.find { !it.evaluate(bits) }
     }
 

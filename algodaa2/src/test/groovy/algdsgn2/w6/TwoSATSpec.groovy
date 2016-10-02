@@ -29,11 +29,11 @@ class TwoSATSpec extends Specification {
         println "TwoSAT($file) : Time spent ${stopwatch.runtime(MILLISECONDS)}ms"
 
         where:
-        file | size | satisfiable
-        //        '2sat_test1_ok.txt' | 8    | true
-        //        '2sat_test2_ko.txt' | 8    | false
-        //        '2sat_test3_ok.txt' | 7    | true
-        '2sat1.txt' | 100000 | true
+        file                | size | satisfiable
+        '2sat_test1_ok.txt' | 8    | true
+        '2sat_test2_ko.txt' | 8    | false
+        '2sat_test3_ok.txt' | 7    | true
+        //        '2sat1.txt'         | 100000  | true
         //        '2sat2.txt'         | 200000  | false
         //        '2sat2.txt'         | 200000  | false
         //        '2sat3.txt'         | 400000  | true
