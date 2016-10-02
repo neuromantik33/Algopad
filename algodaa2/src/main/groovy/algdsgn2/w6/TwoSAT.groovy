@@ -45,15 +45,18 @@ class TwoSAT {
             { ->
                 def ts = new TwoSAT(numVars, clauses, new Random())
                 def bits = randomBitArray(numVars, ts.rnd)
-                ts.randomWalk(bits)
+                ts.randomWalk bits
             }
         }
-        withPool { speculate(trials) }
+        withPool(2) { speculate(trials) }
     }
 
     private boolean randomWalk(BitArray bits) {
         long maxSteps = 2L * numVars * numVars
         while (maxSteps > 0) {
+            if (maxSteps % 100 == 0L) {
+                println "Steps remaining = $maxSteps"
+            }
             // println "remaining steps = $maxSteps, bits=${toBinaryString(bits, numVars)}"
             def clause = findUnsatisfiableClause(bits)
             if (clause == null) {

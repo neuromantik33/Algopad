@@ -20,11 +20,9 @@ class RandomOps {
      */
     static void shuffle(Random rnd, Object[] array) {
         int len = array.length
-        len.times { int i ->
-            int rndIx = i + rnd.nextInt(len - i)
-            Object temp = array[i]
-            array[i] = array[rndIx]
-            array[rndIx] = temp
+        (0..<len).each { int idx ->
+            int randomIx = idx + rnd.nextInt(len - idx)
+            array.swap idx, randomIx
         }
     }
 }
