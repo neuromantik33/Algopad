@@ -4,13 +4,16 @@
 
 package algdsgn2.w6
 
+import algopad.common.ds.BitArray
 import groovy.transform.CompileStatic
 import groovy.transform.Immutable
 
-import static algopad.common.misc.Bits.randomBitSet
+import static algopad.common.misc.Bits.randomBitArray
 import static algopad.common.misc.Bits.toBinaryString
 import static algopad.common.misc.Ints.log2
-import static algopad.common.misc.RandomOps.shuffle
+import static groovy.transform.TypeCheckingMode.SKIP
+import static groovyx.gpars.GParsPool.speculate
+import static groovyx.gpars.GParsPool.withPool
 import static java.lang.Math.max
 
 /**
@@ -35,20 +38,20 @@ class TwoSAT {
      * @param clauses the array of clauses.
      * @return {@code true} if the clauses are satisfiable, {@code false} otherwise.
      */
+    @CompileStatic(SKIP)
     static boolean isSatisfiable(final int numVars, final Clause[] clauses) {
         def maxTries = max(log2(numVars), 10)
-        while (maxTries > 0) {
-            def ts = new TwoSAT(numVars, clauses, new Random())
-            def bits = randomBitSet(numVars, ts.rnd)
-            if (ts.randomWalk(bits)) {
-                return true
+        def trials = (1..maxTries).collect {
+            { ->
+                def ts = new TwoSAT(numVars, clauses, new Random())
+                def bits = randomBitArray(numVars, ts.rnd)
+                ts.randomWalk(bits)
             }
-            maxTries--
         }
-        false
+        withPool { speculate(trials) }
     }
 
-    private boolean randomWalk(BitSet bits) {
+    private boolean randomWalk(BitArray bits) {
         long maxSteps = 2L * numVars * numVars
         while (maxSteps > 0) {
             // println "remaining steps = $maxSteps, bits=${toBinaryString(bits, numVars)}"
@@ -64,8 +67,7 @@ class TwoSAT {
         false
     }
 
-    private Clause findUnsatisfiableClause(BitSet bits) {
-        shuffle rnd, clauses
+    private Clause findUnsatisfiableClause(BitArray bits) {
         clauses.find { !it.evaluate(bits) }
     }
 
@@ -75,10 +77,10 @@ class TwoSAT {
         int v1, v2
         boolean not1, not2
 
-        boolean evaluate(BitSet bits) {
-            def val1 = bits.get(v1)
+        boolean evaluate(BitArray bits) {
+            def val1 = bits[v1]
             if (not1) { val1 = !val1 }
-            def val2 = bits.get(v2)
+            def val2 = bits[v2]
             if (not2) { val2 = !val2 }
             val1 || val2
         }
