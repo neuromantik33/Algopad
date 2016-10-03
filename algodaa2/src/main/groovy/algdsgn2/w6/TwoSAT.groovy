@@ -10,16 +10,11 @@ import groovy.transform.Immutable
 
 import static algopad.common.misc.Bits.randomBitArray
 import static algopad.common.misc.Ints.log2
-import static groovy.transform.TypeCheckingMode.SKIP
-import static groovyx.gpars.GParsPool.speculate
-import static groovyx.gpars.GParsPool.withPool
-import static java.lang.Math.max
 import static java.lang.Thread.currentThread
 
 /**
  * @author Nicolas Estrada.
  */
-@SuppressWarnings('GroovyBreak')
 @CompileStatic
 class TwoSAT {
 
@@ -40,17 +35,18 @@ class TwoSAT {
      * @param clauses the array of clauses.
      * @return {@code true} if the clauses are satisfiable, {@code false} otherwise.
      */
-    @CompileStatic(SKIP)
     static boolean isSatisfiable(final int numVars, final Clause[] clauses) {
-        def maxTries = max(log2(numVars), 10)
-        def trials = (1..maxTries).collect {
-            { ->
-                def ts = new TwoSAT(numVars, clauses, new Random())
-                def bits = randomBitArray(numVars, ts.rnd)
-                ts.randomWalk bits
+        def maxTries = log2(numVars)
+        def numTries = maxTries
+        while (numTries > 0) {
+            def ts = new TwoSAT(numVars, clauses, new Random())
+            def bits = randomBitArray(numVars, ts.rnd)
+            if (ts.randomWalk(bits)) {
+                return true
             }
+            numTries -= 1
         }
-        withPool(1) { speculate(trials) }
+        false
     }
 
     private boolean randomWalk(BitArray bits) {
@@ -64,6 +60,7 @@ class TwoSAT {
             if (clause == null || currentThread().interrupted) {
                 println "numSteps = $numSteps, satisfying bits :\n$bits"
                 satisfied = true
+                //noinspection GroovyBreak
                 break
             }
             int nextBit = rnd.nextBoolean() ? clause.v1 : clause.v2
@@ -81,7 +78,7 @@ class TwoSAT {
         for (; current < len; current++) {
             def clause = clauses[current]
             if (!clause.evaluate(bits)) {
-                current++
+                current += 1
                 return clause
             }
         }
