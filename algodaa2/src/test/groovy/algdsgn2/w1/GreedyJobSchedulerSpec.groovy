@@ -26,7 +26,7 @@ class GreedyJobSchedulerSpec extends Specification {
         scheduler.totalWeightedCompletionTime == time
 
         and:
-        stopwatch.runtime(MILLISECONDS) < 500
+        stopwatch.runtime(MILLISECONDS) < 1000
 
         where:
         file             | heuristic | time

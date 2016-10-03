@@ -59,7 +59,7 @@ class TSPSpec extends Specification {
         where:
         file           | tour
         'tsp_test.txt' | 20000
-        'tsp.txt'      | 26442
+        // SLOW: 'tsp.txt'      | 26442
 
     }
 

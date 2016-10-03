@@ -8,6 +8,7 @@ import groovy.transform.CompileStatic
 
 import static algopad.common.misc.Counting.chooseK
 import static java.lang.Integer.bitCount
+import static java.lang.Integer.numberOfLeadingZeros
 
 /**
  * Some useful methods for working with integers.
@@ -24,6 +25,14 @@ class Ints {
      */
     static int hammingDistance(int x1, int x2) {
         bitCount x1 ^ x2
+    }
+
+    /**
+     * @return the logarithm (base <i>2</i>) of the {@code int} <i>val</i>.
+     */
+    static int log2(int val) {
+        assert val > 0
+        return 31 - numberOfLeadingZeros(val);
     }
 
     /**

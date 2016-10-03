@@ -46,7 +46,7 @@ class FloydMarshallSpec extends Specification {
         'graph_test1.txt' | -10003
         'graph_test2.txt' | -6
         'graph_test3.txt' | -4
-        'g3.txt'          | -19
+        // SLOW: 'g3.txt'          | -19
 
     }
 
@@ -68,9 +68,9 @@ class FloydMarshallSpec extends Specification {
 
         where:
         file << [
-          'graph_negative_cycle.txt',
-          'g1.txt',
-          'g2.txt'
+          'graph_negative_cycle.txt'
+          // SLOW: 'g1.txt',
+          // SLOW: 'g2.txt'
         ]
 
     }
