@@ -35,7 +35,6 @@ class TwoSATSpec extends Specification {
         '2sat_test3_ok.txt' | 7    | true
         //        '2sat1.txt'         | 100000  | true
         //        '2sat2.txt'         | 200000  | false
-        //        '2sat2.txt'         | 200000  | false
         //        '2sat3.txt'         | 400000  | true
         //        '2sat4.txt'         | 600000  | true
         //        '2sat5.txt'         | 800000  | false

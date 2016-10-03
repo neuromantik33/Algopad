@@ -6,11 +6,9 @@ package algdsgn2.w6
 
 import algopad.common.ds.BitArray
 import groovy.transform.CompileStatic
-import groovy.transform.Immutable
 
 import static algopad.common.misc.Bits.randomBitArray
 import static algopad.common.misc.Ints.log2
-import static java.lang.Thread.currentThread
 
 /**
  * @author Nicolas Estrada.
@@ -21,6 +19,7 @@ class TwoSAT {
     final int numVars
     final Clause[] clauses
     final Random rnd
+    final BitArray bits
 
     int current = 0
 
@@ -28,6 +27,7 @@ class TwoSAT {
         this.numVars = numVars
         this.clauses = clauses
         this.rnd = rnd
+        this.bits = randomBitArray(numVars, rnd)
     }
 
     /**
@@ -40,8 +40,7 @@ class TwoSAT {
         def numTries = maxTries
         while (numTries > 0) {
             def ts = new TwoSAT(numVars, clauses, new Random())
-            def bits = randomBitArray(numVars, ts.rnd)
-            if (ts.randomWalk(bits)) {
+            if (ts.randomWalk()) {
                 return true
             }
             numTries -= 1
@@ -49,15 +48,15 @@ class TwoSAT {
         false
     }
 
-    private boolean randomWalk(BitArray bits) {
+    private boolean randomWalk() {
 
         long maxSteps = 2L * numVars**2
         boolean satisfied = false
 
         long numSteps = 0
         while (numSteps < maxSteps) {
-            def clause = findUnsatisfiableClause(bits)
-            if (clause == null || currentThread().interrupted) {
+            def clause = findUnsatisfiableClause()
+            if (clause == null) {
                 println "numSteps = $numSteps, satisfying bits :\n$bits"
                 satisfied = true
                 //noinspection GroovyBreak
@@ -72,7 +71,7 @@ class TwoSAT {
 
     }
 
-    private Clause findUnsatisfiableClause(BitArray bits) {
+    private Clause findUnsatisfiableClause() {
         int len = clauses.length
         if (current >= len) { current = 0 }
         for (; current < len; current++) {
@@ -82,27 +81,15 @@ class TwoSAT {
                 return clause
             }
         }
-        clauses.find { !it.evaluate(bits) }
+        confirmUnsatisfied()
     }
 
-    @Immutable
-    static class Clause {
-
-        int v1, v2
-        boolean not1, not2
-
-        boolean evaluate(BitArray bits) {
-            def val1 = bits[v1]
-            if (not1) { val1 = !val1 }
-            def val2 = bits[v2]
-            if (not2) { val2 = !val2 }
-            val1 || val2
+    private Clause confirmUnsatisfied() {
+        for (Clause clause : clauses) {
+            if (!clause.evaluate(bits)) {
+                return clause
+            }
         }
-
-        String toString() {
-            def s1 = (not1 ? '¬' : '') + "x($v1)"
-            def s2 = (not2 ? '¬' : '') + "x($v2)"
-            "{ $s1 ∨ $s2 }"
-        }
+        null
     }
 }
