@@ -75,7 +75,7 @@ class BitArray {
     }
 
     private static int subscript(final int idx) {
-        idx.intdiv(BITS_PER_UNIT).intValue()
+        idx >>> 3 // equivalent to idx / BITS_PER_UNIT
     }
 
     private static int position(final int idx) {
