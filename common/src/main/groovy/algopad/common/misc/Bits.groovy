@@ -57,29 +57,4 @@ class Bits {
         }
         randomBits
     }
-
-    /**
-     * @return a string representation of the {@link BitSet} <i>bits</i>
-     * argument as an unsigned integer in base&nbsp;2.
-     */
-    static String toBinaryString(final BitSet bits, final int numBits = 0) {
-        toBinaryString bits.toByteArray(), numBits
-    }
-
-    /**
-     * @return a string representation of the {@link BitArray} <i>bits</i>
-     * argument as an unsigned integer in base&nbsp;2.
-     */
-    static String toBinaryString(final BitArray bits, final int numBits = 0) {
-        toBinaryString bits.bytes, numBits
-    }
-
-    static String toBinaryString(final byte[] bytes, final int numBits = 0) {
-        def sb = new StringBuilder()
-        def toBinary = Integer.&toBinaryString
-        for (byte b in bytes) {
-            sb.append toBinary(b & 0xff)
-        }
-        sb.padLeft numBits, '0'
-    }
 }

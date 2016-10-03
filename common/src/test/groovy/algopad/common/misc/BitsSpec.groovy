@@ -18,13 +18,13 @@ class BitsSpec extends Specification {
     def 'it should generate a random number of bits'() {
 
         when:
+        def bigInt = new BigInteger(numBits, new Random(seed))
         def bitSet = randomBitSet(numBits, new Random(seed))
         def bitAry = randomBitArray(numBits, new Random(seed))
-        def bigInt = new BigInteger(numBits, new Random(seed))
 
         then:
         bitSet.toByteArray() == bigInt.toByteArray()
-        bitAry.bytes == bigInt.toByteArray()
+        bitAry.toByteArray() == bigInt.toByteArray()
         bitSet.cardinality() == bigInt.bitCount()
         bitAry.cardinality == bigInt.bitCount()
 

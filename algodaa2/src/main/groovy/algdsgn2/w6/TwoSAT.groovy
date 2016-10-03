@@ -9,7 +9,6 @@ import groovy.transform.CompileStatic
 import groovy.transform.Immutable
 
 import static algopad.common.misc.Bits.randomBitArray
-import static algopad.common.misc.Bits.toBinaryString
 import static algopad.common.misc.Ints.log2
 import static groovy.transform.TypeCheckingMode.SKIP
 import static groovyx.gpars.GParsPool.speculate
@@ -51,7 +50,7 @@ class TwoSAT {
                 ts.randomWalk bits
             }
         }
-        withPool { speculate(trials) }
+        withPool(1) { speculate(trials) }
     }
 
     private boolean randomWalk(BitArray bits) {
@@ -63,7 +62,7 @@ class TwoSAT {
         while (numSteps < maxSteps) {
             def clause = findUnsatisfiableClause(bits)
             if (clause == null || currentThread().interrupted) {
-                println "numSteps = $numSteps, satisfying bits : ${toBinaryString(bits, numVars)}"
+                println "numSteps = $numSteps, satisfying bits :\n$bits"
                 satisfied = true
                 break
             }

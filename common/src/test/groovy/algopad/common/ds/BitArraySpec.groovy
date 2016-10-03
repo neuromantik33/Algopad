@@ -7,14 +7,14 @@ package algopad.common.ds
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static java.lang.Integer.MAX_VALUE
+import static java.lang.Short.MAX_VALUE
 
 class BitArraySpec extends Specification {
 
     @Shared
     def random = new Random()
 
-    def 'it should support basic bitwise operations similar to bitset'() {
+    def 'it should support basic bitwise operations (getting, setting, flipping)'() {
 
         given:
         def bits = new BitArray(length)
