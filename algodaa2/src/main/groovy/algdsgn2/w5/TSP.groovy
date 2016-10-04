@@ -4,20 +4,17 @@
 
 package algdsgn2.w5
 
-import groovy.transform.CompileStatic
-
 import java.util.concurrent.ConcurrentHashMap
+
+import groovy.transform.CompileStatic
 
 import static groovy.transform.TypeCheckingMode.SKIP
 import static groovy.util.GroovyCollections.subsequences
 import static groovyx.gpars.GParsPool.withPool
 import static groovyx.gpars.util.PoolUtils.retrieveDefaultPoolSize
 import static java.lang.Float.MAX_VALUE as Infinity
-import static java.util.concurrent.TimeUnit.NANOSECONDS
 
 /**
- * TODO
- *
  * @author Nicolas Estrada.
  */
 @CompileStatic
@@ -31,31 +28,24 @@ class TSP {
     TSP(float[][] distances) {
         this.n = distances.length
         this.distances = distances
-        this.cache = new ConcurrentHashMap<>(n*n, 0.75f, retrieveDefaultPoolSize())
+        this.cache = new ConcurrentHashMap<>(n * n, 0.75f, retrieveDefaultPoolSize())
         this.allPts = (1..<n) // All points except the start point 0
     }
 
-    /**
-     * TODO
-     *
-     * @return
-     */
-    @SuppressWarnings('GroovyLocalVariableNamingConvention')
     @CompileStatic(SKIP)
     def calculateMinimumTour() {
 
         withPool {
 
-            def oldKeys = []
+            def oldKeys = [] as List<Float>
             def cleanCache = {
-                oldKeys.each cache.&remove
+                oldKeys.each { cache.remove(it) }
                 oldKeys.clear()
                 oldKeys.addAll cache.keySet()
             }
 
-            // println "Calculating combinations for ${allPts}"
             def combos = subsequences(allPts)
-                           .groupByParallel { it.size() }
+              .groupByParallel { List l -> l.size() } as Map
 
             def empty = buildBitSet([])
             for (int pt in allPts) {
@@ -66,11 +56,8 @@ class TSP {
             cleanCache()
 
             for (int k = 1; k < n - 1; k++) {
-                // def now = System.nanoTime()
-                combos[k].eachParallel(this.&calculateSolution)
+                combos[k].eachParallel this.&calculateSolution
                 cleanCache()
-                /*def delta = System.nanoTime() - now
-                println "k = $k, time spent = ${NANOSECONDS.toSeconds(delta)}s"*/
             }
 
             searchMinDistance 0, allPts, buildBitSet(allPts)

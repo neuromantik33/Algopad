@@ -5,7 +5,6 @@ import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w6.TwoSAT.Clause
 import static algdsgn2.w6.TwoSAT.isSatisfiable
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 

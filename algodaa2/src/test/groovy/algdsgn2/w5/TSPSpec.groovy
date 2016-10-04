@@ -3,6 +3,7 @@ package algdsgn2.w5
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static java.lang.Math.sqrt
 import static java.util.concurrent.TimeUnit.MILLISECONDS
@@ -12,7 +13,8 @@ class TSPSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def 'it should calculate the minimum distance of a traveling salesman tour given a distance matrix'() {
+    @Unroll
+    def 'it should calculate the minimum distance #tour of a traveling salesman tour given a distance matrix'() {
 
         given:
         def tsp = new TSP(distances as float[][])
@@ -43,7 +45,8 @@ class TSPSpec extends Specification {
 
     }
 
-    def 'it should calculate the minimum distance of a traveling salesman tour given a coordinate list'() {
+    @Unroll
+    def 'it should calculate the minimum distance #tour of a traveling salesman tour given a coordinate list'() {
 
         given:
         def input = TSPSpec.class.getResource(file)
