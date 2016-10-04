@@ -5,6 +5,8 @@
 package algopad.common.misc
 
 import groovy.transform.CompileStatic
+import groovy.transform.stc.ClosureParams
+import groovy.transform.stc.FromString
 
 /**
  * Some useful methods for working with 2D matrices/arrays.
@@ -20,8 +22,8 @@ class Matrices {
      * Scans the entire <i>matrix</i> and executes the param {@link Closure}
      * in order to initialize each cell.
      */
-    @SuppressWarnings("GroovyParameterNamingConvention")
-    static def initMatrix(Object[][] matrix, Closure closure) {
+    static def initMatrix(Object[][] matrix,
+                          @ClosureParams(value = FromString, options = 'Integer,Integer') Closure closure) {
         matrix.eachWithIndex { Object[] row, int i ->
             row.eachWithIndex { Object col, int j ->
                 matrix[i][j] = closure.call(i, j)
@@ -32,6 +34,7 @@ class Matrices {
     /**
      * @return a string representation of the contents of the specified matrix.
      */
+    @SuppressWarnings('GroovyUntypedAccess')
     static String toString(matrix) {
         def sb = new StringBuilder()
         matrix.eachWithIndex { row, int i ->

@@ -11,8 +11,6 @@ import algopad.common.graph.Vertex
 import algopad.common.misc.Ints.HammingCalculator
 import groovy.transform.CompileStatic
 
-import java.util.Map.Entry
-
 /**
  * @author Nicolas Estrada.
  */
@@ -57,7 +55,7 @@ class Clustering {
 
         // Gather the remaining crossing edges and return the sorted list
         def crossingEdges = []
-        processCrossingEdge { crossingEdges << it }
+        processCrossingEdge { Edge edge -> crossingEdges << edge }
         crossingEdges.sort byWeight
 
     }
@@ -95,26 +93,21 @@ class Clustering {
 
         // Calculates all hamming "neighbors" with distance <= maxDistance
         def neighborsFor = { int num ->
-            def neighbors = []
+            def neighbors = [] as List<Integer>
             calculators.each { HammingCalculator hc ->
                 neighbors.addAll hc.neighborsFor(num)
             }
             neighbors
         }
 
-        for (Iterator iterator = indices.iterator();
-             iterator.hasNext();) {
+        for (def entry in indices.entrySet()) {
 
-            def entry = iterator.next() as Entry<Integer, Integer>
             int num = entry.key
             int numIx = entry.value
 
             neighborsFor(num)
               .findAll { indices.containsKey it }
               .each { set.union numIx, indices[it] as int }
-
-            iterator.remove()
-
         }
 
         set.size

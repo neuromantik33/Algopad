@@ -15,10 +15,6 @@ import static java.lang.Math.min
 /**
  * @author Nicolas Estrada.
  */
-@SuppressWarnings([
-  'GroovyParameterNamingConvention',
-  'GroovyLocalVariableNamingConvention'
-])
 class FloydMarshall {
 
     /**
@@ -29,9 +25,9 @@ class FloydMarshall {
      */
     static def calculateShortestPathsFor(final Graph graph) {
 
-        def V = graph.numVertices
+        def numV = graph.numVertices
         def vertices = graph.vertices
-        def paths = new ShortestPath[V][V]
+        def paths = new ShortestPath[numV][numV]
 
         // Initialize the path matrix
         initMatrix(paths) { row, col ->
@@ -50,7 +46,7 @@ class FloydMarshall {
 
         // Using a GPars fork join pool for parallel execution
         withPool {
-            for (int k = 1; k < V; k++) {
+            for (int k = 1; k < numV; k++) {
                 vertices.eachParallel { Vertex src ->
                     calculateShortestPathFor(src, k, paths)
                 }
