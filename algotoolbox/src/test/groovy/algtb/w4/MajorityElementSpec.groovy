@@ -20,6 +20,7 @@ package algtb.w4
 
 import spock.lang.Narrative
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w4.MajorityElement.hasMajorityElement
 
@@ -27,13 +28,14 @@ import static algtb.w4.MajorityElement.hasMajorityElement
               that is, more than half the votes''')
 class MajorityElementSpec extends Specification {
 
-    def 'Given an array of ints #input, it should check whether it contains an int that appears more than n/2 times'() {
+    @Unroll
+    def 'Given an array #ints, it should check whether it contains an int that appears more than n/2 times'() {
 
         expect:
-        hasMajorityElement(input as int[]) == hasMajority
+        hasMajorityElement(ints as int[]) == hasMajority
 
         where:
-        input           | hasMajority
+        ints            | hasMajority
         [2, 3, 9, 2, 2] | true
         [1, 2, 3, 4]    | false
         [1, 2, 3, 1]    | false

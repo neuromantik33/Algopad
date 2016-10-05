@@ -61,15 +61,15 @@ public final class FractionalKnapsack {
     @SuppressWarnings("PackageVisibleInnerClass")
     static final class Item {
 
-        public final int value;
-        public final int weight;
+        private final int value;
+        private final int weight;
 
         Item(final int value, final int weight) {
             this.value = value;
             this.weight = weight;
         }
 
-        public double getRatio() {
+        private double getRatio() {
             return (double) value / weight;
         }
 

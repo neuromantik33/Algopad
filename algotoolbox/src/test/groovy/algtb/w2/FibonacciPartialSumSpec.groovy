@@ -21,6 +21,7 @@ package algtb.w2
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w2.FibonacciPartialSum.getFibonacciPartialSumLastDigit
 import static java.util.concurrent.TimeUnit.MILLISECONDS
@@ -30,7 +31,8 @@ class FibonacciPartialSumSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def '''given two non-negative integers m and n where m < n,
+    @Unroll
+    def '''given two non-negative integers #from and #to where m < n,
            it should find the last digit of the sum Fibm + Fibm+1 + · · · + Fibn'''() {
 
         expect:

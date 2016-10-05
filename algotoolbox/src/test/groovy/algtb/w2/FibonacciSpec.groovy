@@ -21,6 +21,7 @@ package algtb.w2
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w2.Fibonacci.calculateFibonacci
 import static java.util.concurrent.TimeUnit.MILLISECONDS
@@ -30,7 +31,8 @@ class FibonacciSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def 'given an integer n, it should find the nth fibonacci number'() {
+    @Unroll
+    def 'given an integer #n, it should find the nth fibonacci number'() {
 
         expect:
         calculateFibonacci(n) == val

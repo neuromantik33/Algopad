@@ -23,7 +23,6 @@ import java.util.Scanner;
 /**
  * @author Nicolas Estrada.
  */
-@SuppressWarnings("ClassNamingConvention")
 public final class GCD {
 
     private GCD() {}

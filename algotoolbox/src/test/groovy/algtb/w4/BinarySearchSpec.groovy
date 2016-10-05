@@ -19,12 +19,14 @@
 package algtb.w4
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w4.BinarySearch.binarySearch
 
 class BinarySearchSpec extends Specification {
 
-    def 'it should find an integer within an array using binary search'() {
+    @Unroll
+    def 'it should find an integer #x within an array using binary search'() {
 
         expect:
         binarySearch(a as int[], x) == index

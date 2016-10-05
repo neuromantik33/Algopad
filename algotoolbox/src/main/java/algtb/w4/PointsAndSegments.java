@@ -27,15 +27,15 @@ import java.util.Scanner;
 /**
  * @author Nicolas Estrada.
  */
-@SuppressWarnings("UnnecessarilyQualifiedInnerClassAccess")
+@SuppressWarnings({ "UnnecessarilyQualifiedInnerClassAccess", "NonBooleanMethodNameMayNotStartWithQuestion" })
 public final class PointsAndSegments {
 
     private PointsAndSegments() {}
 
     static int[] countSegments(final Segment[] segments, final int[] points) {
 
-        final int[] counts = new int[points.length];
-        final int estimatedSize = (segments.length << 1) + points.length;
+        final int len = points.length;
+        final int estimatedSize = (segments.length << 1) + len;
         final Queue<SweepEvent> heap = new PriorityQueue<>(estimatedSize);
 
         addPointsToHeap(points, heap);
@@ -43,6 +43,7 @@ public final class PointsAndSegments {
 
         // Sweep the dimension by increasing point values and react to the events accordingly
         int currentSegments = 0;
+        final int[] counts = new int[len];
         while (!heap.isEmpty()) {
             final SweepEvent evt = heap.poll();
             switch (evt.type) {
@@ -98,20 +99,20 @@ public final class PointsAndSegments {
         }
     }
 
-    @SuppressWarnings({ "ComparableImplementedButEqualsNotOverridden", "PackageVisibleField" })
+    @SuppressWarnings("ComparableImplementedButEqualsNotOverridden")
     private static final class SweepEvent implements Comparable<SweepEvent> {
 
         // Ordering is VERY IMPORTANT as it is important for SEGMENT_START
         // events to have higher priority than POINT events, ergo for POINT < SEGMENT_END
-        enum Type {
+        private enum Type {
             SEGMENT_START, POINT, SEGMENT_END
         }
 
-        final Type type;
-        final int  point;
+        private final Type type;
+        private final int  point;
 
         // For point events only
-        final int index;
+        private final int index;
 
         // Constructor for segments
         private SweepEvent(final Type type, final int point) {
@@ -135,13 +136,13 @@ public final class PointsAndSegments {
         }
     }
 
-    @SuppressWarnings("PublicInnerClass")
-    public static class Segment {
+    @SuppressWarnings("PackageVisibleInnerClass")
+    static class Segment {
 
-        public final int start;
-        public final int end;
+        private final int start;
+        private final int end;
 
-        public Segment(final int start, final int end) {
+        Segment(final int start, final int end) {
             this.start = start;
             this.end = end;
         }

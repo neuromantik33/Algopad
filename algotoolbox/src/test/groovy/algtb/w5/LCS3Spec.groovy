@@ -28,7 +28,8 @@ import static algtb.w5.LCS3.getLCSLength
 class LCS3Spec extends Specification {
 
     @Unroll
-    def 'Given three sequences #seq1, #seq2, and #seq3, it should find the length of their longest common subsequence'() {
+    def '''Given three sequences #seq1, #seq2, and #seq3,
+           it should find the length of their longest common sub-sequence'''() {
 
         given:
         seq1 = seq1 as int[]

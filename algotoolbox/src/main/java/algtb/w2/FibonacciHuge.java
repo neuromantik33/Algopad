@@ -53,7 +53,8 @@ public final class FibonacciHuge {
 
         final int lastIx = cache.size() - 1;
         //noinspection NumericCastThatLosesPrecision
-        return i < n ? cache.get((int) (n % lastIx)) : cache.get(lastIx);
+        final int index = i < n ? (int) (n % lastIx) : lastIx;
+        return cache.get(index);
 
     }
 

@@ -19,13 +19,15 @@
 package algtb.w1
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w1.MaxPairwiseProduct.getMaxPairwiseProduct
 import static java.lang.Integer.MAX_VALUE
 
 class MaxPairwiseProductSpec extends Specification {
 
-    def 'it should calculate the maximum pairwise product'() {
+    @Unroll
+    def 'it should calculate the maximum pairwise product #product'() {
 
         expect:
         getMaxPairwiseProduct(numbers as int[]) == product

@@ -51,14 +51,12 @@ public final class Closest {
         final List<Point> q = new ArrayList<>(points);
         sort(q, BY_INCREASING_Y);
 
-        final PointPair pair = findClosestPair(new HashSet<>(points), p, q);
-        return pair.getDistance();
+        final PointPair pair = findClosestPair(p, q);
+        return pair.distance;
 
     }
 
-    private static PointPair findClosestPair(final Set<Point> points,
-                                             final List<Point> p,
-                                             final List<Point> q) {
+    private static PointPair findClosestPair(final List<Point> p, final List<Point> q) {
 
         final int len = p.size();
 
@@ -72,21 +70,21 @@ public final class Closest {
         final List<Point> pX = p.subList(0, mid);
         final Set<Point> leftPts = new HashSet<>(pX);
         final List<Point> pY = filterPoints(q, leftPts);
-        final PointPair pPair = findClosestPair(leftPts, pX, pY);
+        final PointPair pPair = findClosestPair(pX, pY);
 
         final List<Point> qX = p.subList(mid, len);
         final Set<Point> rightPts = new HashSet<>(qX);
         final List<Point> qY = filterPoints(q, rightPts);
-        final PointPair qPair = findClosestPair(rightPts, qX, qY);
+        final PointPair qPair = findClosestPair(qX, qY);
 
-        final double minDistance = min(pPair.getDistance(), qPair.getDistance());
+        final double minDistance = min(pPair.distance, qPair.distance);
         final PointPair sPair = getClosestPairNearMedian(q, p.get(mid), minDistance);
 
         // Return the smallest pair of the right, left and axis closest pairs
         PointPair minPair = pPair;
-        if (sPair.getDistance() < minDistance) {
+        if (sPair.distance < minDistance) {
             minPair = sPair;
-        } else if (qPair.getDistance() < pPair.getDistance()) {
+        } else if (qPair.distance < pPair.distance) {
             minPair = qPair;
         }
 
@@ -107,7 +105,7 @@ public final class Closest {
         for (int i = 1; i < len - 1; i++) {
             for (int j = i + 1; j < len; j++) {
                 final double distance = points.get(i).distanceTo(points.get(j));
-                if (distance < minPair.getDistance()) {
+                if (distance < minPair.distance) {
                     minPair = new PointPair(points.get(i), points.get(j), distance);
                 }
             }
@@ -149,7 +147,7 @@ public final class Closest {
                         break;
                     }
                     final double distance = pt1.distanceTo(pt2);
-                    if (distance < minPair.getDistance()) {
+                    if (distance < minPair.distance) {
                         minPair = new PointPair(pt1, pt2, distance);
                     }
                 }
@@ -193,13 +191,13 @@ public final class Closest {
         }
     };
 
-    @SuppressWarnings({ "PublicInnerClass", "InstanceVariableNamingConvention" })
-    public static class Point {
+    @SuppressWarnings("PackageVisibleInnerClass")
+    static class Point {
 
-        public final int x;
-        public final int y;
+        private final int x;
+        private final int y;
 
-        public Point(final int x, final int y) {
+        Point(final int x, final int y) {
             this.x = x;
             this.y = y;
         }
@@ -230,10 +228,6 @@ public final class Closest {
             this.pt1 = pt1;
             this.pt2 = pt2;
             this.distance = distance;
-        }
-
-        private double getDistance() {
-            return distance;
         }
 
         @Override

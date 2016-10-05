@@ -60,14 +60,18 @@ public final class Inversions {
         long numInv = 0L;
         for (int k = lo; k <= hi; k++) {
             if (i > mid) {
-                a[k] = aux[j++];
+                a[k] = aux[j];
+                j++;
             } else if (j > hi) {
-                a[k] = aux[i++];
+                a[k] = aux[i];
+                i++;
             } else if (aux[j] < aux[i]) {
                 numInv += mid + 1 - i;
-                a[k] = aux[j++];
+                a[k] = aux[j];
+                j++;
             } else {
-                a[k] = aux[i++];
+                a[k] = aux[i];
+                i++;
             }
         }
 

@@ -37,7 +37,8 @@ class ClosestSpec extends Specification {
     Stopwatch stopwatch = new Stopwatch() {}
 
     @Unroll
-    def 'given #n points on a plane, it should find the smallest distance #distance between a pair of two (different) points'() {
+    def '''given #n points on a plane, it should find the smallest distance #distance
+           between a pair of two (different) points'''() {
 
         given:
         points = points.collect { new Point(*it) }
@@ -62,7 +63,8 @@ class ClosestSpec extends Specification {
 
     }
 
-    def 'it should find the smallest pairwise distance between a very large set of points'() {
+    @Unroll
+    def 'it should find the smallest pairwise distance #distance between a very large set of points'() {
 
         given:
         def max = Integer.MAX_VALUE

@@ -19,12 +19,14 @@
 package algtb.w4
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w4.Sorting.randomizedQuickSort
 
 class SortingSpec extends Specification {
 
-    def 'it should sort the array of integers using a 3-way quicksort'() {
+    @Unroll
+    def 'it should sort the array of integers #input using a 3-way quicksort'() {
 
         given:
         input = input as int[]

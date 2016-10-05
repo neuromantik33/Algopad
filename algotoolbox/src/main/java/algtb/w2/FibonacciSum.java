@@ -27,6 +27,7 @@ public final class FibonacciSum {
 
     private FibonacciSum() {}
 
+    @SuppressWarnings("StandardVariableNames")
     static long getFibonacciSumLastDigit(final long n) {
         int val = getLastDigitForFib(n + 2) - 1;
         if (val < 0) {

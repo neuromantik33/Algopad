@@ -27,7 +27,6 @@ public final class BinarySearch {
 
     private BinarySearch() {}
 
-    @SuppressWarnings("MethodNamesDifferingOnlyByCase")
     static int binarySearch(final int[] a, final int x) {
         int lo = 0;
         int hi = a.length - 1;

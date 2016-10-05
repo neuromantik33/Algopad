@@ -19,15 +19,17 @@
 package algtb.w3
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w3.DotProduct.maxDotProduct
 
 class DotProductSpec extends Specification {
 
+    @Unroll
     def '''given 2 sequences :
            - a1..an (ai is the profit per click of the ith ad) and
            - b1..bn (bi is the average number of clicks per day of the ith slot,
-           it should partition them into n pairs (ai,bj) such that the sum of their products is maximized'''() {
+           it should partition them into n pairs (ai,bj) such that the sum of their products #sum is maximized'''() {
 
         expect:
         maxDotProduct(ads as int[], slots as int[]) == sum

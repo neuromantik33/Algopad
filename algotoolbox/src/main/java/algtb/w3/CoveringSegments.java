@@ -39,13 +39,13 @@ public final class CoveringSegments {
 
         final List<Integer> points = new ArrayList<>(segments.length);
         Segment prev = segments[0];
-        points.add(prev.getEnd());
+        points.add(prev.end);
 
-        for (int i = 1; i < segments.length; i++) {
+        for (int i = 1, len = segments.length; i < len; i++) {
             final Segment segment = segments[i];
-            if (segment.getStart() > prev.getEnd()) {
+            if (segment.start > prev.end) {
                 prev = segment;
-                points.add(segment.getEnd());
+                points.add(segment.end);
             }
         }
 
@@ -56,13 +56,14 @@ public final class CoveringSegments {
     private static final Comparator<Segment> BY_RIGHT_ENDPOINT = new Comparator<Segment>() {
         @Override
         public int compare(final Segment o1, final Segment o2) {
-            return Integer.compare(o1.getEnd(), o2.getEnd());
+            return Integer.compare(o1.end, o2.end);
         }
     };
 
     private static int[] toIntArray(final List<Integer> list) {
-        final int[] array = new int[list.size()];
-        for (int i = 0; i < array.length; i++) {
+        final int len = list.size();
+        final int[] array = new int[len];
+        for (int i = 0; i < len; i++) {
             array[i] = list.get(i);
         }
         return array;
@@ -79,21 +80,13 @@ public final class CoveringSegments {
             this.end = end;
         }
 
-        public int getStart() {
-            return start;
-        }
-
-        public int getEnd() {
-            return end;
-        }
-
         @Override
         public String toString() {
             return format("[{0},{1}]", start, end);
         }
     }
 
-    @SuppressWarnings("UseOfSystemOutOrSystemErr")
+    @SuppressWarnings({ "UseOfSystemOutOrSystemErr", "MethodWithMultipleLoops" })
     public static void main(final String... args) {
         try (final Scanner in = new Scanner(System.in, "UTF-8")) {
 

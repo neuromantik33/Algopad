@@ -29,8 +29,8 @@ public final class EditDistance {
 
     private EditDistance() {}
 
-    @SuppressWarnings("MethodWithMultipleLoops")
-    static int calculateEditDistance(final String s, final String t) {
+    @SuppressWarnings({ "MethodWithMultipleLoops", "StandardVariableNames" })
+    static int calculateEditDistance(final CharSequence s, final CharSequence t) {
 
         final int sLen = s.length();
         final int tLen = t.length();

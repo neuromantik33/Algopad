@@ -23,13 +23,14 @@ import spock.lang.Specification
 
 import static java.lang.System.nanoTime
 
-@SuppressWarnings('GroovyLocalVariableNamingConvention')
+@SuppressWarnings('SpWhereUnrollInspection')
 class ProblemsWithoutArraysSpec extends Specification {
 
     @Shared
     def random = new Random()
 
-    private rand1000() { random.nextInt(1000).abs() }
+    @Shared
+    def rand1000 = random.&nextInt.curry(1000)
 
     def '''1.1.1. Consider two integer variables a and b. Write a program block that exchanges the values of a and b
            (i.e., the value of a becomes the value of b and vice versa).'''() {
@@ -509,12 +510,5 @@ class ProblemsWithoutArraysSpec extends Specification {
         804        | 717        | 3
         1611010288 | 1623312280 | 8
 
-    }
-
-    private static <V> V benchmark(String name, Closure<V> closure) {
-        def start = nanoTime()
-        V val = closure.call()
-        println "Time spent on $name \t: ${nanoTime() - start}ns"
-        val
     }
 }

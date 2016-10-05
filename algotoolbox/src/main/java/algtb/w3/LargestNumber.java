@@ -27,17 +27,30 @@ import java.util.Scanner;
 /**
  * @author Nicolas Estrada.
  */
-public final class LargestNumber {
+public final class LargestNumber implements Comparator<String> {
 
     private LargestNumber() {}
 
     static String getLargestNumber(final String[] a) {
-        sort(a, BY_DECREASING_ORDER_WITH_PADDING);
+        sort(a, new LargestNumber());
         final StringBuilder sb = new StringBuilder(a.length);
         for (final String s : a) {
             sb.append(s);
         }
         return sb.toString();
+    }
+
+    @Override
+    public int compare(final String o1, final String o2) {
+        if (o1.length() == o2.length()) {
+            return o2.compareTo(o1);
+        }
+        final int cmp = padSmallestAndCompare(o1, o2);
+        if (cmp != 0) {
+            return cmp;
+        }
+        // Fallback to building the outcomes and comparing them
+        return compareOutcomes(o1, o2);
     }
 
     @SuppressWarnings("AssignmentToMethodParameter")
@@ -69,20 +82,4 @@ public final class LargestNumber {
             System.out.println(getLargestNumber(a));
         }
     }
-
-    private static final Comparator<String> BY_DECREASING_ORDER_WITH_PADDING = new Comparator<String>() {
-        @Override
-        public int compare(final String o1, final String o2) {
-            if (o1.length() == o2.length()) {
-                return o2.compareTo(o1);
-            }
-            final int cmp = padSmallestAndCompare(o1, o2);
-            if (cmp != 0) {
-                return cmp;
-            }
-            // Fallback to building the outcomes and comparing them
-            return compareOutcomes(o1, o2);
-        }
-    };
-
 }

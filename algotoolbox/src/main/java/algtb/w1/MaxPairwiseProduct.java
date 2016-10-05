@@ -34,6 +34,7 @@ public final class MaxPairwiseProduct {
 
     private MaxPairwiseProduct() {}
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     static long getMaxPairwiseProduct(final int[] numbers) {
 
         int max1 = MIN_VALUE;

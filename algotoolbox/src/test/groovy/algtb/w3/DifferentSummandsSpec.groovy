@@ -36,7 +36,7 @@ class DifferentSummandsSpec extends Specification {
            where a1...ak are positive integers and ai != aj for all 1 ≤ i < j ≤ k.'''() {
 
         expect:
-        calculateOptimalSummands(n) == summands
+        calculateOptimalSummands(n) == summands as List<Long>
 
         where:
         n | summands

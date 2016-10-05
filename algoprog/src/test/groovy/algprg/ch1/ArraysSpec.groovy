@@ -24,6 +24,7 @@ import spock.lang.Specification
 import static algopad.common.sorting.MergeSort.sort
 import static java.lang.Integer.MIN_VALUE
 
+@SuppressWarnings('SpWhereUnrollInspection')
 class ArraysSpec extends Specification {
 
     @Shared

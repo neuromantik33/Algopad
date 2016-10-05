@@ -21,6 +21,7 @@ package algtb.w2
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w2.FibonacciHuge.getFibonacciHuge
 import static java.util.concurrent.TimeUnit.MILLISECONDS
@@ -30,7 +31,8 @@ class FibonacciHugeSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def 'given two integers n and m, it should output Fib(n) mod m, that is the remainder of Fib(n) divided by m'() {
+    @Unroll
+    def 'given two integers #n and #sm, it should output Fib(n) mod m, that is the remainder of Fib(n) divided by m'() {
 
         expect:
         getFibonacciHuge(n, m) == val

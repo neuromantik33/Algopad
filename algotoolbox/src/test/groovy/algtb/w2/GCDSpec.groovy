@@ -21,6 +21,7 @@ package algtb.w2
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algtb.w2.GCD.calculateGCD
 import static java.util.concurrent.TimeUnit.MILLISECONDS
@@ -30,7 +31,8 @@ class GCDSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def 'given two integers a and b, it should find their greatest common divisor'() {
+    @Unroll
+    def 'given two integers #a and #b, it should find their greatest common divisor'() {
 
         expect:
         calculateGCD(a, b) == val

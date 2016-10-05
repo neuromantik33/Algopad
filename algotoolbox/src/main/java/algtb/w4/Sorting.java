@@ -26,16 +26,15 @@ import java.util.Scanner;
  */
 public final class Sorting {
 
-    @SuppressWarnings("UnsecureRandomNumberGeneration")
-    private static final Random random = new Random();
-
     private Sorting() {}
 
     static void randomizedQuickSort(final int[] a, final int lo, final int hi) {
 
         if (lo >= hi) { return; }
 
-        final int k = random.nextInt(hi - lo + 1) + lo;
+        //noinspection UnsecureRandomNumberGeneration
+        final Random rnd = new Random();
+        final int k = rnd.nextInt(hi - lo + 1) + lo;
         swap(lo, k, a);
 
         final int[] pivot = partition(a, lo, hi);

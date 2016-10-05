@@ -31,6 +31,7 @@ public final class PrimitiveCalculator {
 
     private PrimitiveCalculator() {}
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     static List<Integer> calculateOptimalSequence(final int n) {
 
         final int[] cache = new int[n + 1];

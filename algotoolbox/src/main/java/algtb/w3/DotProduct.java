@@ -43,6 +43,7 @@ public final class DotProduct {
         return result;
     }
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     public static void main(final String... args) {
         try (final Scanner in = new Scanner(System.in, "UTF-8")) {
             final int n = in.nextInt();

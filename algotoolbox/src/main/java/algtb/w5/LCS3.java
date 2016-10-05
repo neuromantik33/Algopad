@@ -26,7 +26,6 @@ import static java.util.Collections.max;
 /**
  * @author Nicolas Estrada.
  */
-@SuppressWarnings("ClassNamingConvention")
 public final class LCS3 {
 
     private LCS3() {}
