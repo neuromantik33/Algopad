@@ -16,7 +16,8 @@ class ClusteringSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def 'it should calculate the max-spacing K clustering'() {
+    @Unroll
+    def 'it should calculate the max-spacing #maxSpacing of a K-clustering'() {
 
         given:
         def input = ClusteringSpec.class.getResource(file)

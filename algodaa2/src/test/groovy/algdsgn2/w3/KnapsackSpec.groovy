@@ -4,6 +4,7 @@ import algdsgn2.w3.Knapsack.Item
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
+import spock.lang.Unroll
 
 import static algdsgn2.w3.Knapsack.calculateMaxValueWithCapacity
 import static java.util.concurrent.TimeUnit.MILLISECONDS
@@ -13,7 +14,8 @@ class KnapsackSpec extends Specification {
     @Rule
     Stopwatch stopwatch = new Stopwatch() {}
 
-    def 'it should calculate the maximum value for a given knapsack data set'() {
+    @Unroll
+    def 'it should calculate the maximum value #value for a given knapsack data set'() {
 
         given:
         def input = KnapsackSpec.class.getResource(file)
@@ -34,7 +36,7 @@ class KnapsackSpec extends Specification {
 
     }
 
-    private parseKnapsackFile(final URL url) {
+    private static parseKnapsackFile(final URL url) {
         url.withReader { reader ->
             def scanner = new Scanner(reader)
             def capacity = scanner.nextInt()
