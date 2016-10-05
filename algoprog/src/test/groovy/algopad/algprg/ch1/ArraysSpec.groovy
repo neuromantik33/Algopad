@@ -16,7 +16,7 @@
  * permissions and limitations under the License.
  */
 
-package algprg.ch1
+package algopad.algprg.ch1
 
 import spock.lang.Shared
 import spock.lang.Specification
