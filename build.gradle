@@ -21,7 +21,7 @@ allprojects {
     }
 }
 
-project(':algodaa2') {
+project(':algdsgn2') {
     dependencies {
         compile project(':common')
     }
