@@ -2,7 +2,7 @@
  *  algopad.
  */
 
-package algdsgn2.w6
+package algopad.algdsgn2.w6
 
 import algopad.common.ds.BitArray
 import groovy.transform.CompileStatic

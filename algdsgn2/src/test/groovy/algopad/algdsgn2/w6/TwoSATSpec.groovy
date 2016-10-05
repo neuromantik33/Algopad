@@ -1,11 +1,11 @@
-package algdsgn2.w6
+package algopad.algdsgn2.w6
 
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w6.TwoSAT.isSatisfiable
+import static TwoSAT.isSatisfiable
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 
 class TwoSATSpec extends Specification {

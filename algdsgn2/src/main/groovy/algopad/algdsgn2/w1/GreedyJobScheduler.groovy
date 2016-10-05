@@ -1,4 +1,4 @@
-package algdsgn2.w1
+package algopad.algdsgn2.w1
 
 import groovy.transform.CompileStatic
 import groovy.transform.ToString
@@ -7,7 +7,7 @@ import static java.util.Arrays.sort
 
 /**
  * Implementation of a greedy job scheduler which minimizes the sum of weight completion times given a
- * {@link algdsgn2.w1.GreedyJobScheduler.Heuristic}.
+ * {@link GreedyJobScheduler.Heuristic}.
  *
  * @author Nicolas Estrada.
  */

@@ -2,7 +2,7 @@
  *  algopad.
  */
 
-package algdsgn2.w1
+package algopad.algdsgn2.w1
 
 import algopad.common.graph.Edge
 import algopad.common.graph.Graph

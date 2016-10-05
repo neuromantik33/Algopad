@@ -1,12 +1,12 @@
-package algdsgn2.w3
+package algopad.algdsgn2.w3
 
-import algdsgn2.w3.Knapsack.Item
+import algopad.algdsgn2.w3.Knapsack.Item
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w3.Knapsack.calculateMaxValueWithCapacity
+import static Knapsack.calculateMaxValueWithCapacity
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 
 class KnapsackSpec extends Specification {

@@ -2,7 +2,7 @@
  *  algopad.
  */
 
-package algdsgn2.w3
+package algopad.algdsgn2.w3
 
 import groovy.transform.CompileStatic
 import groovy.transform.Immutable

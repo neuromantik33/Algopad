@@ -1,4 +1,4 @@
-package algdsgn2.w4
+package algopad.algdsgn2.w4
 
 import algopad.common.graph.Graph
 import org.junit.Rule
@@ -6,7 +6,7 @@ import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w4.FloydMarshall.calculateShortestPathsFor
+import static FloydMarshall.calculateShortestPathsFor
 import static java.lang.Integer.MAX_VALUE
 import static java.lang.Math.min
 import static java.util.concurrent.TimeUnit.MILLISECONDS

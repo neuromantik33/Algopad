@@ -1,4 +1,4 @@
-package algdsgn2.w2
+package algopad.algdsgn2.w2
 
 import algopad.common.graph.Graph
 import org.junit.Rule
@@ -6,8 +6,8 @@ import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w2.Clustering.calculateSingleLinkClusteringFor
-import static algdsgn2.w2.Clustering.countHammingClustersFor
+import static Clustering.calculateSingleLinkClusteringFor
+import static Clustering.countHammingClustersFor
 import static java.lang.Integer.parseInt
 import static java.util.concurrent.TimeUnit.SECONDS
 

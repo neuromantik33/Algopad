@@ -1,4 +1,4 @@
-package algdsgn2.w5
+package algopad.algdsgn2.w5
 
 import org.junit.Rule
 import org.junit.rules.Stopwatch

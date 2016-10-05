@@ -2,7 +2,7 @@
  *  algopad.
  */
 
-package algdsgn2.w4
+package algopad.algdsgn2.w4
 
 import algopad.common.graph.Graph
 import algopad.common.graph.Vertex

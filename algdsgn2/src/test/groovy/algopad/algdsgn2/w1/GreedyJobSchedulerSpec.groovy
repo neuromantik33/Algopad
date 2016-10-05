@@ -1,12 +1,12 @@
-package algdsgn2.w1
+package algopad.algdsgn2.w1
 
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w1.GreedyJobScheduler.Heuristic.DIFF
-import static algdsgn2.w1.GreedyJobScheduler.Heuristic.RATIO
+import static algopad.algdsgn2.w1.GreedyJobScheduler.Heuristic.DIFF
+import static algopad.algdsgn2.w1.GreedyJobScheduler.Heuristic.RATIO
 import static java.util.concurrent.TimeUnit.MILLISECONDS
 
 class GreedyJobSchedulerSpec extends Specification {

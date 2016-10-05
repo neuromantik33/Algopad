@@ -2,7 +2,7 @@
  *  algopad.
  */
 
-package algdsgn2.w4
+package algopad.algdsgn2.w4
 
 /**
  * This exception is thrown whenever a negative cycle is detected in a {@link algopad.common.graph.Graph}

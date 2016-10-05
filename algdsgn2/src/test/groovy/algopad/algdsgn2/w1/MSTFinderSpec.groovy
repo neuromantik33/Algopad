@@ -1,10 +1,10 @@
-package algdsgn2.w1
+package algopad.algdsgn2.w1
 
 import algopad.common.graph.Graph
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static algdsgn2.w1.MSTFinder.findMST
+import static MSTFinder.findMST
 
 class MSTFinderSpec extends Specification {
 

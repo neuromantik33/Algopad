@@ -2,7 +2,7 @@
  *  algopad.
  */
 
-package algdsgn2.w2
+package algopad.algdsgn2.w2
 
 import algopad.common.ds.DisjointSet
 import algopad.common.graph.Edge
