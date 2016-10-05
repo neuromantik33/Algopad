@@ -18,11 +18,11 @@
 
 package algopad.algtb.w5;
 
-import static java.util.Collections.reverse;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.util.Collections.reverse;
 
 /**
  * @author Nicolas Estrada.

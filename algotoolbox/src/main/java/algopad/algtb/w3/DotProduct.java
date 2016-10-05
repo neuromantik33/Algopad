@@ -18,9 +18,9 @@
 
 package algopad.algtb.w3;
 
-import static java.util.Arrays.sort;
-
 import java.util.Scanner;
+
+import static java.util.Arrays.sort;
 
 /**
  * @author Nicolas Estrada.

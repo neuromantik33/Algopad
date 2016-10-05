@@ -89,6 +89,7 @@ class DisjointSetSpec extends Specification {
 
     }
 
+    @SuppressWarnings("GroovyOverlyLongMethod")
     def 'it should merge components by rank applying path compression'() {
 
         given:

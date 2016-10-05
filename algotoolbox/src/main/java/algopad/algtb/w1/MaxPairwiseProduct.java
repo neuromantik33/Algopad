@@ -18,9 +18,9 @@
 
 package algopad.algtb.w1;
 
-import static java.lang.Integer.MIN_VALUE;
-
 import java.util.Scanner;
+
+import static java.lang.Integer.MIN_VALUE;
 
 /**
  * Given a sequence of non-negative integers a0,…,an−1, find the maximum pairwise product,

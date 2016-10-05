@@ -18,19 +18,19 @@
 
 package algopad.algtb.w4;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+
 import static java.lang.Double.POSITIVE_INFINITY;
 import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.min;
 import static java.lang.StrictMath.sqrt;
 import static java.lang.String.format;
 import static java.util.Collections.sort;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.HashSet;
 
 /**
  * Adapted from pseudo-code (released with no restrictions) using an algorithm described here:

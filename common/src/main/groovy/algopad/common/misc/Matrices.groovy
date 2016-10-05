@@ -48,7 +48,7 @@ class Matrices {
     /**
      * @return a string representation of the contents of the specified matrix.
      */
-    @SuppressWarnings('GroovyUntypedAccess')
+    @SuppressWarnings(['GroovyUntypedAccess', "GroovyUnusedDeclaration"])
     static String toString(matrix) {
         def sb = new StringBuilder()
         matrix.eachWithIndex { row, int i ->

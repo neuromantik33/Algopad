@@ -21,8 +21,6 @@ package algprg.ch1
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static java.lang.System.nanoTime
-
 @SuppressWarnings('SpWhereUnrollInspection')
 class ProblemsWithoutArraysSpec extends Specification {
 

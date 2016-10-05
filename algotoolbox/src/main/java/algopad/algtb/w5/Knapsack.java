@@ -18,10 +18,10 @@
 
 package algopad.algtb.w5;
 
+import java.util.Scanner;
+
 import static java.lang.Math.max;
 import static java.lang.System.arraycopy;
-
-import java.util.Scanner;
 
 /**
  * @author Nicolas Estrada.

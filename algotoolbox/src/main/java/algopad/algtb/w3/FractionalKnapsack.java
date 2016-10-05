@@ -18,12 +18,12 @@
 
 package algopad.algtb.w3;
 
+import java.util.Comparator;
+import java.util.Scanner;
+
 import static java.lang.Math.min;
 import static java.text.MessageFormat.format;
 import static java.util.Arrays.sort;
-
-import java.util.Comparator;
-import java.util.Scanner;
 
 /**
  * @author Nicolas Estrada.

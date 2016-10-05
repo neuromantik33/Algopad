@@ -18,11 +18,11 @@
 
 package algopad.algtb.w4;
 
-import static java.text.MessageFormat.format;
-
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
+
+import static java.text.MessageFormat.format;
 
 /**
  * @author Nicolas Estrada.

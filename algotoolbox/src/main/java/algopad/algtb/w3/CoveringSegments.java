@@ -18,13 +18,13 @@
 
 package algopad.algtb.w3;
 
-import static java.text.MessageFormat.format;
-import static java.util.Arrays.sort;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.text.MessageFormat.format;
+import static java.util.Arrays.sort;
 
 /**
  * @author Nicolas Estrada.

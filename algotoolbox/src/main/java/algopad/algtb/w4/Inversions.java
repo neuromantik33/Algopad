@@ -18,9 +18,9 @@
 
 package algopad.algtb.w4;
 
-import static java.lang.System.arraycopy;
-
 import java.util.Scanner;
+
+import static java.lang.System.arraycopy;
 
 /**
  * @author Nicolas Estrada.

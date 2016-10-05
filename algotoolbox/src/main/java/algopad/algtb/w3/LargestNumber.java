@@ -18,11 +18,11 @@
 
 package algopad.algtb.w3;
 
-import static java.lang.Math.abs;
-import static java.util.Arrays.sort;
-
 import java.util.Comparator;
 import java.util.Scanner;
+
+import static java.lang.Math.abs;
+import static java.util.Arrays.sort;
 
 /**
  * @author Nicolas Estrada.

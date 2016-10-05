@@ -18,9 +18,9 @@
 
 package algopad.algtb.w5;
 
-import static java.lang.Math.min;
-
 import java.util.Scanner;
+
+import static java.lang.Math.min;
 
 /**
  * @author Nicolas Estrada.

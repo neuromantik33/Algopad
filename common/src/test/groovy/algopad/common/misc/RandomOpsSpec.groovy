@@ -19,10 +19,12 @@
 package algopad.common.misc
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class RandomOpsSpec extends Specification {
 
-    def 'it should randomly shuffle an array'() {
+    @Unroll
+    def 'it should randomly shuffle an array #items'() {
 
         given:
         items = items as Integer[]

@@ -18,11 +18,11 @@
 
 package algopad.algtb.w3
 
+import algopad.algtb.w3.FractionalKnapsack.Item
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import static FractionalKnapsack.calculateOptimalValue
-import algopad.algtb.w3.FractionalKnapsack.Item
 
 class FractionalKnapsackSpec extends Specification {
 
