@@ -16,32 +16,35 @@
  * permissions and limitations under the License.
  */
 
-package algopad
+package algopad.common.sorting
 
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
-import static algopad.Sorts.mergeSort
-
-class SortsTest extends Specification {
+@SuppressWarnings('GrUnresolvedAccess')
+class SortingSpec extends Specification {
 
     @Shared
     def random = new Random()
 
-    def 'it should sort a random list using #algo'() {
+    @Unroll
+    def 'it should sort a random list using #name'() {
 
         expect:
         algo.call(list) == list.sort(false)
 
         where:
-        algo << [mergeSort]
-        list = randomList(50)
+        algo = MergeSort.&sort
+        list = randomIntList(100)
+        name = algo.owner.simpleName
 
     }
 
-    private List randomList(int size) {
+    private List randomIntList(int size) {
         def list = []
-        size.times { list << random.nextInt(size) }
+        size.times { list << random.nextInt() }
+        list.trimToSize()
         list
     }
 }

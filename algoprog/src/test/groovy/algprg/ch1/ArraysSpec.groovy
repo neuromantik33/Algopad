@@ -21,7 +21,7 @@ package algprg.ch1
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static algopad.Sorts.mergeSort
+import static algopad.common.sorting.MergeSort.sort
 import static java.lang.Integer.MIN_VALUE
 
 class ArraysSpec extends Specification {
@@ -180,7 +180,7 @@ class ArraysSpec extends Specification {
 
         def countDistinct = { x ->
             def num = 1, len = x.size()
-            def sorted = mergeSort(x)
+            def sorted = sort(x)
             for (int i = 1; i < len; i++) {
                 if (sorted[i] != sorted[i - 1]) {
                     num += 1
@@ -193,7 +193,7 @@ class ArraysSpec extends Specification {
         countDistinct(a) == (a as Set).size()
 
         where:
-        a = randomArray(30)
+        a = randomIntList(30)
 
     }
 
@@ -203,5 +203,12 @@ class ArraysSpec extends Specification {
             array[i] = random.nextInt(size)
         }
         array
+    }
+
+    private List randomIntList(int size) {
+        def list = []
+        size.times { list << random.nextInt() }
+        list.trimToSize()
+        list
     }
 }

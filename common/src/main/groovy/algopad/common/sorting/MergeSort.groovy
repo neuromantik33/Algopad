@@ -16,54 +16,56 @@
  * permissions and limitations under the License.
  */
 
-package algopad
+package algopad.common.sorting
+
+import groovy.transform.CompileStatic
 
 /**
- * Collection of unoptimized sorting algorithms.
+ * Unoptimized merge sort implementation.
  *
  * @author Nicolas Estrada.
  */
-@SuppressWarnings(['GroovyParameterNamingConvention', 'GroovyLocalVariableNamingConvention'])
-class Sorts {
+@CompileStatic
+class MergeSort {
 
-    static def mergeSort = { x ->
+    static List sort(List list) {
 
-        def n = x.size()
-        if (n < 2) { return x }
+        int n = list.size()
+        if (n < 2) { return list }
 
-        int i = n / 2
-        def a = call(x[0..<i])
-        def b = call(x[i..<n])
+        int i = n >> 1
+        def left = sort(list[0..<i])
+        def right = sort(list[i..<n])
 
-        merge(a, b)
+        merge left, right
 
     }
 
-    private static merge(a, b) {
+    private static List merge(List<? extends Comparable> left,
+                              List<? extends Comparable> right) {
 
-        int n = a.size(), m = b.size()
+        int n = left.size(), m = right.size()
         int i = 0, j = 0
 
-        def result = []
-        result.ensureCapacity n + m
+        def result = new ArrayList(n + m)
 
         while (i < n && j < m) {
-            if (a[i] <= b[j]) {
-                result << a[i]
+            if (left[i] <= right[j]) {
+                result << left[i]
                 i += 1
             } else {
-                result << b[j]
+                result << right[j]
                 j += 1
             }
         }
 
         while (i < n) {
-            result << a[i]
+            result << left[i]
             i += 1
         }
 
         while (j < m) {
-            result << b[j]
+            result << right[j]
             j += 1
         }
 
