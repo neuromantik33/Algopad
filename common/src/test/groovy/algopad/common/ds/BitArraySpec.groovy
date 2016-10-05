@@ -31,6 +31,8 @@ class BitArraySpec extends Specification {
     def 'it should support basic bitwise operations (getting, setting, flipping)'() {
 
         given:
+        def length = random.nextInt(MAX_VALUE)
+        def idx = random.nextInt(length)
         def bits = new BitArray(length)
 
         expect:
@@ -63,10 +65,6 @@ class BitArraySpec extends Specification {
         then:
         !bits[idx]
         bits.cardinality == 0
-
-        where:
-        length = random.nextInt(MAX_VALUE)
-        idx = random.nextInt(length)
 
     }
 }

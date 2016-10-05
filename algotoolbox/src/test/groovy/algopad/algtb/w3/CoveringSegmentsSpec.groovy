@@ -16,31 +16,33 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w3
 
+import algopad.algtb.w3.CoveringSegments.Segment
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static CoveringSegments.optimalPoints
+
+class CoveringSegmentsSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def '''given a set of #n segments with integer coordinates on a line,
+           find the minimum number #m of points such that each segment contains at least 1 point.'''() {
 
         given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
+        segments = segments.collect { new Segment(it[0], it[1]) } as Segment[]
 
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        optimalPoints(segments) == points as int[]
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        segments                         | points
+        [[1, 3], [2, 5], [3, 6]]         | [3]
+        [[4, 7], [1, 3], [2, 5], [5, 6]] | [3, 6]
+
+        n = segments.size()
+        m = points.size()
 
     }
 }

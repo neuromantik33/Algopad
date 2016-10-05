@@ -82,7 +82,7 @@ class DisjointSet<T> {
     /**
      * Connects the components containing <i>o1</i> and <i>o2</i>.
      */
-    def union(T o1, T o2) {
+    void union(T o1, T o2) {
         def p1 = find(o1)
         def p2 = find(o2)
         if (!areSame(p1, p2)) {
@@ -115,14 +115,14 @@ class DisjointSet<T> {
         inverse
     }
 
-    private verifyMembers(T... members) {
-        members.each {
-            assert nodeMap[it], "$it was not added to disjoint-set"
+    private verifyMembers(Object... members) {
+        members.each { T elmt ->
+            assert nodeMap[elmt], "$elmt was not added to disjoint-set"
         }
     }
 
     // Union by rank
-    private link(T o1, T o2) {
+    private void link(T o1, T o2) {
         def node1 = nodeMap[o1]
         def node2 = nodeMap[o2]
         if (node1.rank > node2.rank) {

@@ -16,31 +16,36 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w2
 
+import org.junit.Rule
+import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static FibonacciSum.getFibonacciSumLastDigit
+import static java.util.concurrent.TimeUnit.MILLISECONDS
+
+class FibonacciSumSpec extends Specification {
+
+    @Rule
+    Stopwatch stopwatch = new Stopwatch() {}
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def 'given an integer #n, it should find the last digit of the sum Fib0 + Fib1 + · · · + Fibn'() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
+        expect:
+        getFibonacciSumLastDigit(n) == val
 
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        and:
+        stopwatch.runtime(MILLISECONDS) < 1500
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        n            | val
+        3            | 4
+        100          | 5
+        832564823476 | 3
+        614162383528 | 9
 
     }
 }

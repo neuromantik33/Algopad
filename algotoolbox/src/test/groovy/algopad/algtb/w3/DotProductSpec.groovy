@@ -16,31 +16,28 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w3
 
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static DotProduct.maxDotProduct
+
+class DotProductSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def '''given 2 sequences :
+           - a1..an (ai is the profit per click of the ith ad) and
+           - b1..bn (bi is the average number of clicks per day of the ith slot,
+           it should partition them into n pairs (ai,bj) such that the sum of their products #sum is maximized'''() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
-
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        maxDotProduct(ads as int[], slots as int[]) == sum
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        ads        | slots      | sum
+        [23]       | [39]       | 897
+        [1, 3, -5] | [-2, 4, 1] | 23
 
     }
 }

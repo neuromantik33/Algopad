@@ -16,31 +16,35 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w2
 
+import org.junit.Rule
+import org.junit.rules.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static FibonacciLastDigit.getFibonacciLastDigit
+import static java.util.concurrent.TimeUnit.MILLISECONDS
+
+class FibonacciLastDigitSpec extends Specification {
+
+    @Rule
+    Stopwatch stopwatch = new Stopwatch() {}
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def 'given an integer #n, it should find the last digit of the nth fibonacci number ie Fn mod 10'() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
+        expect:
+        getFibonacciLastDigit(n) == val
 
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        and:
+        stopwatch.runtime(MILLISECONDS) < 1500
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        n      | val
+        3      | 2
+        331    | 9
+        327305 | 5
 
     }
 }

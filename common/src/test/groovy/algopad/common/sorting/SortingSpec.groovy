@@ -16,31 +16,35 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.common.sorting
 
+import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+@SuppressWarnings('GrUnresolvedAccess')
+class SortingSpec extends Specification {
+
+    @Shared
+    def random = new Random()
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def 'it should sort a random list using #name'() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
-
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        algo.call(list) == list.sort(false)
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        algo = MergeSort.&sort
+        list = randomIntList(100)
+        name = algo.owner.simpleName
 
+    }
+
+    private List randomIntList(int size) {
+        def list = []
+        size.times { list << random.nextInt() }
+        list.trimToSize()
+        list
     }
 }

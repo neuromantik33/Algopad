@@ -66,7 +66,7 @@ class Ints {
          */
         Set<Integer> neighborsFor(int num) {
             bitmasks.collect { List<Integer> offsets ->
-                def val = num
+                int val = num
                 offsets.each {
                     val ^= 1 << it
                 }

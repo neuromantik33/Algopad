@@ -16,25 +16,6 @@
  * permissions and limitations under the License.
  */
 
-allprojects {
-
-    repositories {
-        mavenCentral()
-    }
-
-    apply plugin: 'java'
-    apply plugin: 'groovy'
-
-    dependencies {
-
-        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
-        compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
-
-        testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4-rc-2'
-
-    }
-
-    test {
-        maxParallelForks 3
-    }
+dependencies {
+    compile project(':common')
 }

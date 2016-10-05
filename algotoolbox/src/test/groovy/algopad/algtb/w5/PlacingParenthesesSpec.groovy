@@ -16,31 +16,29 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w5
 
+import spock.lang.Narrative
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static PlacingParentheses.calculateMaximumValue
+
+@Narrative('In this problem, your goal is to add parentheses to a given arithmetic expression to maximize its value.')
+class PlacingParenthesesSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def '''it should find the maximum value #value for #exp by specifying the order
+           of applying its arithmetic operations using additional parentheses.'''() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
-
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        calculateMaximumValue(exp) == value
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        exp           | value
+        '1+5'         | 6
+        '5-8+7*4-8+9' | 200
+        '1+2-3*4-5'   | 6
 
     }
 }

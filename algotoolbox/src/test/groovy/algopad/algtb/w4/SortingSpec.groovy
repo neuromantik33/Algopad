@@ -16,25 +16,31 @@
  * permissions and limitations under the License.
  */
 
-allprojects {
+package algopad.algtb.w4
 
-    repositories {
-        mavenCentral()
-    }
+import spock.lang.Specification
+import spock.lang.Unroll
 
-    apply plugin: 'java'
-    apply plugin: 'groovy'
+import static Sorting.randomizedQuickSort
 
-    dependencies {
+class SortingSpec extends Specification {
 
-        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
-        compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
+    @Unroll
+    def 'it should sort the array of integers #input using a 3-way quicksort'() {
 
-        testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4-rc-2'
+        given:
+        input = input as int[]
 
-    }
+        when:
+        randomizedQuickSort(input, 0, input.size() - 1)
 
-    test {
-        maxParallelForks 3
+        then:
+        input == sorted as int[]
+
+        where:
+        input                    | sorted
+        [2, 3, 9, 2, 2]          | [2, 2, 2, 3, 9]
+        [1, 1, 1, 1, 1, 1, 1, 0] | [0, 1, 1, 1, 1, 1, 1, 1]
+
     }
 }

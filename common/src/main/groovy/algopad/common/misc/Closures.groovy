@@ -30,6 +30,7 @@ class Closures {
      *
      * @return a negated version of the passed-in <i>predicate</i>.
      */
+    @SuppressWarnings('GroovyAssignabilityCheck')
     static Closure<Boolean> negate(Closure<Boolean> predicate) {
         { ... args -> !predicate.call(*args) }
     }

@@ -31,6 +31,10 @@ class BitsSpec extends Specification {
 
     def 'it should generate a random number of bits'() {
 
+        given:
+        long seed = random.nextLong()
+        int numBits = random.nextInt(100)
+
         when:
         def bigInt = new BigInteger(numBits, new Random(seed))
         def bitSet = randomBitSet(numBits, new Random(seed))
@@ -41,10 +45,6 @@ class BitsSpec extends Specification {
         bitAry.toByteArray() == bigInt.toByteArray()
         bitSet.cardinality() == bigInt.bitCount()
         bitAry.cardinality == bigInt.bitCount()
-
-        where:
-        seed = random.nextLong()
-        numBits = random.nextInt(100)
 
     }
 }

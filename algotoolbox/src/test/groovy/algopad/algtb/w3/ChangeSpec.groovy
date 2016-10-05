@@ -16,25 +16,26 @@
  * permissions and limitations under the License.
  */
 
-allprojects {
+package algopad.algtb.w3
 
-    repositories {
-        mavenCentral()
-    }
+import spock.lang.Specification
+import spock.lang.Unroll
 
-    apply plugin: 'java'
-    apply plugin: 'groovy'
+import static Change.getChange
 
-    dependencies {
+class ChangeSpec extends Specification {
 
-        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
-        compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
+    @Unroll
+    def '''it should calculate the minimum number of coins needed to change the input value #m
+           into coins with denominations 1, 5, and 10.'''() {
 
-        testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4-rc-2'
+        expect:
+        getChange(m) == numCoins
 
-    }
+        where:
+        m  | numCoins
+        2  | 2
+        28 | 6
 
-    test {
-        maxParallelForks 3
     }
 }

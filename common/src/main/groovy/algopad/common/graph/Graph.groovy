@@ -21,7 +21,6 @@ package algopad.common.graph
 import groovy.transform.CompileStatic
 
 @CompileStatic
-@SuppressWarnings('GroovyLocalVariableNamingConvention')
 class Graph {
 
     Vertex[] vertices
@@ -37,7 +36,7 @@ class Graph {
             def numV = scanner.nextInt()
             vertices = new Vertex[numV]
 
-            def numE = scanner.nextInt()
+            int numE = scanner.nextInt()
             numE.times {
 
                 def v = parseVertex(scanner)

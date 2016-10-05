@@ -16,31 +16,31 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w3
 
+import algopad.algtb.w3.FractionalKnapsack.Item
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static FractionalKnapsack.calculateOptimalValue
+
+class FractionalKnapsackSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def 'it should calculate the maximal value of fractions of #n items that fit into a knapsack of capacity #W'() {
 
         given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
+        items = items.collect { new Item(it[0], it[1]) } as Item[]
 
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        calculateOptimalValue(W, items).round(4) == maxVal
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        W  | items                            | maxVal
+        10 | [[500, 30]]                      | 166.6667
+        50 | [[60, 20], [100, 50], [120, 30]] | 180.0
+
+        n = items.size()
 
     }
 }

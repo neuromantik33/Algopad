@@ -16,31 +16,29 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w4
 
+import spock.lang.Narrative
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static MajorityElement.hasMajorityElement
+
+@Narrative('''Majority rule is a decision rule that selects the alternative which has a majority,
+              that is, more than half the votes''')
+class MajorityElementSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def 'Given an array #ints, it should check whether it contains an int that appears more than n/2 times'() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
-
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        hasMajorityElement(ints as int[]) == hasMajority
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        ints            | hasMajority
+        [2, 3, 9, 2, 2] | true
+        [1, 2, 3, 4]    | false
+        [1, 2, 3, 1]    | false
 
     }
 }

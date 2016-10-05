@@ -16,31 +16,29 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w5
 
+import spock.lang.Narrative
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static EditDistance.calculateEditDistance
+
+@Narrative('''The edit distance between two strings is the minimum number of insertions, deletions,
+              and mismatches in an alignment of two strings.''')
+class EditDistanceSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def "it should compute the edit distance #distance of the 2 strings '#s' and '#t'"() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
-
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        calculateEditDistance(s, t) == distance
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        s         | t          | distance
+        'ab'      | 'ab'       | 0
+        'short'   | 'ports'    | 3
+        'editing' | 'distance' | 5
 
     }
 }

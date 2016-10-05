@@ -16,31 +16,28 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.misc
+package algopad.algtb.w5
 
+import spock.lang.Narrative
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class RandomOpsSpec extends Specification {
+import static Knapsack.calculateOptimalWeight
+
+@Narrative('This problem is about implementing an algorithm for the knapsack without repetitions problem.')
+class KnapsackSpec extends Specification {
 
     @Unroll
-    def 'it should randomly shuffle an array #items'() {
+    def '''it should calculate the optimal knapsack capacity never exceeding #maxCapacity
+           for equally valuable items with weight #weights'''() {
 
-        given:
-        items = items as Integer[]
-        def rnd = new Random(seed)
-
-        when:
-        use(RandomOps) {
-            rnd.shuffle items
-        }
-
-        then:
-        items == shuffled as Integer[]
+        expect:
+        calculateOptimalWeight(maxCapacity, weights as int[]) == weight
 
         where:
-        seed | items   | shuffled
-        100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
+        maxCapacity | weights         | weight
+        10          | [1, 4, 8]       | 9
+        10          | [3, 5, 3, 3, 5] | 10
 
     }
 }
