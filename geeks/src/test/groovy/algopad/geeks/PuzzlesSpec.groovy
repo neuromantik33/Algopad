@@ -56,4 +56,26 @@ class PuzzlesSpec extends Specification {
         correct = balanced ? 'balanced' : 'unbalanced'
 
     }
+
+    @Unroll
+    def 'given a string #input, it should find the first non-repeating character #c in it'() {
+
+        given:
+        def findNonRepeatingChar = { String s ->
+            def counts = [:] as LinkedHashMap
+            for (char c in s) {
+                counts[c] = counts.get(c, 0) + 1
+            }
+            counts.find { it.value == 1 }.key as char
+        }
+
+        expect:
+        findNonRepeatingChar(input) == c as char
+
+        where:
+        input           | c
+        'GeeksforGeeks' | 'f'
+        'GeeksQuiz'     | 'G'
+
+    }
 }
