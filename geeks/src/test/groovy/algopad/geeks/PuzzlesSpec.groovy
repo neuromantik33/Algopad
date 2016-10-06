@@ -18,12 +18,14 @@
 
 package algopad.geeks
 
+import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class PuzzlesSpec extends Specification {
 
     @Unroll
+    @See('http://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression')
     def '''given an expression string #exp, it should examine whether the pairs and the orders of
            '{','}','(',')','[',']' are #correct.'''() {
 
@@ -58,7 +60,8 @@ class PuzzlesSpec extends Specification {
     }
 
     @Unroll
-    def 'given a string #input, it should find the first non-repeating character #c in it'() {
+    @See('http://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character')
+    def 'given a string "#input", it should find the first non-repeating character #c in it'() {
 
         given:
         def findNonRepeatingChar = { String s ->
@@ -76,6 +79,42 @@ class PuzzlesSpec extends Specification {
         input           | c
         'GeeksforGeeks' | 'f'
         'GeeksQuiz'     | 'G'
+
+    }
+
+    @Unroll
+    def '''given a linked list #list, it should modify the list such that all even numbers appear
+           before all the odd numbers in the modified linked list, preserving relative order.'''() {
+
+        given:
+        def segregate = { LinkedList ll ->
+            def i = 0
+            def len = ll.size()
+            while (i < len) {
+                if (ll[i] % 2 != 0) {
+                    def val = ll.remove(ll.first)
+                    ll.add val
+                }
+                i += 1
+            }
+        }
+
+        and:
+        list = list as LinkedList
+        segregated = segregated as LinkedList
+
+        when:
+        segregate list
+
+        then:
+        list == segregated
+
+        where:
+        list                               | segregated
+        // [8, 12, 10]                        | [8, 12, 10]
+        [1, 3, 5, 7]                       | [1, 3, 5, 7]
+//        [8, 12, 10, 5, 4, 1, 6]            | [8, 12, 10, 4, 6, 5, 1]
+//        [17, 15, 8, 12, 10, 5, 4, 1, 7, 6] | [8, 12, 10, 4, 6, 17, 15, 5, 1, 7]
 
     }
 }
