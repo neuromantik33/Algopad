@@ -9,5 +9,6 @@ Each module gathers various exercises for varying sources. They are summarized h
 - algoprog    : Algorithms and Programming, 2nd edition (A. Shen)
 - algotoolbox : Algorithmic Toolbox (UC San Diego, Coursera)
 - algodsgn2   : Algorithms: Design and Analysis, Part 2 (Stanford, Coursera)
+- geeks       : http://www.geeksforgeeks.org
 
 If you have any remarks feel free to drop me a line ;)
