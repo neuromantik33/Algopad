@@ -83,17 +83,21 @@ class PuzzlesSpec extends Specification {
     }
 
     @Unroll
+    @See('http://www.geeksforgeeks.org/segregate-even-and-odd-elements-in-a-linked-list')
     def '''given a linked list #list, it should modify the list such that all even numbers appear
            before all the odd numbers in the modified linked list, preserving relative order.'''() {
 
         given:
-        def segregate = { LinkedList ll ->
-            def i = 0
-            def len = ll.size()
+        def segregate = { LinkedList list ->
+            int i = 0, j = 0
+            def len = list.size()
             while (i < len) {
-                if (ll[i] % 2 != 0) {
-                    def val = ll.remove(ll.first)
-                    ll.add val
+                def val = list[j]
+                if (val % 2 != 0) {
+                    list.remove j
+                    list.add val
+                } else {
+                    j += 1
                 }
                 i += 1
             }
@@ -111,10 +115,10 @@ class PuzzlesSpec extends Specification {
 
         where:
         list                               | segregated
-        // [8, 12, 10]                        | [8, 12, 10]
+        [8, 12, 10]                        | [8, 12, 10]
         [1, 3, 5, 7]                       | [1, 3, 5, 7]
-//        [8, 12, 10, 5, 4, 1, 6]            | [8, 12, 10, 4, 6, 5, 1]
-//        [17, 15, 8, 12, 10, 5, 4, 1, 7, 6] | [8, 12, 10, 4, 6, 17, 15, 5, 1, 7]
+        [8, 12, 10, 5, 4, 1, 6]            | [8, 12, 10, 4, 6, 5, 1]
+        [17, 15, 8, 12, 10, 5, 4, 1, 7, 6] | [8, 12, 10, 4, 6, 17, 15, 5, 1, 7]
 
     }
 }
