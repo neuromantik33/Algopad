@@ -18,6 +18,7 @@
 
 package algopad.geeks
 
+import algopad.common.ds.CharStack
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -32,11 +33,11 @@ class PuzzlesSpec extends Specification {
         given:
         def areParenthesesBalanced = { String s ->
             def pairs = ['}': '{', ')': '(', ']': '[']
-            def stack = new Stack<Character>()
+            def stack = new CharStack(s.length())
             for (char c in s) {
                 def closeCh = pairs[c as String]
                 if (closeCh) {
-                    if (stack.empty || stack.pop() != closeCh) {
+                    if (stack.empty || stack.pop() != closeCh as char) {
                         return false
                     }
                 } else {
