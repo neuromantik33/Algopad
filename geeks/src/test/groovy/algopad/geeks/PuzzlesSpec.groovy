@@ -122,4 +122,43 @@ class PuzzlesSpec extends Specification {
         [17, 15, 8, 12, 10, 5, 4, 1, 7, 6] | [8, 12, 10, 4, 6, 17, 15, 5, 1, 7]
 
     }
+
+    @Unroll
+    @See('http://www.geeksforgeeks.org/stock-buy-sell')
+    def '''given an array of the cost of a stock each day, it should find the max profit #maxProfit that can be made
+           by buying and selling in those days.'''() {
+
+        given:
+        def findSellingIntervals = { List stocks ->
+            def intervals = []
+            def last = 0
+            def len = stocks.size() - 1
+            for (int i = 0; i < len; i++) {
+                if (stocks[i] > stocks[i + 1]) {
+                    if (last != i) {
+                        intervals << [last, i]
+                    }
+                    last = i + 1
+                }
+            }
+            if (last != len) {
+                intervals << [last, len]
+            }
+            intervals
+        }
+
+        expect:
+        findSellingIntervals(stocks) == intervals
+
+        where:
+        stocks                             | intervals
+        (9..0)                             | []
+        [100, 180, 260, 310, 40, 535, 695] | [[0, 3], [4, 6]]
+
+        maxProfit = intervals.inject(0) { profit, interval ->
+            def max = stocks[interval[1]]
+            def min = stocks[interval[0]]
+            profit + (max - min)
+        }
+    }
 }
