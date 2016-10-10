@@ -33,10 +33,25 @@ class RandomOps {
      * Rearranges the elements of the specified <i>array</i> in uniformly random order.
      */
     static void shuffle(Random rnd, Object[] array) {
+        use
         int len = array.length
         (0..<len).each { int idx ->
             int randomIx = idx + rnd.nextInt(len - idx)
             array.swap idx, randomIx
         }
+    }
+
+    /**
+     * Generates random characters present in an <i>alphabet</i> and returns a string.
+     *
+     * @param len the length of the string.
+     */
+    static String nextString(Random rnd, int len, Range alphabet) {
+        def sb = new StringBuilder()
+        len.times {
+            int randomIx = rnd.nextInt(alphabet.size())
+            sb.append(alphabet[randomIx])
+        }
+        sb.toString()
     }
 }

@@ -161,4 +161,58 @@ class PuzzlesSpec extends Specification {
             profit + (max - min)
         }
     }
+
+    @Unroll
+    @See('http://www.geeksforgeeks.org/anagram-substring-search-search-permutations')
+    def '''given a string "#text" and a pattern it should output all occurrences of "#pattern"
+           and its permutations (anagrams) in the text'''() {
+
+        // I never would have thought of this, this is completely lifted from website :/
+
+        given:
+        def findAnagramIndices = { String text, String pattern, int radix = Character.MAX_VALUE ->
+
+            def n = text.length()
+            def m = pattern.length()
+
+            int[] countTW = new int[radix]
+            int[] countP = new int[radix]
+            def indices = []
+
+            // Compares current pattern and text window char occurrences
+            def saveIndexIfEqualCounts = { int idx ->
+                for (int i = 0; i < radix; i++) {
+                    if (countTW[i] != countP[i]) {
+                        return
+                    }
+                }
+                indices << (idx - m)
+            }
+
+            // Build occurrences for initial text window
+            for (int i = 0; i < m; i++) {
+                countTW[text[i]] += 1
+                countP[pattern[i]] += 1
+            }
+
+            for (int i = m; i < n; i++) {
+                saveIndexIfEqualCounts i
+                countTW[text[i]] += 1 // Add current char to window
+                countTW[text[i - m]] -= 1 // Remove first character from window
+            }
+            saveIndexIfEqualCounts n // Check last window
+
+            indices
+
+        }
+
+        expect:
+        findAnagramIndices(text, pattern) == indices
+
+        where:
+        text         | pattern | radix | indices
+        'BACDGABCDA' | 'ABCD'  | 128   | [0, 5, 6]
+        'AAABABAA'   | 'AABA'  | 128   | [0, 1, 4]
+
+    }
 }
