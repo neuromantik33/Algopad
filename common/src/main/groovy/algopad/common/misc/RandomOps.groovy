@@ -33,7 +33,6 @@ class RandomOps {
      * Rearranges the elements of the specified <i>array</i> in uniformly random order.
      */
     static void shuffle(Random rnd, Object[] array) {
-        use
         int len = array.length
         (0..<len).each { int idx ->
             int randomIx = idx + rnd.nextInt(len - idx)
