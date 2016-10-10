@@ -44,7 +44,7 @@ class PuzzlesSpec extends Specification {
                     stack.push c
                 }
             }
-            true
+            stack.empty
         }
 
         expect:
@@ -52,6 +52,7 @@ class PuzzlesSpec extends Specification {
 
         where:
         exp                | balanced
+        '('                | false
         '[()]{}{[()()]()}' | true
         '[(])'             | false
         '()]{}{[()()]()}'  | false
