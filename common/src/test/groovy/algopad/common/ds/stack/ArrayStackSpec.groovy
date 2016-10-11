@@ -16,14 +16,14 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.ds
+package algopad.common.ds.stack
 
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class CharStackSpec extends Specification {
+class ArrayStackSpec extends Specification {
 
-    def stack = new CharStack(25)
+    def stack = new ArrayStack(Character, 25)
 
     @Unroll
     def 'it should throw an error when #op from an empty stack'() {
