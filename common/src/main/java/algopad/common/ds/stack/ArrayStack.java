@@ -18,8 +18,9 @@
 
 package algopad.common.ds.stack;
 
-import java.lang.reflect.Array;
 import java.util.EmptyStackException;
+
+import static java.lang.reflect.Array.newInstance;
 
 /**
  * Fixed-capacity object array backed implementation of a {@link Stack}.
@@ -31,9 +32,8 @@ public class ArrayStack<E> implements Stack<E> {
     private final E[] elements;
     private       int size;
 
-    public ArrayStack(final Class<E> clazz, final int capacity) {
-        //noinspection unchecked
-        this.elements = (E[]) Array.newInstance(clazz, capacity);
+    public ArrayStack(final Class<E[]> clazz, final int capacity) {
+        this.elements = clazz.cast(newInstance(clazz.getComponentType(), capacity));
     }
 
     @Override

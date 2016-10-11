@@ -23,7 +23,7 @@ import spock.lang.Unroll
 
 class ArrayStackSpec extends Specification {
 
-    def stack = new ArrayStack(Character, 25)
+    def stack = new ArrayStack(Character[].class, 25)
 
     @Unroll
     def 'it should throw an error when #op from an empty stack'() {

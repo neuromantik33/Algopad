@@ -25,7 +25,6 @@ import spock.lang.Unroll
 
 class PuzzlesSpec extends Specification {
 
-    @Unroll
     @See('http://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression')
     def '''given an expression string "#exp", it should examine whether the pairs and the orders of
            '{','}','(',')','[',']','<','>' are #correct.'''() {
@@ -39,7 +38,7 @@ class PuzzlesSpec extends Specification {
               '>': '<'
             ]
             def parentheses = (pairs.keySet() + pairs.values()).collect { it as char } as Set
-            def stack = new ArrayStack(Character, s.length())
+            def stack = new ArrayStack(Character[].class, s.length())
             for (char c in s) {
                 if (c in parentheses) {
                     def closeCh = pairs[c as String]
