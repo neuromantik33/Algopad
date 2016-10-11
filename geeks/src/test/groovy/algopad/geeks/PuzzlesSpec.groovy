@@ -280,6 +280,7 @@ class PuzzlesSpec extends Specification {
         where:
         src    | dest   | distance
         [0, 0] | [3, 4] | 11
+        [0, 0] | [8, 1] | 23
         [0, 0] | [8, 9] | Double.POSITIVE_INFINITY
 
         matrix = [[1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
