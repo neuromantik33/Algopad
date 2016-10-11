@@ -262,7 +262,6 @@ class PuzzlesSpec extends Specification {
                 }
             }
 
-
             Queue<List> queue = [] as LinkedList
             distances[src[0]][src[1]] = 0
             queue.offer src
