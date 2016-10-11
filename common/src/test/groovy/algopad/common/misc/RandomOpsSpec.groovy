@@ -43,4 +43,21 @@ class RandomOpsSpec extends Specification {
         100  | (1..20) | [16, 4, 13, 20, 15, 12, 17, 18, 1, 7, 3, 10, 14, 19, 5, 2, 11, 8, 9, 6]
 
     }
+
+    @Unroll
+    def 'it should generate a random string "#string"'() {
+
+        given:
+        def rnd = new Random(seed)
+
+        expect:
+        use(RandomOps) {
+            rnd.nextString 10, alphabet
+        } == string
+
+        where:
+        seed | alphabet | string
+        0    | 'a'..'z' | 'ssxvnjhpdq'
+
+    }
 }

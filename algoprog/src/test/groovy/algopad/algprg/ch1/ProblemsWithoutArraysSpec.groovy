@@ -470,7 +470,7 @@ class ProblemsWithoutArraysSpec extends Specification {
             val
         }
 
-        /*
+        /* Book solution
         def gcd = { x, y ->
             def isOdd = { it % 2 != 0 }
             int m = x, n = y, d = 1
