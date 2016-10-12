@@ -18,7 +18,7 @@
 
 package algopad.geeks
 
-import algopad.common.ds.stack.ArrayStack
+import algopad.common.ds.ArrayStack
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll

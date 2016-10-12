@@ -16,7 +16,7 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.ds.stack;
+package algopad.common.ds;
 
 import java.util.EmptyStackException;
 
