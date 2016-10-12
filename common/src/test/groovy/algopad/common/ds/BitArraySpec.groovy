@@ -20,6 +20,7 @@ package algopad.common.ds
 
 import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Subject
 
 import static java.lang.Short.MAX_VALUE
 
@@ -33,6 +34,8 @@ class BitArraySpec extends Specification {
         given:
         def length = random.nextInt(MAX_VALUE)
         def idx = random.nextInt(length)
+
+        @Subject
         def bits = new BitArray(length)
 
         expect:

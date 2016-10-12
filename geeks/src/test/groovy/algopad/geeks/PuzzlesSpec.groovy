@@ -18,7 +18,7 @@
 
 package algopad.geeks
 
-import algopad.common.ds.CharStack
+import algopad.common.ds.ArrayStack
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -27,21 +27,29 @@ class PuzzlesSpec extends Specification {
 
     @Unroll
     @See('http://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression')
-    def '''given an expression string #exp, it should examine whether the pairs and the orders of
-           '{','}','(',')','[',']' are #correct.'''() {
+    def '''given an expression string "#exp", it should examine whether the pairs and the orders of
+           '{','}','(',')','[',']','<','>' are #correct.'''() {
 
         given:
         def areParenthesesBalanced = { String s ->
-            def pairs = ['}': '{', ')': '(', ']': '[']
-            def stack = new CharStack(s.length())
+            def pairs = [
+              '}': '{',
+              ')': '(',
+              ']': '[',
+              '>': '<'
+            ]
+            def parentheses = (pairs.keySet() + pairs.values()).collect { it as char } as Set
+            def stack = new ArrayStack(Character[].class, s.length())
             for (char c in s) {
-                def closeCh = pairs[c as String]
-                if (closeCh) {
-                    if (stack.empty || stack.pop() != closeCh as char) {
-                        return false
+                if (c in parentheses) {
+                    def closeCh = pairs[c as String]
+                    if (closeCh) {
+                        if (stack.empty || stack.pop() != closeCh as char) {
+                            return false
+                        }
+                    } else {
+                        stack.push c
                     }
-                } else {
-                    stack.push c
                 }
             }
             stack.empty
@@ -51,11 +59,13 @@ class PuzzlesSpec extends Specification {
         areParenthesesBalanced(exp) == balanced
 
         where:
-        exp                | balanced
-        '('                | false
-        '[()]{}{[()()]()}' | true
-        '[(])'             | false
-        '()]{}{[()()]()}'  | false
+        exp                        | balanced
+        '('                        | false
+        ')'                        | false
+        '<>{}'                     | true
+        '[h(e)]l{}l{[o(y)(o)](u)}' | true
+        '[(])'                     | false
+        '()]{}{[()()]()}'          | false
 
         correct = balanced ? 'balanced' : 'unbalanced'
 
@@ -253,7 +263,6 @@ class PuzzlesSpec extends Specification {
                 }
             }
 
-
             Queue<List> queue = [] as LinkedList
             distances[src[0]][src[1]] = 0
             queue.offer src
@@ -280,6 +289,7 @@ class PuzzlesSpec extends Specification {
         where:
         src    | dest   | distance
         [0, 0] | [3, 4] | 11
+        [0, 0] | [8, 1] | 23
         [0, 0] | [8, 9] | Double.POSITIVE_INFINITY
 
         matrix = [[1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
