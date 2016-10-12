@@ -18,12 +18,13 @@
 
 package algopad.common.ds
 
-import algopad.common.ds.ArrayStack
 import spock.lang.Specification
+import spock.lang.Subject
 import spock.lang.Unroll
 
 class ArrayStackSpec extends Specification {
 
+    @Subject
     def stack = new ArrayStack(Character[].class, 25)
 
     @Unroll
