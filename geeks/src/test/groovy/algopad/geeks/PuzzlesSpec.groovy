@@ -19,6 +19,7 @@
 package algopad.geeks
 
 import algopad.common.ds.ArrayStack
+import algopad.common.ds.LinkedList
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -100,24 +101,21 @@ class PuzzlesSpec extends Specification {
            before all the odd numbers in the modified linked list, preserving relative order.'''() {
 
         given:
+        list = list as LinkedList
         def segregate = { LinkedList list ->
-            int i = 0, j = 0
-            def len = list.size()
-            while (i < len) {
-                def val = list[j]
-                if (val % 2 != 0) {
-                    list.remove j
-                    list.add val
-                } else {
-                    j += 1
+            def n = list.size()
+            def last = list.nodeIterator()[-1]
+            def itr = list.nodeIterator()
+            while (n > 0) {
+                //noinspection ChangeToOperator
+                def node = itr.next()
+                if (node.value % 2 != 0) {
+                    itr.remove()
+                    last = list.insertAfter(node.value, last)
                 }
-                i += 1
+                n -= 1
             }
         }
-
-        and:
-        list = list as LinkedList
-        segregated = segregated as LinkedList
 
         when:
         segregate list

@@ -18,6 +18,7 @@
 
 package algopad.common.ds;
 
+import java.util.Collection;
 import java.util.EmptyStackException;
 
 /**
@@ -25,17 +26,7 @@ import java.util.EmptyStackException;
  *
  * @author Nicolas Estrada.
  */
-public interface Stack<E> {
-
-    /**
-     * @return the number of elements in this stack.
-     */
-    int size();
-
-    /**
-     * @return {@code true} if and only if this stack contains no elements, {@code false} otherwise.
-     */
-    boolean isEmpty();
+public interface Stack<E> extends Collection<E> {
 
     /**
      * Looks at the element at the top of this stack without removing it
@@ -54,7 +45,15 @@ public interface Stack<E> {
 
     /**
      * Pushes a element onto the top of this stack.
+     *
+     * @throws FullStackException if the stack is full and of fixed-capacity.
      */
     void push(E elmt);
+
+    /**
+     * Thrown when attempting to {@link #push(Object)} an element into a full fixed-capacity stack.
+     */
+    @SuppressWarnings("PublicInnerClass")
+    class FullStackException extends RuntimeException {}
 
 }
