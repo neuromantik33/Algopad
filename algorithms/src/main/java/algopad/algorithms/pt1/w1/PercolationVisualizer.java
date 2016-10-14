@@ -7,7 +7,7 @@
  *  From that file, it
  *
  *    - Reads the grid size N of the percolation system.
- *    - Creates an N-by-N grid of sites (intially all blocked)
+ *    - Creates an N-by-N grid of sites (initially all blocked)
  *    - Reads in a sequence of sites (row i, column j) to open.
  *
  *  After each site is opened, it draws full sites in light blue,
@@ -16,13 +16,14 @@
  *
  ******************************************************************************/
 
-package algopad.sedgewick.w1;
+package algopad.algorithms.pt1.w1;
 
 import java.awt.Font;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 
+@SuppressWarnings("ALL")
 public class PercolationVisualizer {
 
     // delay in miliseconds (controls animation speed)

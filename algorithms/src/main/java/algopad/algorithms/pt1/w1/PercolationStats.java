@@ -15,7 +15,7 @@
  * permissions and limitations under the License.
  */
 
-package algopad.sedgewick.w1;
+package algopad.algorithms.pt1.w1;
 
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;

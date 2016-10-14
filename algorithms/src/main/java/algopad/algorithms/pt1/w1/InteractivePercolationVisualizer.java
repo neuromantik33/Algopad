@@ -11,11 +11,12 @@
  *
  ******************************************************************************/
 
-package algopad.sedgewick.w1;
+package algopad.algorithms.pt1.w1;
 
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
+@SuppressWarnings("ALL")
 public class InteractivePercolationVisualizer {
 
     public static void main(String[] args) {
