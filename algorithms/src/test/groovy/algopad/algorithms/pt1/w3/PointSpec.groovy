@@ -25,20 +25,23 @@ import static java.lang.Double.POSITIVE_INFINITY
 import static java.util.Arrays.sort
 import static java.util.Collections.shuffle
 
+@SuppressWarnings('SpWhereUnrollInspection')
 class PointSpec extends Specification {
 
     def 'it should throw an error if compareTo is invoked with null'() {
 
         when:
+        //noinspection ChangeToOperator
         new Point(1, 1).compareTo(null)
 
         then:
-        thrown(NullPointerException)
+        thrown NullPointerException
 
     }
 
     /**
-     * Formally, the invoking point (x0, y0) is less than the argument point (x1, y1) if and only if either y0 < y1 or if y0 = y1 and x0 < x1.
+     * Formally, the invoking point (x0, y0) is less than the argument point (x1, y1)
+     * if and only if either y0 < y1 or if y0 = y1 and x0 < x1.
      */
     def 'it should compare points by their y-coordinates, breaking ties by their x-coordinates'() {
 
@@ -46,7 +49,7 @@ class PointSpec extends Specification {
         def p1 = new Point(x1, y1)
 
         expect:
-        p0.compareTo(p1) == result
+        p0 <=> p1 == result
 
         where:
         x0 | y0 | x1 | y1 | result
@@ -129,7 +132,8 @@ class PointSpec extends Specification {
 
         where:
         p      | points
-        [0, 0] | [[10, 0], [9, 1], [8, 2], [7, 3], [6, 4], [5, 5], [4, 6], [3, 7], [2, 8], [1, 9], [0, 10]].collect { x, y -> new Point(x, y) }
+        [0, 0] | [[10, 0], [9, 1], [8, 2], [7, 3], [6, 4], [5, 5], [4, 6], [3, 7], [2, 8], [1, 9], [0, 10]]
+          .collect { x, y -> new Point(x, y) }
 
     }
 }

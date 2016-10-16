@@ -21,6 +21,7 @@ import edu.princeton.cs.algs4.Stopwatch
 import spock.lang.Specification
 import spock.lang.Unroll
 
+@SuppressWarnings('SpWhereUnrollInspection')
 class FastCollinearPointsSpec extends Specification {
 
     def 'it should throw an error if points are null at construction'() {
@@ -44,7 +45,7 @@ class FastCollinearPointsSpec extends Specification {
                                  new Point(0, 0)] as Point[])
 
         then:
-        thrown(IllegalArgumentException)
+        thrown IllegalArgumentException
 
     }
 

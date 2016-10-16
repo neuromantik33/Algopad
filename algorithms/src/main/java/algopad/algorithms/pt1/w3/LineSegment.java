@@ -9,6 +9,7 @@
 
 package algopad.algorithms.pt1.w3;
 
+@SuppressWarnings("EqualsAndHashcode")
 public class LineSegment {
 
     private final Point p;   // one endpoint of this line segment
@@ -23,8 +24,10 @@ public class LineSegment {
      * @throws NullPointerException if either <tt>p</tt> or <tt>q</tt>
      * is <tt>null</tt>
      */
+    @SuppressWarnings("LocalCanBeFinal")
     public LineSegment(Point p, Point q) {
         if (p == null || q == null) {
+            //noinspection ProhibitedExceptionThrown,DuplicateStringLiteralInspection
             throw new NullPointerException("argument is null");
         }
         this.p = p;
@@ -46,6 +49,7 @@ public class LineSegment {
      * @return a string representation of this line segment
      */
     public String toString() {
+        //noinspection StringConcatenation
         return p + " -> " + q;
     }
 

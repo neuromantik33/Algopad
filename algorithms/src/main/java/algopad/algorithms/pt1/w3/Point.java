@@ -17,6 +17,7 @@ import edu.princeton.cs.algs4.StdDraw;
  *
  * @author Nicolas Estrada.
  */
+@SuppressWarnings({ "ComparableImplementedButEqualsNotOverridden", "QuestionableName" })
 public class Point implements Comparable<Point> {
 
     private final int x;     // x-coordinate of this point
@@ -50,6 +51,7 @@ public class Point implements Comparable<Point> {
      */
     public void drawTo(final Point that) {
         /* DO NOT MODIFY */
+        //noinspection UnnecessaryThis
         StdDraw.line(this.x, this.y, that.x, that.y);
     }
 
@@ -97,7 +99,9 @@ public class Point implements Comparable<Point> {
      * argument point
      */
     @Override
+    @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
     public int compareTo(final Point that) {
+        //noinspection ConstantConditions
         if (that == null) {
             //noinspection ProhibitedExceptionThrown
             throw new NullPointerException();
@@ -118,6 +122,7 @@ public class Point implements Comparable<Point> {
      * @return the Comparator that defines this ordering on points
      */
     public Comparator<Point> slopeOrder() {
+        //noinspection Convert2Lambda,ReturnOfInnerClass
         return new Comparator<Point>() {
             @Override
             public int compare(final Point o1, final Point o2) {
@@ -137,6 +142,7 @@ public class Point implements Comparable<Point> {
      */
     public String toString() {
         /* DO NOT MODIFY */
+        //noinspection SingleCharacterStringConcatenation,StringConcatenation
         return "(" + x + ", " + y + ")";
     }
 }

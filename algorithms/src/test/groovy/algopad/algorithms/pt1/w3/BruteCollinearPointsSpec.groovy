@@ -20,6 +20,7 @@ package algopad.algorithms.pt1.w3
 import spock.lang.Specification
 import spock.lang.Unroll
 
+@SuppressWarnings('SpWhereUnrollInspection')
 class BruteCollinearPointsSpec extends Specification {
 
     def 'it should throw an error if points are null at construction'() {
@@ -28,7 +29,7 @@ class BruteCollinearPointsSpec extends Specification {
         new BruteCollinearPoints(points)
 
         then:
-        thrown(NullPointerException)
+        thrown NullPointerException
 
         where:
         points << [null, [null] as Point[]]
@@ -43,7 +44,7 @@ class BruteCollinearPointsSpec extends Specification {
                                   new Point(0, 0)] as Point[])
 
         then:
-        thrown(IllegalArgumentException)
+        thrown IllegalArgumentException
 
     }
 

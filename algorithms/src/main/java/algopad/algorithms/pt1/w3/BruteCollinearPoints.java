@@ -34,6 +34,7 @@ import edu.princeton.cs.algs4.StdOut;
  *
  * @author Nicolas Estrada.
  */
+@SuppressWarnings("MethodWithMultipleLoops")
 public class BruteCollinearPoints {
 
     private static final int MAX_X = 32768;
@@ -41,6 +42,7 @@ public class BruteCollinearPoints {
 
     private final List<LineSegment> segments = new ArrayList<>(10);
 
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
     public BruteCollinearPoints(final Point[] points) {
         final Point[] sortedPts = verifyPoints(points);
         if (sortedPts.length >= 4) {
@@ -48,6 +50,7 @@ public class BruteCollinearPoints {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private static Point[] verifyPoints(final Point[] points) {
         if (points == null) {
             throwNPE();
@@ -75,6 +78,7 @@ public class BruteCollinearPoints {
 
     }
 
+    @SuppressWarnings({ "FeatureEnvy", "StandardVariableNames" })
     private void iterateOverPointCombinations(final Point[] points) {
 
         final int len = points.length;
@@ -136,10 +140,12 @@ public class BruteCollinearPoints {
         throw new NullPointerException();
     }
 
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
     public static void main(final String[] args) {
 
         // Read the N points from a file
         final In in = new In(args[0]);
+        //noinspection LocalVariableNamingConvention
         final int N = in.readInt();
         final Point[] points = new Point[N];
         for (int i = 0; i < N; i++) {

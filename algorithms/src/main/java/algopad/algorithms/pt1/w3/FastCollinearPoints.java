@@ -38,6 +38,7 @@ public class FastCollinearPoints {
     private final List<LineSegment> segments      = new ArrayList<>(10);
     private final SET<PointKey>     visitedPoints = new SET<>();
 
+    @SuppressWarnings("MethodCanBeVariableArityMethod")
     public FastCollinearPoints(final Point[] points) {
         final Point[] sortedPts = verifyPoints(points);
         if (sortedPts.length >= 4) {
@@ -49,6 +50,7 @@ public class FastCollinearPoints {
         }
     }
 
+    @SuppressWarnings({ "Duplicates", "MethodWithMultipleLoops" })
     private static Point[] verifyPoints(final Point[] points) {
         if (points == null) {
             throwNPE();
@@ -76,6 +78,7 @@ public class FastCollinearPoints {
 
     }
 
+    @SuppressWarnings("MethodWithMultipleLoops")
     private void findCollinearSegmentsFor(final Point origin,
                                           final int originIdx,
                                           final Point[] points) {
@@ -161,7 +164,8 @@ public class FastCollinearPoints {
         }
     }
 
-    private static class PointKey implements Comparable<PointKey> {
+    @SuppressWarnings("ComparableImplementedButEqualsNotOverridden")
+    private static final class PointKey implements Comparable<PointKey> {
 
         private final int    address;
         private final double slope;
@@ -182,7 +186,7 @@ public class FastCollinearPoints {
 
         @Override
         public String toString() {
-            return Integer.toHexString(address) + "@" + slope;
+            return String.format("%s@%s", Integer.toHexString(address), slope);
         }
     }
 }
