@@ -16,12 +16,13 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.ds;
+package algopad.common.ds.demos;
 
 import java.util.AbstractCollection;
 import java.util.EmptyStackException;
 import java.util.Iterator;
 
+import algopad.common.ds.Stack;
 import algopad.common.ds.itr.ArrayIterator;
 
 import static java.lang.reflect.Array.newInstance;

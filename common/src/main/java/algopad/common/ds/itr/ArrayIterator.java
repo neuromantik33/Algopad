@@ -69,9 +69,4 @@ public class ArrayIterator<E> implements Iterator<E> {
         index += step;
         return e;
     }
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
 }
