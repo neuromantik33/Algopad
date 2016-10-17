@@ -15,10 +15,6 @@
  * permissions and limitations under the License.
  */
 
-/*
- *  algorithms.pt1.
- */
-
 package algopad.algorithms.pt1.w4;
 
 import java.util.ArrayList;
