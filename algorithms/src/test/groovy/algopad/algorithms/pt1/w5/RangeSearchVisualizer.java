@@ -3,7 +3,7 @@
  *  Execution:    java RangeSearchVisualizer input.txt
  *  Dependencies: PointSET.java KdTree.java
  *
- *  Read points from a file (specified as a command-line arugment) and
+ *  Read points from a file (specified as a command-line argument) and
  *  draw to standard draw. Also draw all of the points in the rectangle
  *  the user selects by dragging the mouse.
  *

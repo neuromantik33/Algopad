@@ -174,7 +174,8 @@ public class Board {
      * @return {@code true} if this object is the same as the obj argument,
      * {@code false} otherwise.
      */
-    @SuppressWarnings({ "NonFinalFieldReferenceInEquals", "ParameterNameDiffersFromOverriddenParameter" })
+    @SuppressWarnings({ "NonFinalFieldReferenceInEquals",
+                        "ParameterNameDiffersFromOverriddenParameter" })
     public boolean equals(final Object y) {
 
         if (y == null) { return false; }

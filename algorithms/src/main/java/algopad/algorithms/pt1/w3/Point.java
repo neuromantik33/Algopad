@@ -17,7 +17,8 @@ import edu.princeton.cs.algs4.StdDraw;
  *
  * @author Nicolas Estrada.
  */
-@SuppressWarnings({ "ComparableImplementedButEqualsNotOverridden", "QuestionableName" })
+@SuppressWarnings({ "ComparableImplementedButEqualsNotOverridden",
+                    "QuestionableName" })
 public class Point implements Comparable<Point> {
 
     private final int x;     // x-coordinate of this point

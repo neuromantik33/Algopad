@@ -22,8 +22,6 @@ import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdRandom;
 
-import static java.lang.Math.max;
-
 /**
  * A {@link RandomizedQueue} is similar to a stack or queue, except that the
  * item removed is chosen uniformly at random from items in the data structure.
@@ -106,7 +104,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private void shrinkIfNeeded() {
         if (size > 0 && size == elements.length / 4) {
-            final int newCapacity = max(elements.length / 2, DEFAULT_CAPACITY);
+            final int newCapacity = Math.max(elements.length / 2, DEFAULT_CAPACITY);
             resize(newCapacity);
         }
     }
