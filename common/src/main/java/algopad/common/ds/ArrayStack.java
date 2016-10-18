@@ -52,7 +52,10 @@ public class ArrayStack<E> extends AbstractCollection<E> implements Stack<E> {
     public E pop() {
         verifySize();
         size--;
-        return elements[size];
+        final E e = elements[size];
+        //noinspection AssignmentToNull (clear to let GC do its work)
+        elements[size] = null;
+        return e;
     }
 
     private void verifySize() {

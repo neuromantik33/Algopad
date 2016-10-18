@@ -18,23 +18,28 @@
 
 package algopad.common.ds;
 
-import java.lang.reflect.Array;
 import java.util.AbstractQueue;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Queue;
 
+import algopad.common.ds.itr.ArrayIterator;
+
 import static java.lang.reflect.Array.newInstance;
+import static java.util.Arrays.fill;
 
 /**
  * A fixed-capacity object array backed implementation of a {@link Queue}.
  *
  * @author Nicolas Estrada.
  */
+@SuppressWarnings("ReturnOfNull")
 public class ArrayQueue<E> extends AbstractQueue<E> {
 
     private final E[] elements;
-    private       int size;
+
+    private int size;
+    private int tail;
+    private int head;
 
     public ArrayQueue(final Class<E[]> clazz, final int capacity) {
         this.elements = clazz.cast(newInstance(clazz.getComponentType(), capacity));
@@ -42,7 +47,7 @@ public class ArrayQueue<E> extends AbstractQueue<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return Collections.emptyIterator();
+        return new ArrayIterator<>(elements, head, tail, true);
     }
 
     @Override
@@ -52,16 +57,41 @@ public class ArrayQueue<E> extends AbstractQueue<E> {
 
     @Override
     public boolean offer(final E e) {
-        return false;
+        if (size == elements.length) {
+            return false;
+        }
+        elements[tail] = e;
+        tail = (tail + 1) % elements.length;
+        size++;
+        return true;
     }
 
     @Override
     public E poll() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        final E e = elements[head];
+        //noinspection AssignmentToNull (clear to let GC do its work)
+        elements[head] = null;
+        head = (head + 1) % elements.length;
+        size--;
+        return e;
     }
 
     @Override
     public E peek() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        return elements[head];
+    }
+
+    @Override
+    public void clear() {
+        fill(elements, null);
+        head = 0;
+        tail = 0;
+        size = 0;
     }
 }

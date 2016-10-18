@@ -24,22 +24,19 @@ import spock.lang.Unroll
 
 class QueueSpec extends Specification {
 
-    @Unroll
     def 'it should throw an error when queuing too many items onto an array queue'() {
 
         @Subject
         def queue = newQueue('array')
 
         when:
-        for (char c in 'a'..'y') {
-            assert queue.offer(c)
-        }
+        0.upto 19, queue.&add
 
         then:
         notThrown IllegalStateException
 
         when:
-        queue.offer 'z' as char
+        queue.add 20
 
         then:
         thrown IllegalStateException
@@ -108,7 +105,7 @@ class QueueSpec extends Specification {
         queue.offer 99
 
         then:
-        queue == [99]
+        queue as List == [99]
 
         where:
         impl << ['array', 'linked']
