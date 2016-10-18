@@ -24,18 +24,19 @@ import static java.lang.Math.abs;
 
 /**
  * {@link Iterator} over a typed-array which iterates from a <i>start</i> index
- * for a given <i>length</i>. It can iterate either forward or backward.
+ * for a given <i>length</i>.<br>
+ * It can iterate either forward or backward and it cycles over the array whenever a
+ * boundary is encountered and there are still any remaining elements left to read.
  *
  * @author Nicolas Estrada.
  */
-public class ArrayIterator<E> implements Iterator<E> {
+public class CyclingArrayIterator<E> implements Iterator<E> {
 
     private final E[] elements;
-    private final int start;
-    private final int length;
     private final int step;
 
     private int index;
+    private int remaining;
 
     /**
      * Creates a new array iterator instance.
@@ -43,21 +44,20 @@ public class ArrayIterator<E> implements Iterator<E> {
      * @param ascending if {@code true} then the index will increment until the
      * <i>length</i> it iterated, otherwise it will decrement.
      */
-    public ArrayIterator(final E[] elements,
-                         final int start,
-                         final int length,
-                         final boolean ascending) {
+    public CyclingArrayIterator(final E[] elements,
+                                final int start,
+                                final int length,
+                                final boolean ascending) {
         //noinspection AssignmentToCollectionOrArrayFieldFromParameter
         this.elements = elements;
-        this.length = length;
-        this.start = start;
+        this.remaining = length;
         this.index = start;
         this.step = ascending ? 1 : -1;
     }
 
     @Override
     public boolean hasNext() {
-        return abs(index - start) < length;
+        return remaining > 0;
     }
 
     @Override
@@ -67,6 +67,17 @@ public class ArrayIterator<E> implements Iterator<E> {
         }
         final E e = elements[index];
         index += step;
+        resetIndex();
+        remaining--;
         return e;
+    }
+
+    private void resetIndex() {
+        final int capacity = elements.length;
+        if (index == capacity) {
+            index = 0;
+        } else if (index == -1) {
+            index = capacity - 1;
+        }
     }
 }

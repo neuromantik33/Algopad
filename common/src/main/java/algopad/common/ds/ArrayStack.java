@@ -22,7 +22,7 @@ import java.util.AbstractCollection;
 import java.util.EmptyStackException;
 import java.util.Iterator;
 
-import algopad.common.ds.itr.ArrayIterator;
+import algopad.common.ds.itr.CyclingArrayIterator;
 
 import static java.lang.System.arraycopy;
 import static java.lang.reflect.Array.newInstance;
@@ -73,7 +73,7 @@ public class ArrayStack<E> extends AbstractCollection<E> implements Stack<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new ArrayIterator<>(elements, size - 1, size, false);
+        return new CyclingArrayIterator<>(elements, size - 1, size, false);
     }
 
     @Override
