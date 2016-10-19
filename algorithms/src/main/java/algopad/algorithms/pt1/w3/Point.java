@@ -17,7 +17,8 @@ import edu.princeton.cs.algs4.StdDraw;
  *
  * @author Nicolas Estrada.
  */
-@SuppressWarnings({ "ComparableImplementedButEqualsNotOverridden", "QuestionableName" })
+@SuppressWarnings({ "ComparableImplementedButEqualsNotOverridden",
+                    "QuestionableName" })
 public class Point implements Comparable<Point> {
 
     private final int x;     // x-coordinate of this point
@@ -122,7 +123,7 @@ public class Point implements Comparable<Point> {
      * @return the Comparator that defines this ordering on points
      */
     public Comparator<Point> slopeOrder() {
-        //noinspection Convert2Lambda,ReturnOfInnerClass
+        //noinspection ReturnOfInnerClass
         return new Comparator<Point>() {
             @Override
             public int compare(final Point o1, final Point o2) {

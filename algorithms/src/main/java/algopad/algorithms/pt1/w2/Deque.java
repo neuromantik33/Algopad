@@ -27,7 +27,8 @@ import java.util.NoSuchElementException;
  *
  * @author Nicolas Estrada.
  */
-@SuppressWarnings({ "TypeParameterNamingConvention", "NonBooleanMethodNameMayNotStartWithQuestion" })
+@SuppressWarnings({ "TypeParameterNamingConvention",
+                    "NonBooleanMethodNameMayNotStartWithQuestion" })
 public class Deque<Item> implements Iterable<Item> {
 
     private       int        size;

@@ -21,7 +21,8 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
-@SuppressWarnings({ "UtilityClassWithoutPrivateConstructor", "NonFinalUtilityClass" })
+@SuppressWarnings({ "UtilityClassWithoutPrivateConstructor",
+                    "NonFinalUtilityClass" })
 public class Subset {
 
     @SuppressWarnings({ "FeatureEnvy", "MethodWithMultipleLoops" })
