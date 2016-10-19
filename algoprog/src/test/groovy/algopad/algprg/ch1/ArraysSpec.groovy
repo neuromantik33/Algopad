@@ -18,10 +18,10 @@
 
 package algopad.algprg.ch1
 
+import algopad.common.sorting.MergeSort
 import spock.lang.Shared
 import spock.lang.Specification
 
-import static algopad.common.sorting.MergeSort.sort
 import static java.lang.Integer.MIN_VALUE
 
 @SuppressWarnings('SpWhereUnrollInspection')
@@ -181,7 +181,7 @@ class ArraysSpec extends Specification {
 
         def countDistinct = { x ->
             def num = 1, len = x.size()
-            def sorted = sort(x)
+            def sorted = new MergeSort()(x)
             for (int i = 1; i < len; i++) {
                 if (sorted[i] != sorted[i - 1]) {
                     num += 1

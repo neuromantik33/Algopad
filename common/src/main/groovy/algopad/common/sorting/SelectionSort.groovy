@@ -20,6 +20,8 @@ package algopad.common.sorting
 
 import groovy.transform.CompileStatic
 
+import static java.util.Comparator.naturalOrder
+
 /**
  * Unoptimized selection sort implementation.
  *
@@ -28,14 +30,19 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class SelectionSort extends Closure<List> {
 
-    SelectionSort() { super(null) }
+    final Comparator cmp
+
+    SelectionSort(Comparator cmp = naturalOrder()) {
+        super(null)
+        this.cmp = cmp
+    }
 
     @SuppressWarnings('GroovyUnusedDeclaration')
-    static List doCall(List list) {
+    List doCall(List list) {
         int k = 0, len = list.size()
         // def invariant = { ListOps.isSorted(list[0..k]) }
         while (k < len) {
-            def idx = minIndex(list, k..len)
+            def idx = minIndex(list, k)
             list.swap k, idx
             // assert invariant()
             k++
@@ -43,10 +50,11 @@ class SelectionSort extends Closure<List> {
         list
     }
 
-    private static int minIndex(List<? extends Comparable> list, IntRange unselected) {
-        int index = unselected.from
-        for (int i = index + 1; i < unselected.to; i++) {
-            if (list[i] < list[index]) {
+    private int minIndex(List list, int start) {
+        int index = start
+        int len = list.size()
+        for (int i = start + 1; i < len; i++) {
+            if (cmp.compare(list[index], list[i]) > 0) {
                 index = i
             }
         }

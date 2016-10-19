@@ -18,6 +18,9 @@
 
 package algopad.common.sorting
 
+import algopad.common.DefaultStopwatch
+import org.junit.Rule
+import org.junit.rules.Stopwatch
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -27,6 +30,9 @@ class SortingSpec extends Specification {
 
     @Shared
     def rnd = new Random()
+
+    @Rule
+    Stopwatch stopwatch = new DefaultStopwatch()
 
     @Unroll
     def 'it should sort a random list using #name'() {
@@ -38,8 +44,11 @@ class SortingSpec extends Specification {
         algo(list) == sorted
 
         where:
-        algo << [new MergeSort(), new SelectionSort()]
-        list = randomIntList(100)
+        algo << [
+          new MergeSort(),
+          new SelectionSort()
+        ]
+        list = randomIntList(10000)
         name = algo.class.simpleName
 
     }

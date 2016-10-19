@@ -20,6 +20,8 @@ package algopad.common.sorting
 
 import groovy.transform.CompileStatic
 
+import static java.util.Comparator.naturalOrder
+
 /**
  * Unoptimized merge sort implementation.
  *
@@ -28,7 +30,12 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class MergeSort extends Closure<List> {
 
-    MergeSort() { super(null) }
+    final Comparator cmp
+
+    MergeSort(Comparator cmp = naturalOrder()) {
+        super(null)
+        this.cmp = cmp
+    }
 
     @SuppressWarnings('GroovyUnusedDeclaration')
     List doCall(List list) {
@@ -51,8 +58,7 @@ class MergeSort extends Closure<List> {
     }*/
 
     @SuppressWarnings('GroovyResultOfIncrementOrDecrementUsed')
-    private static List merge(List<? extends Comparable> left,
-                              List<? extends Comparable> right) {
+    private List merge(List left, List right) {
 
         int n = left.size(), m = right.size()
         int i = 0, j = 0
@@ -60,7 +66,7 @@ class MergeSort extends Closure<List> {
         def result = new ArrayList(n + m)
 
         while (i < n && j < m) {
-            if (left[i] <= right[j]) {
+            if (cmp.compare(left[i], right[j]) <= 0) {
                 result << left[i]
                 i += 1
             } else {
