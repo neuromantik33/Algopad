@@ -16,38 +16,31 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.sorting
+package algopad.common.misc
 
-import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
 
-@SuppressWarnings('GrUnresolvedAccess')
-class SortingSpec extends Specification {
-
-    @Shared
-    def rnd = new Random()
+class ListOpsSpec extends Specification {
 
     @Unroll
-    def 'it should sort a random list using #name'() {
-
-        given:
-        def sorted = list.sort(false)
+    def '#list should be able to specify whether it is #sort'() {
 
         expect:
-        algo(list) == sorted
+        use(ListOps) {
+            list.isSorted() == sorted
+        }
 
         where:
-        algo << [new MergeSort(), new SelectionSort()]
-        list = randomIntList(100)
-        name = algo.class.simpleName
+        list                  | sorted
+        []                    | true
+        [1]                   | true
+        (0..9)                | true
+        [3, 3, 3]             | true
+        (9..0)                | false
+        [1, 2, 3, 5, 4, 6, 7] | false
 
-    }
+        sort = sorted ? 'sorted' : 'unsorted'
 
-    private List randomIntList(int size) {
-        def list = []
-        list.ensureCapacity size
-        size.times { list << rnd.nextInt() }
-        list
     }
 }

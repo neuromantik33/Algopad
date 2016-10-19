@@ -26,21 +26,25 @@ import groovy.transform.CompileStatic
  * @author Nicolas Estrada.
  */
 @CompileStatic
-class MergeSort {
+class MergeSort extends Closure<List> {
 
-    static List sort(List list) {
+    MergeSort() { super(null) }
+
+    @SuppressWarnings('GroovyUnusedDeclaration')
+    List doCall(List list) {
 
         int n = list.size()
         if (n < 2) { return list }
 
         int i = n >> 1
-        def left = sort(list[0..<i])
-        def right = sort(list[i..<n])
+        def left = call(list[0..<i])
+        def right = call(list[i..<n])
 
         merge left, right
 
     }
 
+    @SuppressWarnings('GroovyResultOfIncrementOrDecrementUsed')
     private static List merge(List<? extends Comparable> left,
                               List<? extends Comparable> right) {
 
@@ -59,15 +63,8 @@ class MergeSort {
             }
         }
 
-        while (i < n) {
-            result << left[i]
-            i += 1
-        }
-
-        while (j < m) {
-            result << right[j]
-            j += 1
-        }
+        while (i < n) { result << left[i++] }
+        while (j < m) { result << right[j++] }
 
         result
 
