@@ -40,16 +40,19 @@ class SortingSpec extends Specification {
         given:
         def sorted = list.sort(false)
 
-        expect:
-        algo(list) == sorted
+        when:
+        sort(list)
+
+        then:
+        list == sorted
 
         where:
-        algo << [
+        sort << [
           new MergeSort(),
           new SelectionSort()
         ]
         list = randomIntList(10000)
-        name = algo.class.simpleName
+        name = sort.class.simpleName
 
     }
 

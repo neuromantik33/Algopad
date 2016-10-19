@@ -31,6 +31,7 @@ import static java.util.Comparator.naturalOrder
 class MergeSort extends Closure<List> {
 
     final Comparator cmp
+    private ArrayList buf = []
 
     MergeSort(Comparator cmp = naturalOrder()) {
         super(null)
@@ -43,13 +44,18 @@ class MergeSort extends Closure<List> {
         int n = list.size()
         if (n < 2) { return list }
 
+        buf.ensureCapacity n
+
         int i = n >> 1
         def left = call(list[0..<i])
         def right = call(list[i..<n])
 
         // assert invariant(left, right)
+        def copy = merge(left, right)
 
-        merge left, right
+        // Copy items back into the list
+        n.times { int j -> list[j] = copy[j] }
+        list
 
     }
 
@@ -63,22 +69,22 @@ class MergeSort extends Closure<List> {
         int n = left.size(), m = right.size()
         int i = 0, j = 0
 
-        def result = new ArrayList(n + m)
+        buf.clear()
 
         while (i < n && j < m) {
             if (cmp.compare(left[i], right[j]) <= 0) {
-                result << left[i]
+                buf << left[i]
                 i += 1
             } else {
-                result << right[j]
+                buf << right[j]
                 j += 1
             }
         }
 
-        while (i < n) { result << left[i++] }
-        while (j < m) { result << right[j++] }
+        while (i < n) { buf << left[i++] }
+        while (j < m) { buf << right[j++] }
 
-        result
+        buf
 
     }
 }
