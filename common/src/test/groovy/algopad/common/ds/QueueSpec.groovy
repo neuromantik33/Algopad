@@ -22,21 +22,42 @@ import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-class LinkedQueueSpec extends Specification {
+class QueueSpec extends Specification {
 
-    @Subject
-    def queue = new LinkedQueue()
+    def 'it should throw an error when queuing too many items onto an array queue'() {
 
-    def 'initially it is empty'() {
+        @Subject
+        def queue = newQueue('array')
+
+        when:
+        0.upto 19, queue.&add
+
+        then:
+        notThrown IllegalStateException
+
+        when:
+        queue.add 20
+
+        then:
+        thrown IllegalStateException
+
+    }
+
+    @Unroll
+    def 'initially the #impl queue is empty'() {
 
         expect:
         queue.empty
         queue.size() == 0
 
+        where:
+        impl << ['array', 'linked']
+        queue = newQueue(impl)
+
     }
 
     @Unroll
-    def 'it should throw an error when #op from an empty queue'() {
+    def 'it should throw an error when #op-ing from an empty #impl queue'() {
 
         expect:
         queue.empty
@@ -48,11 +69,18 @@ class LinkedQueueSpec extends Specification {
         thrown NoSuchElementException
 
         where:
-        op << ['remove', 'element']
+        impl     | op
+        'linked' | 'remove'
+        'linked' | 'element'
+        'array'  | 'remove'
+        'array'  | 'element'
+
+        queue = newQueue(impl)
 
     }
 
-    def 'it should support basic queue operations (offering, polling, peeking)'() {
+    @Unroll
+    def 'the #impl queue should support basic queue operations (offering, polling, peeking)'() {
 
         when:
         queue.offer 0
@@ -77,7 +105,19 @@ class LinkedQueueSpec extends Specification {
         queue.offer 99
 
         then:
-        queue == [99]
+        queue as List == [99]
 
+        where:
+        impl << ['array', 'linked']
+        queue = newQueue(impl)
+
+    }
+
+    private static Queue newQueue(name) {
+        def impls = [
+          'array' : { new ArrayQueue(Integer[].class, 20) },
+          'linked': { new LinkedQueue() }
+        ]
+        impls[name].call()
     }
 }

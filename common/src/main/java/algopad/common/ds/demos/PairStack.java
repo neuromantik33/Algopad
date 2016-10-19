@@ -16,13 +16,14 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.ds;
+package algopad.common.ds.demos;
 
 import java.util.AbstractCollection;
 import java.util.EmptyStackException;
 import java.util.Iterator;
 
-import algopad.common.ds.itr.ArrayIterator;
+import algopad.common.ds.Stack;
+import algopad.common.ds.itr.CyclingArrayIterator;
 
 import static java.lang.reflect.Array.newInstance;
 
@@ -105,7 +106,7 @@ public class PairStack<E> {
 
         @Override
         public Iterator<E> iterator() {
-            return new ArrayIterator<>(elements, currentIdx(), size, ascending);
+            return new CyclingArrayIterator<>(elements, currentIdx(), size, ascending);
         }
 
         private int currentIdx() {

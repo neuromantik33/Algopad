@@ -18,6 +18,9 @@
 
 package algopad.common.sorting
 
+import algopad.common.DefaultStopwatch
+import org.junit.Rule
+import org.junit.rules.Stopwatch
 import spock.lang.Shared
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -26,25 +29,37 @@ import spock.lang.Unroll
 class SortingSpec extends Specification {
 
     @Shared
-    def random = new Random()
+    def rnd = new Random()
+
+    @Rule
+    Stopwatch stopwatch = new DefaultStopwatch()
 
     @Unroll
     def 'it should sort a random list using #name'() {
 
-        expect:
-        algo.call(list) == list.sort(false)
+        given:
+        def sorted = list.sort(false)
+
+        when:
+        sort(list)
+
+        then:
+        list == sorted
 
         where:
-        algo = MergeSort.&sort
-        list = randomIntList(100)
-        name = algo.owner.simpleName
+        sort << [
+          new MergeSort(),
+          new SelectionSort()
+        ]
+        list = randomIntList(10000)
+        name = sort.class.simpleName
 
     }
 
     private List randomIntList(int size) {
         def list = []
-        size.times { list << random.nextInt() }
-        list.trimToSize()
+        list.ensureCapacity size
+        size.times { list << rnd.nextInt() }
         list
     }
 }

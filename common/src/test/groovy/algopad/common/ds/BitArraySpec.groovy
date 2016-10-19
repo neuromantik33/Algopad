@@ -29,6 +29,44 @@ class BitArraySpec extends Specification {
     @Shared
     def random = new Random()
 
+    def 'it should throw an error when trying to create bit arrays of negative length'() {
+
+        when:
+        new BitArray(0)
+
+        then:
+        notThrown IllegalArgumentException
+
+        when:
+        new BitArray(-1)
+
+        then:
+        thrown IllegalArgumentException
+
+        when:
+        new BitArray(-1, '123'.bytes)
+
+        then:
+        thrown IllegalArgumentException
+
+    }
+
+    def 'it should throw an error if the length is insufficient to support byte array'() {
+
+        when:
+        new BitArray(8, '1'.bytes)
+
+        then:
+        notThrown IllegalArgumentException
+
+        when:
+        new BitArray(16, '1'.bytes)
+
+        then:
+        thrown IllegalArgumentException
+
+    }
+
     def 'it should support basic bitwise operations (getting, setting, flipping)'() {
 
         given:

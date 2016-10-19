@@ -16,31 +16,22 @@
  * permissions and limitations under the License.
  */
 
-allprojects {
+package algopad.common
 
-    repositories {
-        mavenCentral()
-    }
+import org.junit.rules.Stopwatch
+import org.junit.runner.Description
 
-    apply plugin: 'java'
-    apply plugin: 'groovy'
+import static java.util.concurrent.TimeUnit.NANOSECONDS
 
-    dependencies {
+/**
+ * Default {@link Stopwatch} implementation for long tests.
+ *
+ * @author Nicolas Estrada.
+ */
+class DefaultStopwatch extends Stopwatch {
 
-        compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
-        compile group: 'org.codehaus.gpars', name: 'gpars', version: '1.2.1'
-
-        testCompile group: 'org.spockframework', name: 'spock-core', version: '1.1-groovy-2.4-rc-2'
-
-    }
-
-    test {
-        maxParallelForks 3
-    }
-
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) { task ->
-            task.options.compilerArgs << '-Xlint:unchecked'
-        }
+    @Override
+    protected void finished(final long nanos, final Description description) {
+        println "Test '${description.methodName}' finished, spent ${NANOSECONDS.toMillis(nanos)}ms"
     }
 }

@@ -16,8 +16,9 @@
  * permissions and limitations under the License.
  */
 
-package algopad.common.ds
+package algopad.common.ds.demos
 
+import algopad.common.ds.Stack
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll

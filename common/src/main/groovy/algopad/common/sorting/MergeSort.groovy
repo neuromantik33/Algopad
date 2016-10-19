@@ -20,56 +20,71 @@ package algopad.common.sorting
 
 import groovy.transform.CompileStatic
 
+import static java.util.Comparator.naturalOrder
+
 /**
  * Unoptimized merge sort implementation.
  *
  * @author Nicolas Estrada.
  */
 @CompileStatic
-class MergeSort {
+class MergeSort extends Closure<List> {
 
-    static List sort(List list) {
+    final Comparator cmp
+    private ArrayList buf = []
+
+    MergeSort(Comparator cmp = naturalOrder()) {
+        super(null)
+        this.cmp = cmp
+    }
+
+    @SuppressWarnings('GroovyUnusedDeclaration')
+    List doCall(List list) {
 
         int n = list.size()
         if (n < 2) { return list }
 
-        int i = n >> 1
-        def left = sort(list[0..<i])
-        def right = sort(list[i..<n])
+        buf.ensureCapacity n
 
-        merge left, right
+        int i = n >> 1
+        def left = call(list[0..<i])
+        def right = call(list[i..<n])
+
+        // assert invariant(left, right)
+        def copy = merge(left, right)
+
+        // Copy items back into the list
+        n.times { int j -> list[j] = copy[j] }
+        list
 
     }
 
-    private static List merge(List<? extends Comparable> left,
-                              List<? extends Comparable> right) {
+    /*private static boolean invariant(List left, List right) {
+        isSorted(left) && isSorted(right)
+    }*/
+
+    @SuppressWarnings('GroovyResultOfIncrementOrDecrementUsed')
+    private List merge(List left, List right) {
 
         int n = left.size(), m = right.size()
         int i = 0, j = 0
 
-        def result = new ArrayList(n + m)
+        buf.clear()
 
         while (i < n && j < m) {
-            if (left[i] <= right[j]) {
-                result << left[i]
+            if (cmp.compare(left[i], right[j]) <= 0) {
+                buf << left[i]
                 i += 1
             } else {
-                result << right[j]
+                buf << right[j]
                 j += 1
             }
         }
 
-        while (i < n) {
-            result << left[i]
-            i += 1
-        }
+        while (i < n) { buf << left[i++] }
+        while (j < m) { buf << right[j++] }
 
-        while (j < m) {
-            result << right[j]
-            j += 1
-        }
-
-        result
+        buf
 
     }
 }

@@ -22,7 +22,7 @@ import java.util.AbstractCollection;
 import java.util.EmptyStackException;
 import java.util.Iterator;
 
-import algopad.common.ds.itr.ArrayIterator;
+import algopad.common.ds.itr.CyclingArrayIterator;
 
 import static java.lang.System.arraycopy;
 import static java.lang.reflect.Array.newInstance;
@@ -52,7 +52,10 @@ public class ArrayStack<E> extends AbstractCollection<E> implements Stack<E> {
     public E pop() {
         verifySize();
         size--;
-        return elements[size];
+        final E e = elements[size];
+        //noinspection AssignmentToNull (clear to let GC do its work)
+        elements[size] = null;
+        return e;
     }
 
     private void verifySize() {
@@ -70,7 +73,7 @@ public class ArrayStack<E> extends AbstractCollection<E> implements Stack<E> {
 
     @Override
     public Iterator<E> iterator() {
-        return new ArrayIterator<>(elements, size - 1, size, false);
+        return new CyclingArrayIterator<>(elements, size - 1, size, false);
     }
 
     @Override
@@ -81,20 +84,6 @@ public class ArrayStack<E> extends AbstractCollection<E> implements Stack<E> {
     @Override
     public Object[] toArray() {
         return copyOf(elements, size);
-    }
-
-    @Override
-    public <T> T[] toArray(final T[] a) {
-        if (a.length < size) {
-            //noinspection unchecked,SuspiciousArrayCast
-            return (T[]) copyOf(elements, size, a.getClass());
-        }
-        arraycopy(elements, 0, a, 0, size);
-        if (a.length > size) {
-            //noinspection AssignmentToNull
-            a[size] = null;
-        }
-        return a;
     }
 
     @Override

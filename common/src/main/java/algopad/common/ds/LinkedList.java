@@ -37,7 +37,6 @@ import static java.util.Objects.hash;
 @SuppressWarnings("ObjectEquality")
 public class LinkedList<E> extends AbstractCollection<E> {
 
-    @SuppressWarnings("WeakerAccess")
     protected final Node<E> sentinel;
     protected       int     size;
 
@@ -195,7 +194,7 @@ public class LinkedList<E> extends AbstractCollection<E> {
             return;
         }
         prev.next = removed.next;
-        //noinspection AssignmentToNull (for garbage collection)
+        //noinspection AssignmentToNull (clear to let GC do its work)
         removed.next = null;
         size--;
     }
