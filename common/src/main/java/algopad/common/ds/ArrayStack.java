@@ -87,20 +87,6 @@ public class ArrayStack<E> extends AbstractCollection<E> implements Stack<E> {
     }
 
     @Override
-    public <T> T[] toArray(final T[] a) {
-        if (a.length < size) {
-            //noinspection unchecked,SuspiciousArrayCast
-            return (T[]) copyOf(elements, size, a.getClass());
-        }
-        arraycopy(elements, 0, a, 0, size);
-        if (a.length > size) {
-            //noinspection AssignmentToNull
-            a[size] = null;
-        }
-        return a;
-    }
-
-    @Override
     public boolean add(final E e) {
         try {
             push(e);

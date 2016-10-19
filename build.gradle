@@ -37,4 +37,10 @@ allprojects {
     test {
         maxParallelForks 3
     }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) { task ->
+            task.options.compilerArgs << '-Xlint:unchecked'
+        }
+    }
 }
