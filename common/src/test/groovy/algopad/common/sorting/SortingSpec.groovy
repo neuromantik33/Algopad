@@ -51,9 +51,15 @@ class SortingSpec extends Specification {
         sort << [
           new MergeSort(),
           new SelectionSort(),
-          new InsertionSort()
+          new InsertionSort(),
+          new BubbleSort()
         ]
         list = use(RandomOps) { rnd.nextInts(20000) }.toList()
+        /*list = use(RandomOps) {
+            def l = (0..9).toList()
+            rnd.shuffle(l)
+            l
+        }*/
         name = sort.class.simpleName
 
     }
