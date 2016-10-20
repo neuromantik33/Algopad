@@ -50,7 +50,7 @@ class MergeSort extends Closure<List> {
         def left = call(list[0..<i])
         def right = call(list[i..<n])
 
-        // assert invariant(left, right)
+        // assert ListOps.isSorted(left) && ListOps.isSorted(right) /* Loop invariant */
         def copy = merge(left, right)
 
         // Copy items back into the list
@@ -58,10 +58,6 @@ class MergeSort extends Closure<List> {
         list
 
     }
-
-    /*private static boolean invariant(List left, List right) {
-        isSorted(left) && isSorted(right)
-    }*/
 
     @SuppressWarnings('GroovyResultOfIncrementOrDecrementUsed')
     private List merge(List left, List right) {

@@ -60,4 +60,22 @@ class RandomOpsSpec extends Specification {
         0    | 'a'..'z' | 'ssxvnjhpdq'
 
     }
+
+    @Unroll
+    def 'it should generate a random array (length=#len) of integers'() {
+
+        given:
+        def rnd = new Random(seed)
+
+        expect:
+        use(RandomOps) {
+            bound == null ? rnd.nextInts(len) : rnd.nextInts(len, bound)
+        } as List == integers
+
+        where:
+        seed | len | integers                                           | bound
+        0    | 4   | [-1155484576, -723955400, 1033096058, -1690734402] | null
+        100  | 10  | [915, 250, 874, 988, 291, 666, 36, 288, 723, 713]  | 1000
+
+    }
 }

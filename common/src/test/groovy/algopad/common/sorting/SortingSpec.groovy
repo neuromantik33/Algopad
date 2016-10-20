@@ -19,6 +19,7 @@
 package algopad.common.sorting
 
 import algopad.common.DefaultStopwatch
+import algopad.common.misc.RandomOps
 import org.junit.Rule
 import org.junit.rules.Stopwatch
 import spock.lang.Shared
@@ -49,17 +50,11 @@ class SortingSpec extends Specification {
         where:
         sort << [
           new MergeSort(),
-          new SelectionSort()
+          new SelectionSort(),
+          new InsertionSort()
         ]
-        list = randomIntList(10000)
+        list = use(RandomOps) { rnd.nextInts(20000) }.toList()
         name = sort.class.simpleName
 
-    }
-
-    private List randomIntList(int size) {
-        def list = []
-        list.ensureCapacity size
-        size.times { list << rnd.nextInt() }
-        list
     }
 }
