@@ -26,13 +26,12 @@ class SimulationArraySpec extends Specification {
 
     @Unroll
     @See('http://www.interviewbit.com/problems/spiral-order-matrix-i')
-    def '''given a matrix of #m x #n (#total elements),
-           return all elements of the matrix in spiral order.'''() {
+    def 'given a matrix of #m x #n (#total elements), return all elements of the matrix in spiral order.'() {
 
         given:
         def spiralOrder = { List<List> matrix ->
             //noinspection GroovyLocalVariableNamingConvention
-            final LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3
+            final RIGHT = 0, DOWN = 1, LEFT = 2, UP = 3
             def left = 0, right = n - 1, top = 0, bottom = m - 1
             def dir = RIGHT
             final result = []
@@ -41,26 +40,24 @@ class SimulationArraySpec extends Specification {
                     case RIGHT:
                         left.upto(right) { result << matrix[top][it] }
                         top++
-                        dir = DOWN
                         break
                     case DOWN:
                         top.upto(bottom) { result << matrix[it][right] }
                         right--
-                        dir = LEFT
                         break
                     case LEFT:
                         right.downto(left) { result << matrix[bottom][it] }
                         bottom--
-                        dir = UP
                         break
                     case UP:
                         bottom.downto(top) { result << matrix[it][left] }
                         left++
-                        dir = RIGHT
                         break
                     default:
                         assert false // Impossible
                 }
+                // Next direction depends on constant values above
+                dir = (dir + 1) % 3
             }
             result
         }
@@ -69,10 +66,12 @@ class SimulationArraySpec extends Specification {
         spiralOrder(matrix) == result
 
         where:
-        matrix      | result
+        matrix             | result
         [[1, 2, 3],
          [4, 5, 6],
-         [7, 8, 9]] | [1, 2, 3, 6, 9, 8, 7, 4, 5]
+         [7, 8, 9]]        | [1, 2, 3, 6, 9, 8, 7, 4, 5]
+        [[1, 2, 3, 4, 5],
+         [10, 9, 8, 7, 6]] | 1..10
         m = matrix.size()
         n = matrix[0].size()
         total = m * n
