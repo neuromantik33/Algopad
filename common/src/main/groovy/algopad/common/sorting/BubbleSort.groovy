@@ -23,40 +23,39 @@ import groovy.transform.CompileStatic
 import static java.util.Comparator.naturalOrder
 
 /**
- * Unoptimized selection sort implementation.
+ * Unoptimized bubble sort implementation.
  *
  * @author Nicolas Estrada.
  */
 @CompileStatic
-class SelectionSort extends Closure<List> {
+class BubbleSort extends Closure<List> {
 
     final Comparator cmp
 
-    SelectionSort(Comparator cmp = naturalOrder()) {
+    BubbleSort(Comparator cmp = naturalOrder()) {
         super(null)
         this.cmp = cmp
     }
 
     @SuppressWarnings('GroovyUnusedDeclaration')
     List doCall(List list) {
-        int k = 0, len = list.size()
-        while (k < len) {
-            def idx = minIndex(list, k)
-            list.swap k, idx
-            // assert ListOps.isSorted(list[0..k]) /* Loop invariant */
-            k++
+        // int k = 0
+        while (bubble(list)) {
+            // assert ListOps.isSorted(list[(list.size() - k)..<list.size()])  /* Loop invariant */
+            // k++
         }
         list
     }
 
-    private int minIndex(List list, int start) {
-        int index = start
-        int len = list.size()
-        for (int i = start + 1; i < len; i++) {
-            if (cmp.compare(list[index], list[i]) > 0) {
-                index = i
+    private boolean bubble(List list) {
+        def len = list.size()
+        def swapped = false
+        for (int i = 1; i < len; i++) {
+            if (cmp.compare(list[i], list[i - 1]) < 0) {
+                swapped = true
+                list.swap i, i - 1
             }
         }
-        index
+        swapped
     }
 }

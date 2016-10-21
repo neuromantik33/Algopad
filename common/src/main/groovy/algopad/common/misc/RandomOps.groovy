@@ -51,4 +51,20 @@ class RandomOps {
         }
         sb.toString()
     }
+
+    /**
+     * Generates random integers and returns them as an array.
+     *
+     * @param len the length of the int array.
+     * @param bound optional upper bound (exclusive). Must be positive.
+     * @see Random#nextInt(int)
+     */
+    static int[] nextInts(Random rnd, int len, int bound = 0) {
+        def array = new int[len]
+        def nextInt = bound ? rnd.&nextInt.curry(bound) : rnd.&nextInt
+        len.times {
+            array[it] = nextInt()
+        }
+        array
+    }
 }
