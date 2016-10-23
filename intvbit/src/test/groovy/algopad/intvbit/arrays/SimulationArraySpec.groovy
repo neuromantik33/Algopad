@@ -33,7 +33,7 @@ class SimulationArraySpec extends Specification {
         def spiralOrder = { List<List> matrix ->
             //noinspection GroovyLocalVariableNamingConvention
             final LEFT = 0, RIGHT = 1, UP = 2, DOWN = 3
-            def left = 0, right = n - 1, top = 0, bottom = m - 1
+            int left = 0, right = n - 1, top = 0, bottom = m - 1
             def dir = RIGHT
             final result = []
             while (result.size() < total) {
