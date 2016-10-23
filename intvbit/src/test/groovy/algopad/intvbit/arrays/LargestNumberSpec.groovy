@@ -34,8 +34,7 @@ class LargestNumberSpec extends Specification {
         })
 
         // Join and remove preceding zeros
-        def value = sorted.join()
-                          .replaceFirst(/^0*/, '')
+        def value = sorted.join().replaceFirst(/^0*/, '')
 
         value ?: '0'
 
