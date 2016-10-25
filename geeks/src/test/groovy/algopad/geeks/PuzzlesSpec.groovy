@@ -18,49 +18,12 @@
 
 package algopad.geeks
 
-import algopad.common.ds.LinkedList
+import algopad.common.ds.LinkedQueue
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class PuzzlesSpec extends Specification {
-
-    @Unroll
-    @See('http://www.geeksforgeeks.org/segregate-even-and-odd-elements-in-a-linked-list')
-    def '''given a linked list #list, it should modify the list such that all even numbers appear
-           before all the odd numbers in the modified linked list, preserving relative order.'''() {
-
-        given:
-        list = list as LinkedList
-        def segregate = { LinkedList list ->
-            def n = list.size()
-            def last = list.nodeIterator()[-1]
-            def itr = list.nodeIterator()
-            while (n > 0) {
-                //noinspection ChangeToOperator
-                def node = itr.next()
-                if (node.value % 2 != 0) {
-                    itr.remove()
-                    last = list.insertAfter(node.value, last)
-                }
-                n -= 1
-            }
-        }
-
-        when:
-        segregate list
-
-        then:
-        list == segregated
-
-        where:
-        list                               | segregated
-        [8, 12, 10]                        | [8, 12, 10]
-        [1, 3, 5, 7]                       | [1, 3, 5, 7]
-        [8, 12, 10, 5, 4, 1, 6]            | [8, 12, 10, 4, 6, 5, 1]
-        [17, 15, 8, 12, 10, 5, 4, 1, 7, 6] | [8, 12, 10, 4, 6, 17, 15, 5, 1, 7]
-
-    }
 
     @Unroll
     @See('http://www.geeksforgeeks.org/stock-buy-sell')
@@ -102,60 +65,6 @@ class PuzzlesSpec extends Specification {
     }
 
     @Unroll
-    @See('http://www.geeksforgeeks.org/anagram-substring-search-search-permutations')
-    def '''given a string "#text" and a pattern it should output all occurrences of "#pattern"
-           and its permutations (anagrams) in the text'''() {
-
-        // I never would have thought of this, this is completely lifted from website :/
-
-        given:
-        def findAnagramIndices = { String text, String pattern, int radix = Character.MAX_VALUE ->
-
-            def n = text.length()
-            def m = pattern.length()
-
-            int[] countTW = new int[radix]
-            int[] countP = new int[radix]
-            def indices = []
-
-            // Compares current pattern and text window char occurrences
-            def saveIndexIfEqualCounts = { int idx ->
-                for (int i = 0; i < radix; i++) {
-                    if (countTW[i] != countP[i]) {
-                        return
-                    }
-                }
-                indices << (idx - m)
-            }
-
-            // Build occurrences for initial text window
-            for (int i = 0; i < m; i++) {
-                countTW[text[i]] += 1
-                countP[pattern[i]] += 1
-            }
-
-            for (int i = m; i < n; i++) {
-                saveIndexIfEqualCounts i
-                countTW[text[i]] += 1 // Add current char to window
-                countTW[text[i - m]] -= 1 // Remove first character from window
-            }
-            saveIndexIfEqualCounts n // Check last window
-
-            indices
-
-        }
-
-        expect:
-        findAnagramIndices(text, pattern) == indices
-
-        where:
-        text         | pattern | radix | indices
-        'BACDGABCDA' | 'ABCD'  | 128   | [0, 5, 6]
-        'AAABABAA'   | 'AABA'  | 128   | [0, 1, 4]
-
-    }
-
-    @Unroll
     @See('http://www.geeksforgeeks.org/shortest-path-in-a-binary-maze')
     @SuppressWarnings('GroovyOverlyLongMethod')
     def '''given a #size matrix where each element is either 0 or 1, it should find the shortest
@@ -191,7 +100,7 @@ class PuzzlesSpec extends Specification {
                 }
             }
 
-            Queue<List> queue = [] as LinkedList
+            def queue = new LinkedQueue<>()
             distances[src[0]][src[1]] = 0
             queue.offer src
 
