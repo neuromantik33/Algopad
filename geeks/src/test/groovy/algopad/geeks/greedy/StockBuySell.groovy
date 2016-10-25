@@ -16,38 +16,38 @@
  * permissions and limitations under the License.
  */
 
-package algopad.geeks
+package algopad.geeks.greedy
 
-import algopad.common.ds.LinkedQueue
 import spock.lang.See
 import spock.lang.Specification
+import spock.lang.Subject
 import spock.lang.Unroll
 
-class PuzzlesSpec extends Specification {
+@See('http://www.geeksforgeeks.org/stock-buy-sell')
+class StockBuySell extends Specification {
+
+    @Subject
+    def findSellingIntervals = { List stocks ->
+        def intervals = []
+        def last = 0
+        def len = stocks.size() - 1
+        for (int i = 0; i < len; i++) {
+            if (stocks[i] > stocks[i + 1]) {
+                if (last != i) {
+                    intervals << [last, i]
+                }
+                last = i + 1
+            }
+        }
+        if (last != len) {
+            intervals << [last, len]
+        }
+        intervals
+    }
 
     @Unroll
-    @See('http://www.geeksforgeeks.org/stock-buy-sell')
     def '''given an array of the cost of a stock each day, it should find the max profit #maxProfit that can be made
            by buying and selling in those days.'''() {
-
-        given:
-        def findSellingIntervals = { List stocks ->
-            def intervals = []
-            def last = 0
-            def len = stocks.size() - 1
-            for (int i = 0; i < len; i++) {
-                if (stocks[i] > stocks[i + 1]) {
-                    if (last != i) {
-                        intervals << [last, i]
-                    }
-                    last = i + 1
-                }
-            }
-            if (last != len) {
-                intervals << [last, len]
-            }
-            intervals
-        }
 
         expect:
         findSellingIntervals(stocks) == intervals
@@ -63,6 +63,4 @@ class PuzzlesSpec extends Specification {
             profit + (max - min)
         }
     }
-
-
 }
