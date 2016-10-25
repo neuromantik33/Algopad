@@ -25,7 +25,7 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 @See('http://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression')
-class BalancedParenthesesSpec extends Specification {
+class BalancedParentheses extends Specification {
 
     @Subject
     def areParenthesesBalanced = { String s ->

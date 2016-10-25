@@ -24,7 +24,7 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 @See('http://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character')
-class NonRepeatingCharSpec extends Specification {
+class NonRepeatingChar extends Specification {
 
     @Subject
     def findNonRepeatingChar = { String s ->

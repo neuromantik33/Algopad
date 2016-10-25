@@ -25,7 +25,7 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 @See('http://www.geeksforgeeks.org/segregate-even-and-odd-elements-in-a-linked-list')
-class SegregateByParitySpec extends Specification {
+class SegregateByParity extends Specification {
 
     @Subject
     def segregate = { LinkedList list ->

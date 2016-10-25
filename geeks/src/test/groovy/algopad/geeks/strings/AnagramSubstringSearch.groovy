@@ -24,7 +24,7 @@ import spock.lang.Subject
 import spock.lang.Unroll
 
 @See('http://www.geeksforgeeks.org/anagram-substring-search-search-permutations')
-class FindingAnagrams extends Specification {
+class AnagramSubstringSearch extends Specification {
 
     @Subject
     def findAnagramIndices = { String text, String pattern, int radix = Character.MAX_VALUE ->
