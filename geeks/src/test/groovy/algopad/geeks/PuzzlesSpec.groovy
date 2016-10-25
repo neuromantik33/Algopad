@@ -26,29 +26,6 @@ import spock.lang.Unroll
 class PuzzlesSpec extends Specification {
 
     @Unroll
-    @See('http://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character')
-    def 'given a string "#input", it should find the first non-repeating character #c in it'() {
-
-        given:
-        def findNonRepeatingChar = { String s ->
-            def counts = [:] as LinkedHashMap
-            for (char c in s) {
-                counts[c] = counts.get(c, 0) + 1
-            }
-            counts.find { it.value == 1 }.key as char
-        }
-
-        expect:
-        findNonRepeatingChar(input) == c as char
-
-        where:
-        input           | c
-        'GeeksforGeeks' | 'f'
-        'GeeksQuiz'     | 'G'
-
-    }
-
-    @Unroll
     @See('http://www.geeksforgeeks.org/segregate-even-and-odd-elements-in-a-linked-list')
     def '''given a linked list #list, it should modify the list such that all even numbers appear
            before all the odd numbers in the modified linked list, preserving relative order.'''() {
