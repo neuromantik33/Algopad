@@ -477,12 +477,12 @@ class ProblemsWithoutArraysSpec extends Specification {
                 //noinspection GroovyIfStatementWithTooManyBranches
                 if (isEven(m) && isEven(n)) {
                     d = 2 * d
-                    m = div2(m)
-                    n = div2(n)
+                    m >>= 1
+                    n >>= 1
                 } else if (isEven(m) && isOdd(n)) {
-                    m = div2(m)
+                    m >>= 1
                 } else if (isOdd(m) && isEven(n)) {
-                    n = div2(n)
+                    n >>= 1
                 } else {
                     if (m >= n) {
                         m -= n
