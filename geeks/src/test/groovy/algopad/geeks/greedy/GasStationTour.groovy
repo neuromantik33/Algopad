@@ -30,8 +30,8 @@ import spock.lang.Unroll
               to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.''')
 class GasStationTour extends Specification {
 
-    @Subject
-    def determineStartIndex = { List gas, List cost ->
+    /*def calculateStartPoint = { List gas, List cost ->
+
         def n = gas.size()
         def start = -1
 
@@ -55,6 +55,27 @@ class GasStationTour extends Specification {
 
         start
 
+    } BRUTE FORCE */
+
+    @Subject
+    def calculateStartPoint = { List gas, List cost ->
+
+        def n = gas.size()
+        def start = 0, totalCost = 0, currentCost = 0
+
+        for (int i = 0; i < n; i++) {
+            def diff = gas[i] - cost[i]
+            if (currentCost < 0) {
+                currentCost = diff
+                start = i
+            } else {
+                currentCost += diff
+            }
+            totalCost += diff
+        }
+
+        totalCost < 0 ? -1 : start
+
     }
 
     @Unroll
@@ -63,7 +84,7 @@ class GasStationTour extends Specification {
            or -1 if impossible'''() {
 
         expect:
-        determineStartIndex(gas, cost) == start
+        calculateStartPoint(gas, cost) == start
 
         where:
         gas          | cost         | start
