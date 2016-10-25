@@ -107,13 +107,13 @@ class ProblemsWithoutArraysSpec extends Specification {
 
             // y is even
             if (y % 2 == 0) {
-                int exp = y / 2
+                int exp = y >> 1
                 BigInteger val = call(x, exp)
                 return val * val
             }
 
             // y is odd
-            int exp = (y - 1) / 2
+            int exp = (y - 1) >> 1
             BigInteger val = call(x, exp)
             x * val * val
 
@@ -310,13 +310,13 @@ class ProblemsWithoutArraysSpec extends Specification {
 
             // y is even
             if (y % 2 == 0) {
-                int exp = y / 2
+                int exp = y >> 1
                 int[][] val = call(x, exp)
                 return multiply2d(val, val)
             }
 
             // y is odd
-            int exp = (y - 1) / 2
+            int exp = (y - 1) >> 1
             int[][] val = call(x, exp)
             val = multiply2d(val, val)
             multiply2d(x, val)
@@ -449,20 +449,19 @@ class ProblemsWithoutArraysSpec extends Specification {
 
         given:
         def isEven = { it % 2 == 0 }
-        def div2 = { (int) (it / 2) }
         def gcd = { x, y ->
             def val
             if (y == 0) {
                 val = x
             } else if (isEven(x)) {
                 if (isEven(y)) {
-                    val = 2 * call(div2(x), div2(y))
+                    val = 2 * call(x >> 1, y >> 1)
                 } else {
-                    val = call(div2(x), y)
+                    val = call(x >> 1, y)
                 }
             } else {
                 if (isEven(y)) {
-                    val = call(x, div2(y))
+                    val = call(x, y >> 1)
                 } else {
                     val = call(y, (x - y).abs())
                 }
