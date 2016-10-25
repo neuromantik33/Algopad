@@ -18,59 +18,12 @@
 
 package algopad.geeks
 
-import algopad.common.ds.ArrayStack
 import algopad.common.ds.LinkedList
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class PuzzlesSpec extends Specification {
-
-    @Unroll
-    @See('http://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression')
-    def '''given an expression string "#exp", it should examine whether the pairs and the orders of
-           '{','}','(',')','[',']','<','>' are #correct.'''() {
-
-        given:
-        def areParenthesesBalanced = { String s ->
-            def pairs = [
-              '}': '{',
-              ')': '(',
-              ']': '[',
-              '>': '<'
-            ]
-            def parentheses = (pairs.keySet() + pairs.values()).collect { it as char } as Set
-            def stack = new ArrayStack(Character[].class, s.length())
-            for (char c in s) {
-                if (c in parentheses) {
-                    def closeCh = pairs[c as String]
-                    if (closeCh) {
-                        if (stack.empty || stack.pop() != closeCh as char) {
-                            return false
-                        }
-                    } else {
-                        stack.push c
-                    }
-                }
-            }
-            stack.empty
-        }
-
-        expect:
-        areParenthesesBalanced(exp) == balanced
-
-        where:
-        exp                        | balanced
-        '('                        | false
-        ')'                        | false
-        '<>{}'                     | true
-        '[h(e)]l{}l{[o(y)(o)](u)}' | true
-        '[(])'                     | false
-        '()]{}{[()()]()}'          | false
-
-        correct = balanced ? 'balanced' : 'unbalanced'
-
-    }
 
     @Unroll
     @See('http://www.geeksforgeeks.org/given-a-string-find-its-first-non-repeating-character')
