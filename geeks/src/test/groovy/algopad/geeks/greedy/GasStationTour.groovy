@@ -32,7 +32,6 @@ class GasStationTour extends Specification {
 
     @Subject
     def determineStartIndex = { List gas, List cost ->
-        assert gas.size() == cost.size()
         def n = gas.size()
         def start = -1
 
@@ -45,7 +44,7 @@ class GasStationTour extends Specification {
             remainingGas = gas[i]
             int j = i + 1
             while (j < n && hasEnoughGas(j)) {
-                remainingGas += gas[j]
+                remainingGas += gas[j] - cost[j]
                 j++
             }
             if (hasEnoughGas(j) && j == n) {
@@ -70,6 +69,9 @@ class GasStationTour extends Specification {
         gas          | cost         | start
         [1, 2]       | [2, 1]       | 1
         [4, 6, 7, 4] | [6, 5, 3, 5] | 1
+        [6, 3, 7]    | [4, 6, 3]    | 2
+        [13, 1, 11]  | [1, 23, 1]   | 2
+        [1, 2, 3, 4] | [2, 3, 4, 5] | -1
 
     }
 }
