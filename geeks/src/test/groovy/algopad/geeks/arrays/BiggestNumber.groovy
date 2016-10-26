@@ -2,6 +2,7 @@
  * Algopad.
  *
  * Copyright (c) 2016 Nicolas Estrada.
+ *
  * Licensed under the MIT License, the "License";
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,23 +16,24 @@
  * permissions and limitations under the License.
  */
 
-package algopad.intvbit.arrays
+package algopad.geeks.arrays
 
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-@See('http://www.interviewbit.com/problems/largest-number')
-class LargestNumberSpec extends Specification {
+@See('http://www.geeksforgeeks.org/given-an-array-of-numbers-arrange-the-numbers-to-form-the-biggest-number')
+class BiggestNumber extends Specification {
 
     @Subject
-    def largestNumber = { List a ->
+    def biggestNumber = { List a ->
 
-        def sorted = a.collect { "$it" as String }
-                      .sort({ o1, o2 ->
+        def joinedCmp = { String o1, String o2 ->
             o1.size() == o2.size() ? o2 <=> o1 : (o2 + o1) <=> (o1 + o2)
-        })
+        }
+        def sorted = a.collect { "$it" as String }
+                      .sort(joinedCmp)
 
         // Join and remove preceding zeros
         def value = sorted.join().replaceFirst(/^0*/, '')
@@ -44,12 +46,14 @@ class LargestNumberSpec extends Specification {
     def 'given #input, arrange them such that they form the largest number #largest'() {
 
         expect:
-        largestNumber(input) == largest
+        biggestNumber(input) == largest
 
         where:
-        input             | largest
-        [0, 0, 0]         | '0'
-        [3, 30, 34, 5, 9] | '9534330'
+        input                        | largest
+        [0, 0, 0]                    | '0'
+        [3, 30, 34, 5, 9]            | '9534330'
+        [54, 546, 548, 60]           | '6054854654'
+        [1, 34, 3, 98, 9, 76, 45, 4] | '998764543431'
 
     }
 }

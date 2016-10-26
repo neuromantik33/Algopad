@@ -2,6 +2,7 @@
  * Algopad.
  *
  * Copyright (c) 2016 Nicolas Estrada.
+ *
  * Licensed under the MIT License, the "License";
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,19 +16,19 @@
  * permissions and limitations under the License.
  */
 
-package algopad.intvbit.arrays
+package algopad.geeks.arrays
 
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-@See('http://www.interviewbit.com/problems/repeat-and-missing-number-array')
-class RepeatAndMissingNumberArraySpec extends Specification {
+@See('http://www.geeksforgeeks.org/find-a-repeating-and-a-missing-number')
+class RepeatAndMissingNumber extends Specification {
 
     /* Alternate solution (mine)
     @Subject
-    def repeatedNumber = { List a ->
+    def repeatedAndMissingNumber = { List a ->
         def n = a.size()
         def marked = new boolean[n]
         def dup = -1
@@ -45,7 +46,7 @@ class RepeatAndMissingNumberArraySpec extends Specification {
 
     @Subject
     @SuppressWarnings('GroovyLocalVariableNamingConvention')
-    def repeatedNumber = { List a ->
+    def repeatedAndMissingNumber = { List a ->
 
         def pow2 = { int x -> (long) x * x }
         def n = a.size()
@@ -77,7 +78,7 @@ class RepeatAndMissingNumberArraySpec extends Specification {
            except A which appears twice and B which is missing. Return #A and #B.'''() {
 
         expect:
-        repeatedNumber(input) == [A, B]
+        repeatedAndMissingNumber(input) == [A, B]
 
         where:
         input              | A | B
