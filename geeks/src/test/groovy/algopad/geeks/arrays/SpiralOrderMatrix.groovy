@@ -16,15 +16,15 @@
  * permissions and limitations under the License.
  */
 
-package algopad.intvbit.arrays
+package algopad.geeks.arrays
 
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-@See('http://www.interviewbit.com/problems/spiral-order-matrix-i')
-class SpiralOrderMatrixISpec extends Specification {
+@See('http://www.geeksforgeeks.org/print-a-given-matrix-in-spiral-form')
+class SpiralOrderMatrix extends Specification {
 
     @Subject
     def spiralOrder = { List<List> matrix ->
@@ -59,7 +59,7 @@ class SpiralOrderMatrixISpec extends Specification {
                     assert false // Impossible
             }
             // Next direction depends on constant values above
-            dir = (dir + 1) % 3
+            dir = (dir + 1) % 4
         }
         result
     }
@@ -71,12 +71,19 @@ class SpiralOrderMatrixISpec extends Specification {
         spiralOrder(matrix) == result
 
         where:
-        matrix             | result
+        matrix                     | result
+        [[1, 2, 3, 4, 5],
+         [10, 9, 8, 7, 6]]         | 1..10
         [[1, 2, 3],
          [4, 5, 6],
-         [7, 8, 9]]        | [1, 2, 3, 6, 9, 8, 7, 4, 5]
-        [[1, 2, 3, 4, 5],
-         [10, 9, 8, 7, 6]] | 1..10
+         [7, 8, 9]]                | [1, 2, 3, 6, 9, 8, 7, 4, 5]
+        [[1, 2, 3, 4],
+         [5, 6, 7, 8],
+         [9, 10, 11, 12],
+         [13, 14, 15, 16]]         | [1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]
+        [[1, 2, 3, 4, 5, 6],
+         [7, 8, 9, 10, 11, 12],
+         [13, 14, 15, 16, 17, 18]] | [1, 2, 3, 4, 5, 6, 12, 18, 17, 16, 15, 14, 13, 7, 8, 9, 10, 11]
         m = matrix.size()
         n = matrix[0].size()
 

@@ -11,6 +11,5 @@ Each module gathers various exercises for varying sources. They are summarized h
 - algotoolbox : Algorithmic Toolbox (UC San Diego, Coursera)
 - algodsgn2   : Algorithms: Design and Analysis, Part 2 (Stanford, Coursera)
 - geeks       : http://www.geeksforgeeks.org
-- intvbit     : http://www.interviewbit.com
 
 If you have any remarks feel free to drop me a line ;)

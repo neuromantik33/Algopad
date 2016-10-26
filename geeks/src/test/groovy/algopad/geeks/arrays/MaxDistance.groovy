@@ -2,6 +2,7 @@
  * Algopad.
  *
  * Copyright (c) 2016 Nicolas Estrada.
+ *
  * Licensed under the MIT License, the "License";
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,13 +16,9 @@
  * permissions and limitations under the License.
  */
 
-package algopad.intvbit.arrays
+package algopad.geeks.arrays
 
-import spock.lang.Narrative
-import spock.lang.See
-import spock.lang.Specification
-import spock.lang.Subject
-import spock.lang.Unroll
+import spock.lang.*
 
 import static java.lang.Math.max
 import static java.lang.Math.min
@@ -40,8 +37,8 @@ While traversing minLeft[] and maxRight[] if we see that minLeft[i] is greater t
 then we must move ahead in minLeft[] because all elements on left of minLeft[i] are greater than
 or equal to minLeft[i]. Otherwise we must move ahead in maxRight[j] to look for a greater j – i value.
 ''')
-@See('http://www.interviewbit.com/problems/max-distance')
-class MaxDistanceSpec extends Specification {
+@See('http://www.geeksforgeeks.org/given-an-array-arr-find-the-maximum-j-i-such-that-arrj-arri')
+class MaxDistance extends Specification {
 
     @Subject
     def maxDistance = { List a ->
