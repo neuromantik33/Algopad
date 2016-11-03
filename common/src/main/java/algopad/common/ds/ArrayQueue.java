@@ -22,6 +22,8 @@ import java.util.AbstractQueue;
 import java.util.Iterator;
 import java.util.Queue;
 
+import javax.annotation.Nonnull;
+
 import algopad.common.ds.itr.CyclingArrayIterator;
 
 import static java.lang.reflect.Array.newInstance;
@@ -46,6 +48,7 @@ public class ArrayQueue<E> extends AbstractQueue<E> {
     }
 
     @Override
+    @Nonnull
     public Iterator<E> iterator() {
         return new CyclingArrayIterator<>(elements, head, size, true);
     }

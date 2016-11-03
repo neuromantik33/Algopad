@@ -28,7 +28,7 @@ import static java.lang.Math.sqrt
 class SieveOfEratosthenes extends Specification {
 
     @Subject
-    def calculatePrimes = { int n ->
+    static def calculatePrimes = { int n ->
 
         boolean[] notPrime = new boolean[n + 1]
         int len = notPrime.length

@@ -48,14 +48,14 @@ class AnagramSubstringSearch extends Specification {
 
         // Build occurrences for initial text window
         for (int i = 0; i < m; i++) {
-            countTW[text[i]] += 1
-            countP[pattern[i]] += 1
+            countTW[(int) text[i]] += 1
+            countP[(int) pattern[i]] += 1
         }
 
         for (int i = m; i < n; i++) {
             saveIndexIfEqualCounts i
-            countTW[text[i]] += 1 // Add current char to window
-            countTW[text[i - m]] -= 1 // Remove first character from window
+            countTW[(int) text[i]] += 1 // Add current char to window
+            countTW[(int) text[i - m]] -= 1 // Remove first character from window
         }
         saveIndexIfEqualCounts n // Check last window
 

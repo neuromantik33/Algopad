@@ -67,7 +67,6 @@ public final class LargestNumber implements Comparator<String> {
     }
 
     private static int compareOutcomes(final String o1, final String o2) {
-        //noinspection StringConcatenationMissingWhitespace,StringConcatenation
         return (o2 + o1).compareTo(o1 + o2);
     }
 
