@@ -93,7 +93,7 @@ Similarly, when we search for the right boundary, we must make sure i does not g
 when we set the new i to i = mid.
 The easiest way to achieve this is by making mid biased to the right, i.e. mid = (i+j)/2+1.
 ''')
-class MissingInRange extends Specification {
+class RangeSearch extends Specification {
 
     @Subject
     def findRange = { List<Integer> a, int target ->
