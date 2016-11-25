@@ -52,9 +52,9 @@ class RepeatAndMissingNumber extends Specification {
         def n = a.size()
 
         // A - B
-        def sum = 0g
+        long sum = 0L
         // A^2 - B^2 = (A - B)(A + B)
-        def sumSquared = 0g
+        long sumSquared = 0L
 
         1.upto(n) {
             sum = sum + a[it - 1] - it
@@ -65,7 +65,7 @@ class RepeatAndMissingNumber extends Specification {
         sumSquared /= sum
 
         // Now we have A + B and A - B -> A = ((A - B) + (A + B)) / 2
-        int A = ((sum + sumSquared) / 2) as int
+        int A = (sum + sumSquared) >> 1
         // B = A + B - A
         int B = sumSquared - A
 

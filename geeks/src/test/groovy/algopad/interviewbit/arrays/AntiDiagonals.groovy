@@ -15,7 +15,7 @@
  * permissions and limitations under the License.
  */
 
-package algopad.geeks.arrays
+package algopad.interviewbit.arrays
 
 import spock.lang.See
 import spock.lang.Specification

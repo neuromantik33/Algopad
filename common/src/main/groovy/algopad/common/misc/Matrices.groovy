@@ -28,6 +28,7 @@ import groovy.transform.stc.FromString
  * @author Nicolas Estrada.
  */
 @CompileStatic
+@SuppressWarnings('GroovyUnusedDeclaration')
 class Matrices {
 
     final static LINE_SEPARATOR = System.getProperty('line.separator')
@@ -48,12 +49,26 @@ class Matrices {
     /**
      * @return a string representation of the contents of the specified matrix.
      */
-    @SuppressWarnings(['GroovyUntypedAccess', "GroovyUnusedDeclaration"])
+    @SuppressWarnings('GroovyUntypedAccess')
     static String toString(matrix) {
         def sb = new StringBuilder()
         matrix.eachWithIndex { row, int i ->
             row.eachWithIndex { col, int j ->
                 sb.append(col).append(' ')
+            }
+            sb.append LINE_SEPARATOR
+        }
+        sb.toString()
+    }
+
+    /**
+     * @return a string representation of the contents of the specified {@code boolean} matrix.
+     */
+    static String toString(boolean[][] matrix) {
+        def sb = new StringBuilder()
+        matrix.eachWithIndex { boolean[] row, int i ->
+            row.eachWithIndex { boolean col, int j ->
+                sb.append(col ? 1 : 0).append(' ')
             }
             sb.append LINE_SEPARATOR
         }

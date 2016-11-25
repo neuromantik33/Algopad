@@ -50,17 +50,17 @@ class MaxDistance extends Specification {
         def maxRight = new int[n]
         def minLeft = new int[n]
 
-        minLeft[0] = a[0];
-        for (int i = 1; i < n; ++i) {
+        minLeft[0] = a[0]
+        1.upto(n - 1) { i ->
             minLeft[i] = min(a[i], minLeft[i - 1])
         }
 
-        maxRight[n - 1] = a[n - 1];
-        for (int j = n - 2; j >= 0; --j) {
+        maxRight[n - 1] = a[n - 1]
+        (n - 2).downto(0) { j ->
             maxRight[j] = max(a[j], maxRight[j + 1])
         }
 
-        int i = 0, j = 0;
+        int i = 0, j = 0
         int gap = -1
         while (j < n && i < n) {
             if (minLeft[i] < maxRight[j]) {

@@ -15,7 +15,7 @@
  * permissions and limitations under the License.
  */
 
-package algopad.geeks.arrays
+package algopad.geeks.pointers
 
 import spock.lang.Narrative
 import spock.lang.Specification
@@ -41,16 +41,15 @@ class ClosestThreeSum extends Specification {
         int closestSum = 0
 
         a.sort()
-        n.times { i ->
+        outer:
+        for (int i = 0; i < n; i++) {
             int j = i + 1, k = n - 1
             while (j < k) {
                 int sum = a[i] + a[j] + a[k]
                 int delta = (sum - target).abs()
                 if (delta == 0) {
-                    // Break out of the while loop and times()
                     closestSum = sum
-                    directive = DONE
-                    break
+                    break outer
                 } else if (delta < smallestDelta) {
                     smallestDelta = delta
                     closestSum = sum
@@ -77,6 +76,7 @@ class ClosestThreeSum extends Specification {
         [1, 2, 3]            | 7      | 6
         [12, 3, 4, 1, 6, 9]  | 30     | 27
         [1, 4, 45, 6, 10, 8] | 42     | 50
+        [1, 4, 45, 6, 10, 8] | 11     | 11
 
     }
 }

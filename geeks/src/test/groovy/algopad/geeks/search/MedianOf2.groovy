@@ -24,98 +24,68 @@ import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
-import static java.lang.Integer.MAX_VALUE
-import static java.lang.Math.min
-
 @See('http://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes')
 class MedianOf2 extends Specification {
-
-    //    @Subject My solution :(
-    //    def medianOf2 = { List<Integer> a, List<Integer> b ->
-    //
-    //        def median = { List l ->
-    //            def len = l.size()
-    //            def mid = len >> 1
-    //            len % 2 == 0 ? (l[mid - 1] + l[mid]) / 2 : l[mid]
-    //        }
-    //
-    //        def m = a.size()
-    //        def n = b.size()
-    //        assert m <= n
-    //
-    //        if (!m) { return median(b) }
-    //        if (m == 1) {
-    //            def tmp = new ArrayList<>(b);
-    //            if (a[0] <= tmp[0]) {
-    //                tmp.add(0, a[0]);
-    //            } else if (a[0] >= tmp[n - 1]) {
-    //                tmp.add(a[0]);
-    //            } else {
-    //                int idx = binarySearch(tmp, a[0]);
-    //                if (idx < 0) {
-    //                    idx = -idx - 1
-    //                }
-    //                tmp.add(idx, a[0]);
-    //            }
-    //            return median(tmp);
-    //        }
-    //
-    //        def max = { i, j ->
-    //            if (i < 0 || i > m - 1) { return b[j] }
-    //            if (j < 0 || j > n - 1) { return a[i] }
-    //            Math.max(a[i], b[j])
-    //        }
-    //
-    //        def min = { i, j ->
-    //            if (i < 0 || i > m - 1) { return b[j] }
-    //            if (j < 0 || j > n - 1) { return a[i] }
-    //            Math.min(a[i], b[j])
-    //        }
-    //
-    //        def search = { int imin, int imax ->
-    //            def i = (imin + imax) >> 1
-    //            def j = ((m + n + 1) >> 1) - i
-    //            if (i < m && j > 0 && b[j - 1] > a[i]) {
-    //                return call(i + 1, imax)
-    //            } else if (j < n && i > 0 && a[i - 1] > b[j]) {
-    //                return call(imin, i - 1)
-    //            } else {
-    //                double mdn
-    //                if ((m + n) % 2 != 0) {
-    //                    mdn = max(i - 1, j - 1)
-    //                } else {
-    //                    mdn = (max(i - 1, j - 1) + min(i, j)) / 2
-    //                }
-    //                return mdn
-    //            }
-    //        }
-    //
-    //        search(0, m)
-    //
-    //    }
 
     @Subject
     def medianOf2 = { List<Integer> a, List<Integer> b ->
 
-        def findKth = { int i, int j, int k ->
-            def m = a.size()
-            def n = b.size()
-            if (i >= m) { return b[j + k - 1] }
-            if (j >= n) { return a[i + k - 1] }
-            if (k == 1) { return min(a[i], b[j]) }
+        def m = a.size()
+        def n = b.size()
+        assert m <= n
 
-            int mid = k >> 1
-            int aMid = i + mid - 1 < m ? a[i + mid - 1] : MAX_VALUE
-            int bMid = j + mid - 1 < n ? b[j + mid - 1] : MAX_VALUE
-            aMid < bMid ? call(i + mid, j, k - mid) // Right
-                        : call(i, j + mid, k - mid) // Left
+        def max = { i, j ->
+            if (i < 0) { return b[j] }
+            if (j < 0) { return a[i] }
+            Math.max(a[i], b[j])
         }
 
-        def len = a.size() + b.size()
-        def mid = len >> 1
-        len % 2 == 1 ? findKth(0, 0, mid + 1) // Odd
-                     : (findKth(0, 0, mid) + findKth(0, 0, mid + 1)) / 2 // Even
+        def min = { i, j ->
+            if (i == m) { return b[j] }
+            if (j == n) { return a[i] }
+            Math.min(a[i], b[j])
+        }
+
+        int iMin = 0, iMax = m
+        while (iMin <= iMax) {
+            int i = (iMin + iMax) >> 1
+            int j = ((m + n + 1) >> 1) - i
+            if (i < m && j > 0 && b[j - 1] > a[i]) {
+                iMin = i + 1
+            } else if (j < n && i > 0 && a[i - 1] > b[j]) {
+                iMax = i - 1
+            } else {
+                return (m + n) % 2 == 1 ? max(i - 1, j - 1)
+                                        : (max(i - 1, j - 1) + min(i, j)) / 2.0
+            }
+        }
+
+        assert false // Impossible!
+
     }
+
+    //    @Subject Online solution : which is better?!
+    //    def medianOf2 = { List<Integer> a, List<Integer> b ->
+    //
+    //        def findKth = { int i, int j, int k ->
+    //            def m = a.size()
+    //            def n = b.size()
+    //            if (i >= m) { return b[j + k - 1] }
+    //            if (j >= n) { return a[i + k - 1] }
+    //            if (k == 1) { return min(a[i], b[j]) }
+    //
+    //            int mid = k >> 1
+    //            int aMid = i + mid - 1 < m ? a[i + mid - 1] : MAX_VALUE
+    //            int bMid = j + mid - 1 < n ? b[j + mid - 1] : MAX_VALUE
+    //            aMid < bMid ? call(i + mid, j, k - mid) // Right
+    //                        : call(i, j + mid, k - mid) // Left
+    //        }
+    //
+    //        def len = a.size() + b.size()
+    //        def mid = len >> 1
+    //        len % 2 == 1 ? findKth(0, 0, mid + 1) // Odd
+    //                     : (findKth(0, 0, mid) + findKth(0, 0, mid + 1)) / 2 // Even
+    //    }
 
     @Unroll
     def 'given 2 sorted arrays #a and #b, it should return the median of the merging of the 2 arrays.'() {
