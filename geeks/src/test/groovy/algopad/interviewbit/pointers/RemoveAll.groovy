@@ -15,12 +15,14 @@
  * permissions and limitations under the License.
  */
 
-package algopad.geeks.pointers
+package algopad.interviewbit.pointers
 
+import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
+@See('https://www.interviewbit.com/problems/remove-element-from-array')
 class RemoveAll extends Specification {
 
     /*@Subject // My more complicated solution :/
