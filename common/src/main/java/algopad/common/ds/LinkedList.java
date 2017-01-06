@@ -24,6 +24,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 import static java.lang.String.format;
 import static java.util.Objects.hash;
 
@@ -87,6 +89,7 @@ public class LinkedList<E> extends AbstractCollection<E> {
     }
 
     @Override
+    @Nonnull
     public Iterator<E> iterator() {
         final Iterator<Node<E>> it = new NodeItr();
         //noinspection ReturnOfInnerClass
@@ -129,6 +132,7 @@ public class LinkedList<E> extends AbstractCollection<E> {
 
     @Override
     public int hashCode() {
+        //noinspection ObjectInstantiationInEqualsHashCode
         return hash(toArray());
     }
 

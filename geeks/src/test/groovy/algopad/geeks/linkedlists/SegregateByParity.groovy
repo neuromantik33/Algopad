@@ -64,5 +64,4 @@ class SegregateByParity extends Specification {
         [17, 15, 8, 12, 10, 5, 4, 1, 7, 6] | [8, 12, 10, 4, 6, 17, 15, 5, 1, 7]
 
     }
-
 }

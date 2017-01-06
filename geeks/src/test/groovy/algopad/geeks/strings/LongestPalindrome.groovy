@@ -57,7 +57,9 @@ class LongestPalindrome extends Specification {
         if (n == 0) { return s }
 
         boolean[][] cache = new boolean[n][n]
-        for (int i = 0; i < n; i++) { cache[i][i] = true }
+        for (int i = 0; i < n; i++) {
+            cache[i][i] = true
+        }
         for (int i = 0; i < n - 1; i++) {
             int j = i + 1
             cache[i][j] = s.charAt(i) == s.charAt(j)
