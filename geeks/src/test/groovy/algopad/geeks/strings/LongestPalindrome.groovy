@@ -35,7 +35,7 @@ class LongestPalindrome extends Specification {
         def isPalindrome = { int i, int j ->
             boolean eq = s.charAt(i) == s.charAt(j)
             if (eq && j - i > 1) {
-                eq = eq && call(i + 1, j - 1)
+                eq = call(i + 1, j - 1)
             }
             eq
         }

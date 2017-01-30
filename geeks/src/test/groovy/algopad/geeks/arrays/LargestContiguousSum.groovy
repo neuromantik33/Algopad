@@ -32,8 +32,8 @@ class LargestContiguousSum extends Specification {
         if (a.empty) { return 0 }
         def sum = a[0]
         def curr = a[0]
-        a.tail().each { i ->
-            curr = max(i, curr + i)
+        a.tail().each { num ->
+            curr = max(num, curr + num)
             sum = max(sum, curr)
         }
         sum

@@ -28,7 +28,7 @@ class AntiDiagonals extends Specification {
     @Subject
     def antiDiagonals = { List<List> matrix ->
         int n = matrix.size()
-        def diagonals = []
+        def diagonals = [] as ArrayList
         // There are 2n - 1 diagonals
         diagonals.ensureCapacity n + n - 1
         n.times { i ->

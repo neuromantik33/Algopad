@@ -32,7 +32,7 @@ class IsPalindrome extends Specification {
     @Subject
     def isPalindrome = { String s ->
 
-        def n = s.length()
+        int n = s.length()
         if (n < 2) { return true }
         def isLetter = { Character.isLetter(it as char) }
 
