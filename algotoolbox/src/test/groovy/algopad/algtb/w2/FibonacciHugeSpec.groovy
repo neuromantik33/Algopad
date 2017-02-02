@@ -32,7 +32,7 @@ class FibonacciHugeSpec extends Specification {
     Stopwatch stopwatch = new Stopwatch() {}
 
     @Unroll
-    def 'given two integers #n and #sm, it should output Fib(n) mod m, that is the remainder of Fib(n) divided by m'() {
+    def 'given two integers #n and #m, it should output Fib(n) mod m, that is the remainder of Fib(n) divided by m'() {
 
         expect:
         getFibonacciHuge(n, m) == val

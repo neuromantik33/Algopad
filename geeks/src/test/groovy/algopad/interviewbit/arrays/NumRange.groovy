@@ -17,12 +17,26 @@
 
 package algopad.interviewbit.arrays
 
+import spock.lang.Narrative
 import spock.lang.See
 import spock.lang.Specification
 import spock.lang.Subject
 import spock.lang.Unroll
 
 @See('https://www.interviewbit.com/problems/numrange')
+@Narrative('''
+For each left index a, let b be the largest possible right index such that B[a] + B[a+1] + ... + B[b] <= P 
+(unless B_a > P, in which case there's no such index and we can let b = a - 1 for convenience). 
+Note that there are then exactly b - a + 1 valid contiguous sequences with a as their left index 
+(namely, the sequences a..a, a..(a+1), ..., a..b).
+
+For each of the N potential left indices a, the corresponding maximum right index b can be found in
+O(log(N)) time using binary search, assuming that the prefix sums of the B array have been precomputed.
+Alternatively, we can observe that when a is increased by 1, its corresponding b index is always
+increased by 0 or more (never decreased). This allows us to achieve a time complexity of O(N) by employing
+the "sliding window" technique, iterating over all values of a from 1 to N while also
+shifting b forward from 1 to N as appropriate.
+''')
 class NumRange extends Specification {
 
     // TODO Can do better than O(n^2)!!
