@@ -209,7 +209,6 @@ class ArraysSpec extends Specification {
     private List randomIntList(int size) {
         def list = []
         size.times { list << random.nextInt() }
-        list.trimToSize()
         list
     }
 }
