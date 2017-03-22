@@ -32,7 +32,7 @@ import groovy.transform.CompileStatic
 class DisjointSet<T> {
 
     private Map<T, DSNode> nodeMap
-    private Closure<Boolean> areSame;
+    private Closure<Boolean> areSame
     private int size
 
     /**
